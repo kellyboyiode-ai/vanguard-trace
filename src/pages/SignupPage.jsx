@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { signUpWithEmail } from '../services/authService';
 
 export default function SignupPage() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -48,20 +47,27 @@ export default function SignupPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm text-zinc-300 mb-1" htmlFor="email">Email</label>
+            <label className="block text-sm text-zinc-300 mb-1" htmlFor="email">
+              Email
+            </label>
             <input
               id="email"
               type="email"
               autoComplete="email"
               required
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
               placeholder="you@example.com"
             />
           </div>
           <div>
-            <label className="block text-sm text-zinc-300 mb-1" htmlFor="password">Password</label>
+            <label
+              className="block text-sm text-zinc-300 mb-1"
+              htmlFor="password"
+            >
+              Password
+            </label>
             <input
               id="password"
               type="password"
@@ -69,20 +75,25 @@ export default function SignupPage() {
               required
               minLength={8}
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
               placeholder="Min. 8 characters"
             />
           </div>
           <div>
-            <label className="block text-sm text-zinc-300 mb-1" htmlFor="confirm">Confirm Password</label>
+            <label
+              className="block text-sm text-zinc-300 mb-1"
+              htmlFor="confirm"
+            >
+              Confirm Password
+            </label>
             <input
               id="confirm"
               type="password"
               autoComplete="new-password"
               required
               value={confirm}
-              onChange={e => setConfirm(e.target.value)}
+              onChange={(e) => setConfirm(e.target.value)}
               className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
               placeholder="••••••••"
             />
@@ -98,7 +109,9 @@ export default function SignupPage() {
 
         <p className="mt-6 text-center text-sm text-zinc-500">
           Already have an account?{' '}
-          <Link to="/login" className="text-blue-400 hover:underline">Sign in</Link>
+          <Link to="/login" className="text-blue-400 hover:underline">
+            Sign in
+          </Link>
         </p>
       </div>
     </div>
