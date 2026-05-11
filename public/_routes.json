@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "include": [
+    "/*"
+  ],
+  "exclude": [
+    "/api/*",
+    "/_*",
+    "/public/*"
+  ],
+  "rules": [
+    {
+      "type": "rewrite",
+      "pattern": "^(?!/api).*$",
+      "destination": "/index.html",
+      "fallthrough": false
+    },
+    {
+      "type": "route",
+      "pattern": "/api/*",
+      "fallthrough": true
+    }
+  ]
+}

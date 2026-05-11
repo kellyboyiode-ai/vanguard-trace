@@ -1,0 +1,63 @@
+/* Navbar Component Styling */
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.navbar-link {
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--text);
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-ui);
+  border: 1px solid transparent;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.navbar-link:hover,
+.navbar-link:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.navbar-link-active {
+  color: var(--ink);
+  border-color: var(--border-strong);
+  background: var(--panel-bg);
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .navbar {
+    gap: 8px;
+  }
+
+  .navbar-link {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    gap: 6px;
+  }
+
+  .navbar-link {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.8rem;
+  }
+}

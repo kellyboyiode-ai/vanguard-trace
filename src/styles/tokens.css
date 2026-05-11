@@ -1,0 +1,25 @@
+:root {
+  --vt-font-display:
+    'Orbitron', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --vt-font-ui:
+    'JetBrains Mono', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --vt-font-mono:
+    'IBM Plex Mono', 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+
+  --vt-background: #050505;
+  --vt-secondary: #0f172a;
+  --vt-accent-cyan: #22d3ee;
+  --vt-warning-red: #ef4444;
+  --vt-text-light: #d1d5db;
+  --vt-background-rgb: 5, 5, 5;
+  --vt-secondary-rgb: 15, 23, 42;
+  --vt-accent-rgb: 34, 211, 238;
+  --vt-warning-rgb: 239, 68, 68;
+  --vt-text-rgb: 209, 213, 219;
+
+  --trace-bg: #f6f8ff;
+  --trace-panel: #ffffff;
+  --trace-text: #0f172a;
+  --trace-muted: #475569;
+  --trace-accent: #2563eb;
+}

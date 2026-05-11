@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;800&display=swap');
+@import 'tailwindcss';
+
+:root {
+  --font-display:
+    'Orbitron', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-ui:
+    'JetBrains Mono', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono:
+    'IBM Plex Mono', 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+
+  --bg: #f4efe8;
+  --panel-bg: rgba(255, 255, 255, 0.82);
+  --panel-quiet: rgba(14, 23, 42, 0.04);
+  --ink: #101828;
+  --text: #475467;
+  --muted: #667085;
+  --accent: #f97352;
+  --border-soft: rgba(16, 24, 40, 0.08);
+  --border-strong: rgba(16, 24, 40, 0.16);
+  --shadow-sm: 0 12px 28px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 24px 60px rgba(16, 24, 40, 0.12);
+
+  font-family: var(--font-ui);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--text);
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(249, 115, 82, 0.18),
+      transparent 22%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(22, 163, 74, 0.14),
+      transparent 20%
+    ),
+    var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+::selection {
+  background: rgba(249, 115, 82, 0.24);
+  color: var(--ink);
+}
