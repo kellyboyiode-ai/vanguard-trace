@@ -1,9 +1,13 @@
+import { dirname, resolve } from 'node:path'
 import { spawnSync } from 'node:child_process'
 import process from 'node:process'
+import { fileURLToPath } from 'node:url'
 
 const args = new Set(process.argv.slice(2))
 const runOnce = args.has('--once')
 const intervalMs = Number.parseInt(process.env.AUTO_COMMIT_INTERVAL_MS ?? '30000', 10)
+const scriptDir = dirname(fileURLToPath(import.meta.url))
+const repoRoot = resolve(scriptDir, '..')
 
 if (!Number.isFinite(intervalMs) || intervalMs < 1000) {
   console.error('AUTO_COMMIT_INTERVAL_MS must be a number greater than or equal to 1000.')
@@ -12,7 +16,7 @@ if (!Number.isFinite(intervalMs) || intervalMs < 1000) {
 
 function runGit(commandArgs, options = {}) {
   return spawnSync('git', commandArgs, {
-    cwd: process.cwd(),
+    cwd: repoRoot,
     encoding: 'utf8',
     ...options,
   })
