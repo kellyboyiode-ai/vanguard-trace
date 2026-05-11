@@ -131,7 +131,7 @@ Auto-commit local changes:
 npm run auto-commit
 ```
 
-This watches the repo by polling git status every 30 seconds and creates a local commit whenever there are changes. Use `AUTO_COMMIT_INTERVAL_MS=5000 npm run auto-commit` to change the interval, or `npm run auto-commit:once` to perform a single check-and-commit run.
+This watches the repo by polling git status every 30 seconds and creates a commit whenever there are changes. If `origin` exists, it also pushes that commit automatically. Use `AUTO_COMMIT_INTERVAL_MS=5000 npm run auto-commit` to change the interval, `AUTO_COMMIT_PUSH=false npm run auto-commit` to disable pushes, or `npm run auto-commit:once` to perform a single check-and-commit run.
 
 ## Security Notes
 

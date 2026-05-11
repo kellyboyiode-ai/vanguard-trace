@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url'
 const args = new Set(process.argv.slice(2))
 const runOnce = args.has('--once')
 const intervalMs = Number.parseInt(process.env.AUTO_COMMIT_INTERVAL_MS ?? '30000', 10)
+const pushEnabled = (process.env.AUTO_COMMIT_PUSH ?? 'true').toLowerCase() !== 'false'
+const pushRemote = process.env.AUTO_COMMIT_REMOTE ?? 'origin'
 const scriptDir = dirname(fileURLToPath(import.meta.url))
 const repoRoot = resolve(scriptDir, '..')
 
@@ -39,6 +41,40 @@ function getPendingChanges() {
   return result.stdout.trim()
 }
 
+function getCurrentBranch() {
+  const result = runGit(['rev-parse', '--abbrev-ref', 'HEAD'])
+  if (result.status !== 0) {
+    throw new Error(result.stderr.trim() || 'Unable to resolve current branch.')
+  }
+
+  return result.stdout.trim()
+}
+
+function remoteExists(remoteName) {
+  const result = runGit(['remote', 'get-url', remoteName])
+  return result.status === 0
+}
+
+function pushChanges() {
+  if (!pushEnabled) {
+    console.log('Auto-push disabled by AUTO_COMMIT_PUSH=false.')
+    return
+  }
+
+  if (!remoteExists(pushRemote)) {
+    console.log(`Remote "${pushRemote}" is not configured. Skipping push.`)
+    return
+  }
+
+  const branch = getCurrentBranch()
+  const pushResult = runGit(['push', '-u', pushRemote, branch])
+  if (pushResult.status !== 0) {
+    throw new Error(pushResult.stderr.trim() || pushResult.stdout.trim() || 'git push failed.')
+  }
+
+  process.stdout.write(pushResult.stdout)
+}
+
 function commitChanges() {
   const addResult = runGit(['add', '-A'])
   if (addResult.status !== 0) {
@@ -58,6 +94,7 @@ function commitChanges() {
   }
 
   process.stdout.write(commitResult.stdout)
+  pushChanges()
   return true
 }
 
