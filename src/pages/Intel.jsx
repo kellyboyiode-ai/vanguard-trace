@@ -1,4 +1,41 @@
 import { ShellLayout } from '../layouts/index.js';
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
+
+const riskTrend = [
+  { day: 'Mon', risk: 31 },
+  { day: 'Tue', risk: 27 },
+  { day: 'Wed', risk: 35 },
+  { day: 'Thu', risk: 42 },
+  { day: 'Fri', risk: 33 },
+  { day: 'Sat', risk: 29 },
+  { day: 'Sun', risk: 26 },
+];
+
+const activeAlerts = [
+  {
+    corridor: 'Baltic Route C7',
+    severity: 'High',
+    advisory: 'Port strike risk rising in 48 hours.',
+  },
+  {
+    corridor: 'Mediterranean M2',
+    severity: 'Medium',
+    advisory: 'Increased customs processing delays.',
+  },
+  {
+    corridor: 'North Sea N1',
+    severity: 'Low',
+    advisory: 'Weather watch advisory, monitor container seals.',
+  },
+];
 
 export default function Intel() {
   return (
@@ -17,16 +54,51 @@ export default function Intel() {
           <div className="settings-grid">
             <div>
               <span>Active advisories</span>
-              <strong>4</strong>
+              <strong>{activeAlerts.length}</strong>
             </div>
             <div>
               <span>High-risk corridors</span>
-              <strong>2</strong>
+              <strong>1</strong>
             </div>
             <div>
               <span>Last sync</span>
               <strong>2 min ago</strong>
             </div>
+          </div>
+
+          <div className="panel-grid">
+            <article className="panel panel-nested">
+              <h3>Weekly corridor risk trend</h3>
+              <div className="chart-shell">
+                <ResponsiveContainer width="100%" height={260}>
+                  <AreaChart data={riskTrend}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="day" tick={{ fontSize: 11 }} />
+                    <YAxis tick={{ fontSize: 11 }} />
+                    <Tooltip formatter={(value) => [value, 'Risk score']} />
+                    <Area
+                      type="monotone"
+                      dataKey="risk"
+                      stroke="#be123c"
+                      fill="#fda4af"
+                      fillOpacity={0.6}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </article>
+
+            <article className="panel panel-nested">
+              <h3>Active alert board</h3>
+              <ul className="route-list">
+                {activeAlerts.map((alert) => (
+                  <li key={alert.corridor}>
+                    <span>{`${alert.corridor} | ${alert.severity}`}</span>
+                    <span>{alert.advisory}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
           </div>
         </section>
       </div>

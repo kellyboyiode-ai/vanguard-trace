@@ -154,6 +154,18 @@ h3 {
   box-shadow: var(--shadow-sm);
 }
 
+.panel-nested {
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.chart-shell {
+  margin-top: 0.8rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.86);
+  padding: 0.75rem;
+}
+
 .panel-header {
   display: flex;
   justify-content: space-between;
@@ -227,6 +239,18 @@ h3 {
 
 .form-block {
   margin-top: 1rem;
+}
+
+.checkbox-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.form-button-secondary {
+  background: transparent;
 }
 
 @media (max-width: 900px) {
