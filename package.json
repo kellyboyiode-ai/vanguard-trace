@@ -16,17 +16,24 @@
     "auto-commit:once": "node scripts/auto-commit.mjs --once"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@react-three/fiber": "^9.6.1",
     "@supabase/supabase-js": "^2.105.4",
     "@tailwindcss/vite": "^4.3.0",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.14.0",
+    "mapbox-gl": "^3.23.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "react-hook-form": "^7.75.0",
+    "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.15.0",
     "react-type-animation": "^3.2.0",
+    "recharts": "^3.8.1",
     "tailwindcss": "^4.3.0",
-    "three": "^0.184.0"
+    "three": "^0.184.0",
+    "zod": "^4.4.3",
+    "zustand": "^5.0.13"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
