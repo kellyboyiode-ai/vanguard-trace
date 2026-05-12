@@ -1,4 +1,4 @@
-import { SectionHeader } from '../components/index.js';
+import { FileUpload, SectionHeader } from '../components/index.js';
 import { ShellLayout } from '../layouts/index.js';
 
 export default function TracesPage() {
@@ -29,6 +29,10 @@ export default function TracesPage() {
               <span>1.7s median</span>
             </li>
           </ul>
+
+          <div className="form-block">
+            <FileUpload />
+          </div>
         </section>
       </div>
     </ShellLayout>

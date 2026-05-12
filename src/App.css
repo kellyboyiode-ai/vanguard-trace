@@ -225,6 +225,10 @@ h3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.form-block {
+  margin-top: 1rem;
+}
+
 @media (max-width: 900px) {
   .app-shell {
     padding: 20px;

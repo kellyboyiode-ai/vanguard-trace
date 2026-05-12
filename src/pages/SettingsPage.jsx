@@ -1,4 +1,4 @@
-import { SectionHeader } from '../components/index.js';
+import { FileUpload, SectionHeader } from '../components/index.js';
 import { ShellLayout } from '../layouts/index.js';
 
 export default function SettingsPage() {
@@ -28,6 +28,10 @@ export default function SettingsPage() {
               <span>Trace retention</span>
               <strong>30 days</strong>
             </div>
+          </div>
+
+          <div className="form-block">
+            <FileUpload />
           </div>
         </section>
       </div>

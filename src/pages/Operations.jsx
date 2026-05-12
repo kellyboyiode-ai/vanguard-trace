@@ -1,4 +1,5 @@
 import { ShellLayout } from '../layouts/index.js';
+import { FileUpload } from '../components/index.js';
 
 export default function Operations() {
   return (
@@ -28,6 +29,10 @@ export default function Operations() {
               <span>5 open</span>
             </li>
           </ul>
+
+          <div className="form-block">
+            <FileUpload />
+          </div>
         </section>
       </div>
     </ShellLayout>

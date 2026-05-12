@@ -64,12 +64,61 @@ create table if not exists public.saved_reports (
   unique(customer_id, report_id)
 );
 
+create table if not exists public.operations_events (
+  id uuid primary key default gen_random_uuid(),
+  customer_id uuid references public.customers(id) on delete cascade,
+  event_type text not null,
+  title text not null,
+  details text,
+  severity text not null default 'medium',
+  status text not null default 'open',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.intel_alerts (
+  id uuid primary key default gen_random_uuid(),
+  customer_id uuid references public.customers(id) on delete cascade,
+  corridor text not null,
+  risk_score integer not null default 0,
+  headline text not null,
+  advisory text,
+  status text not null default 'active',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.trace_events (
+  id uuid primary key default gen_random_uuid(),
+  customer_id uuid references public.customers(id) on delete cascade,
+  route_name text not null,
+  metric_name text not null,
+  metric_value numeric(12, 2) not null,
+  unit text not null default 'ms',
+  recorded_at timestamptz not null default now(),
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.customer_settings (
+  customer_id uuid primary key references public.customers(id) on delete cascade,
+  alert_threshold_ms integer not null default 2500,
+  weekly_digest_enabled boolean not null default true,
+  report_retention_days integer not null default 30,
+  preferred_corridor text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 alter table public.customers enable row level security;
 alter table public.shipments enable row level security;
 alter table public.reports enable row level security;
 alter table public.messages enable row level security;
 alter table public.uploads enable row level security;
 alter table public.saved_reports enable row level security;
+alter table public.operations_events enable row level security;
+alter table public.intel_alerts enable row level security;
+alter table public.trace_events enable row level security;
+alter table public.customer_settings enable row level security;
 
 create or replace function public.touch_updated_at()
 returns trigger
@@ -96,6 +145,24 @@ execute function public.touch_updated_at();
 drop trigger if exists touch_reports_updated_at on public.reports;
 create trigger touch_reports_updated_at
 before update on public.reports
+for each row
+execute function public.touch_updated_at();
+
+drop trigger if exists touch_operations_events_updated_at on public.operations_events;
+create trigger touch_operations_events_updated_at
+before update on public.operations_events
+for each row
+execute function public.touch_updated_at();
+
+drop trigger if exists touch_intel_alerts_updated_at on public.intel_alerts;
+create trigger touch_intel_alerts_updated_at
+before update on public.intel_alerts
+for each row
+execute function public.touch_updated_at();
+
+drop trigger if exists touch_customer_settings_updated_at on public.customer_settings;
+create trigger touch_customer_settings_updated_at
+before update on public.customer_settings
 for each row
 execute function public.touch_updated_at();
 
@@ -158,6 +225,64 @@ create policy "authenticated can create saved reports"
   on public.saved_reports for insert
   with check (auth.uid() = customer_id);
 
+drop policy if exists "authenticated can read operations events" on public.operations_events;
+create policy "authenticated can read operations events"
+  on public.operations_events for select
+  using (auth.uid() = customer_id);
+
+drop policy if exists "authenticated can create operations events" on public.operations_events;
+create policy "authenticated can create operations events"
+  on public.operations_events for insert
+  with check (auth.uid() = customer_id);
+
+drop policy if exists "authenticated can update operations events" on public.operations_events;
+create policy "authenticated can update operations events"
+  on public.operations_events for update
+  using (auth.uid() = customer_id)
+  with check (auth.uid() = customer_id);
+
+drop policy if exists "authenticated can read intel alerts" on public.intel_alerts;
+create policy "authenticated can read intel alerts"
+  on public.intel_alerts for select
+  using (auth.uid() = customer_id);
+
+drop policy if exists "authenticated can create intel alerts" on public.intel_alerts;
+create policy "authenticated can create intel alerts"
+  on public.intel_alerts for insert
+  with check (auth.uid() = customer_id);
+
+drop policy if exists "authenticated can update intel alerts" on public.intel_alerts;
+create policy "authenticated can update intel alerts"
+  on public.intel_alerts for update
+  using (auth.uid() = customer_id)
+  with check (auth.uid() = customer_id);
+
+drop policy if exists "authenticated can read trace events" on public.trace_events;
+create policy "authenticated can read trace events"
+  on public.trace_events for select
+  using (auth.uid() = customer_id);
+
+drop policy if exists "authenticated can create trace events" on public.trace_events;
+create policy "authenticated can create trace events"
+  on public.trace_events for insert
+  with check (auth.uid() = customer_id);
+
+drop policy if exists "authenticated can read customer settings" on public.customer_settings;
+create policy "authenticated can read customer settings"
+  on public.customer_settings for select
+  using (auth.uid() = customer_id);
+
+drop policy if exists "authenticated can create customer settings" on public.customer_settings;
+create policy "authenticated can create customer settings"
+  on public.customer_settings for insert
+  with check (auth.uid() = customer_id);
+
+drop policy if exists "authenticated can update customer settings" on public.customer_settings;
+create policy "authenticated can update customer settings"
+  on public.customer_settings for update
+  using (auth.uid() = customer_id)
+  with check (auth.uid() = customer_id);
+
 create index if not exists shipments_tracking_code_idx
   on public.shipments(tracking_code);
 
@@ -169,6 +294,15 @@ create index if not exists reports_status_idx
 
 create index if not exists messages_channel_idx
   on public.messages(channel);
+
+create index if not exists operations_events_customer_status_idx
+  on public.operations_events(customer_id, status);
+
+create index if not exists intel_alerts_customer_status_idx
+  on public.intel_alerts(customer_id, status);
+
+create index if not exists trace_events_customer_recorded_at_idx
+  on public.trace_events(customer_id, recorded_at desc);
 
 insert into public.shipments (tracking_code, status, location, eta)
 values
