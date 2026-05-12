@@ -39,6 +39,33 @@
   font-weight: 600;
 }
 
+.navbar-logout {
+  border-radius: 999px;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-ui);
+  border: 1px solid var(--border-strong);
+  background: var(--ink);
+  color: var(--text-on-ink, #f9fafc);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    opacity 160ms ease,
+    filter 160ms ease;
+}
+
+.navbar-logout:hover,
+.navbar-logout:focus-visible {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.navbar-logout:disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
+}
+
 /* Responsive adjustments */
 @media (max-width: 900px) {
   .navbar {
@@ -46,6 +73,11 @@
   }
 
   .navbar-link {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.85rem;
+  }
+
+  .navbar-logout {
     padding: 0.65rem 0.85rem;
     font-size: 0.85rem;
   }
@@ -57,6 +89,11 @@
   }
 
   .navbar-link {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .navbar-logout {
     padding: 0.6rem 0.75rem;
     font-size: 0.8rem;
   }

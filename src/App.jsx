@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import './styles/footer.css';
 import { AuthProvider } from './context/AuthContext.jsx';
 import {
+  About,
   Home,
   Intel,
   NotFoundPage,
@@ -78,6 +79,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Contact />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <ProtectedRoute>
+              <About />
             </ProtectedRoute>
           }
         />

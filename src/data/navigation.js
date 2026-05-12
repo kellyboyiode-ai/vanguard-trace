@@ -6,6 +6,7 @@ export const navigationLinks = [
   { to: '/services', label: 'Services' },
   { to: '/intel', label: 'Intel' },
   { to: '/contact', label: 'Contact' },
+  { to: '/about', label: 'About' },
   { to: '/traces', label: 'Traces' },
   { to: '/settings', label: 'Settings' },
 ];

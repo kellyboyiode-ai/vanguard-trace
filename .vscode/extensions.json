@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "supabase.vscode-supabase-extension",
-    "ms-edgedevtools.vscode-edge-devtools"
+    "ms-edgedevtools.vscode-edge-devtools",
+    "mtxr.sqltools"
   ]
 }
