@@ -125,6 +125,18 @@ Create production build:
 npm run build
 ```
 
+Deploy to Cloudflare Pages:
+
+```bash
+npm run deploy
+```
+
+Deploy a preview branch build:
+
+```bash
+npm run deploy:preview
+```
+
 Auto-commit local changes:
 
 ```bash
