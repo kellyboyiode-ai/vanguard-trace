@@ -54,7 +54,7 @@ The included `.github/workflows/cloudflare-deploy.yml` will automatically deploy
 
 Use Cloudflare Pages custom domains for `vanguardtrace.site` instead of adding a manual Workers route.
 
-1. Open **Workers & Pages** → **vanguard-trace** → **Custom domains**
+1. Open **Workers & Pages** → **vanguardtrace** → **Custom domains**
 2. Click **Set up a custom domain**
 3. Add `vanguardtrace.site`
 4. Add `www.vanguardtrace.site` if you want both hostnames live
