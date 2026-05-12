@@ -1,34 +1,9 @@
 # Cloudflare Pages configuration for VanguardTrace
-# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/
+# Docs: https://developers.cloudflare.com/pages/functions/wrangler-configuration/
 
 name = "vanguard-trace"
-type = "javascript"
-main = "src/index.jsx"
-
-[env.production]
-name = "vanguard-trace-prod"
-
-# Build configuration
-[build]
-command = "npm run build"
-cwd = "./"
-root = "."
-
-# Static files directory
-[build.upload]
-format = "service-worker"
-
-# Assets configuration
-[assets]
-binding = "ASSETS"
-directory = "dist"
-include = ["*.js", "*.css", "*.html", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.svg", "*.webp", "*.woff", "*.woff2", "*.ttf", "*.eot"]
-exclude = ["*.map"]
+pages_build_output_dir = "dist"
 
 # Compatibility settings
 compatibility_date = "2024-12-16"
 compatibility_flags = ["nodejs_compat"]
-
-# Triggers for deployment
-[triggers]
-crons = []
