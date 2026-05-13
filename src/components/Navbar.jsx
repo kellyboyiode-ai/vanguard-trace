@@ -245,7 +245,7 @@ export default function Navbar() {
   const activeMobileGroup =
     mobileMenuView === 'root'
       ? null
-      : desktopMenus.find((menu) => menu.id === mobileMenuView) ?? null;
+      : (desktopMenus.find((menu) => menu.id === mobileMenuView) ?? null);
 
   return (
     <nav className="navbar" aria-label="Primary navigation">
@@ -416,7 +416,7 @@ export default function Navbar() {
                   onClick={() => setMobileMenuView(menu.id)}
                 >
                   <span>{menu.label}</span>
-                  <span aria-hidden="true">></span>
+                  <span aria-hidden="true">{'>'}</span>
                 </button>
               ))}
             </div>
@@ -465,7 +465,7 @@ export default function Navbar() {
               className="navbar-drawer-back"
               onClick={() => setMobileMenuView('root')}
             >
-              <span aria-hidden="true"><</span>
+              <span aria-hidden="true">{'<'}</span>
               <span>Back</span>
             </button>
 

@@ -191,6 +191,7 @@ export default function Home() {
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [departureDate, setDepartureDate] = useState('');
+  const [departureAnchor] = useState(() => Date.now());
   const [region, setRegion] = useState(regions[0]);
   const [promoEmail, setPromoEmail] = useState('');
   const [openModal, setOpenModal] = useState(null);
@@ -219,7 +220,7 @@ export default function Home() {
     }
 
     const hoursUntilDeparture =
-      (departure.getTime() - Date.now()) / (1000 * 60 * 60);
+      (departure.getTime() - departureAnchor) / (1000 * 60 * 60);
 
     if (hoursUntilDeparture < 0) {
       return 'Selected departure date is in the past.';
@@ -230,7 +231,7 @@ export default function Home() {
     }
 
     return '';
-  }, [departureDate]);
+  }, [departureAnchor, departureDate]);
 
   function handleAcceptCookies() {
     localStorage.setItem('vt-cookie-ok', 'true');
