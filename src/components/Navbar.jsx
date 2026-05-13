@@ -624,32 +624,32 @@ export default function Navbar() {
               {!activeMobileSection &&
                 !activeMobileGroup?.sections?.length &&
                 (activeMobileGroup?.links ?? []).map((link) => {
-                if (isExternalLink(link.href)) {
+                  if (isExternalLink(link.href)) {
+                    return (
+                      <a
+                        key={`${activeMobileGroup?.id ?? 'mobile'}-${link.text}`}
+                        href={link.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        role="menuitem"
+                        onClick={handleMobileNavigate}
+                      >
+                        {link.text}
+                      </a>
+                    );
+                  }
+
                   return (
-                    <a
+                    <NavLink
                       key={`${activeMobileGroup?.id ?? 'mobile'}-${link.text}`}
-                      href={link.href}
-                      target="_blank"
-                      rel="noreferrer"
+                      to={link.href}
                       role="menuitem"
                       onClick={handleMobileNavigate}
                     >
                       {link.text}
-                    </a>
+                    </NavLink>
                   );
-                }
-
-                return (
-                  <NavLink
-                    key={`${activeMobileGroup?.id ?? 'mobile'}-${link.text}`}
-                    to={link.href}
-                    role="menuitem"
-                    onClick={handleMobileNavigate}
-                  >
-                    {link.text}
-                  </NavLink>
-                );
-              })}
+                })}
             </div>
           </div>
         )}

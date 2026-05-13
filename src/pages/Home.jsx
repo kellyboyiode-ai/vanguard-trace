@@ -259,7 +259,10 @@ export default function Home() {
       analytics: true,
       marketing: true,
     };
-    localStorage.setItem('vt-cookie-preferences', JSON.stringify(acceptedPrefs));
+    localStorage.setItem(
+      'vt-cookie-preferences',
+      JSON.stringify(acceptedPrefs),
+    );
     localStorage.setItem('vt-cookie-ok', 'true');
     setCookiePreferences(acceptedPrefs);
     setCookieAccepted(true);
@@ -271,7 +274,10 @@ export default function Home() {
       analytics: false,
       marketing: false,
     };
-    localStorage.setItem('vt-cookie-preferences', JSON.stringify(rejectedPrefs));
+    localStorage.setItem(
+      'vt-cookie-preferences',
+      JSON.stringify(rejectedPrefs),
+    );
     localStorage.setItem('vt-cookie-ok', 'true');
     setCookiePreferences(rejectedPrefs);
     setCookieAccepted(true);

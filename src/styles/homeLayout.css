@@ -52,6 +52,12 @@
   cursor: pointer;
 }
 
+.home-cookie-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .home-cookie-banner button:hover {
   background: #ffffff;
   color: #001871;
@@ -561,6 +567,56 @@
   border-radius: 0.6rem;
   border: 1px solid #d1d5db;
   padding: 0.55rem 0.65rem;
+}
+
+.home-quote-form select,
+.home-quote-form textarea {
+  min-height: 40px;
+  border-radius: 0.6rem;
+  border: 1px solid #d1d5db;
+  padding: 0.55rem 0.65rem;
+  font-family: inherit;
+}
+
+.home-quote-form textarea {
+  grid-column: 1 / -1;
+  resize: vertical;
+}
+
+.home-quote-check {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.84rem;
+  color: #111827;
+}
+
+.home-cookie-preferences {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.home-cookie-preferences label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #111827;
+}
+
+.home-cookie-preferences-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.home-cookie-preferences-actions button {
+  min-height: 40px;
+  border-radius: 0.6rem;
+  border: 1px solid #e03c31;
+  background: #e03c31;
+  color: #ffffff;
+  padding: 0.35rem 0.85rem;
+  cursor: pointer;
 }
 
 .home-quote-actions {
