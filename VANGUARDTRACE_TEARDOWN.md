@@ -1,87 +1,119 @@
-# VanguardTrace.site Technical Teardown
+# Vanguard Trace End-to-End Technical Teardown
 
-This is the Vanguard Trace equivalent of a full end-to-end project breakdown, based on the actual source repository and a quick verification against the live domain.
+This document is the repo-accurate, source-level equivalent of a full architecture and behavior teardown.
+
+It uses the same structured style as a deep mirrored-site analysis, but it is updated for the real Vanguard Trace codebase as it exists today.
 
 The key truth is:
 
-This is a modern React single-page application with optional live Supabase services and a Cloudflare Pages deployment target.
-It is not a static mirror, and it is not currently a full custom backend stack.
-The frontend is fully source-driven, with a real auth gate and a small set of implemented live workflows layered over a broader logistics intelligence dashboard shell.
+This is a modern React single-page application with a real source tree, a Cloudflare Pages deployment target, and an optional Supabase-backed live mode.
+The UI shell is fully implemented.
+Several workflows already talk to live backend services.
+Some surfaces are still dashboard-grade scaffolding or static product framing rather than complete operational modules.
 
 ## 1. Project Identity And Scope
 
-Repository root: `vanguard-trace`
-Deployment target: `vanguardtrace.site`
-App type: React SPA built with Vite
-Primary hosting model: Cloudflare Pages
-Primary data/auth/storage backend: Supabase
+Repository root:
 
-Quick repository composition, excluding generated/vendor folders such as `.git`, `node_modules`, and `dist`:
+- `vanguard-trace`
 
-- 84 tracked source/config files
-- 26 `.jsx` files
-- 24 `.js` files
-- 10 `.css` files
-- 7 `.json` files
-- 1 SQL schema
-- 1 GitHub Actions workflow
+Deployment identity:
 
-This repo is a real maintainable source project, not an archived deploy artifact.
+- Cloudflare Pages project: `vanguardtrace`
+- Live domain target: `vanguardtrace.site`
 
-## 2. What The Live Site Is Right Now
+Project type:
 
-A fetch of `https://vanguardtrace.site` matches the repo's public unauthenticated experience:
+- React 19 single-page application
+- Vite 8 frontend build
+- Cloudflare Pages static hosting target
+- Optional Supabase backend for auth, database, and storage
 
-- Users land on a `Sign In` screen when they are not authenticated
-- The footer and navigation labels match the current source tree
-- The app is client-rendered and route-driven rather than page-per-file HTML
+This is not a mirrored production snapshot.
+This is a source repository with components, services, routes, styling, schema, and deployment configuration.
 
-That means the repository and the live domain are aligned at a high level.
+## 2. Repository Information Architecture
+
+Top-level structure:
+
+- `public/`: static files copied as-is into build output
+- `scripts/`: repo automation utilities
+- `src/`: all frontend application code
+- `supabase/`: schema and local Supabase config
+
+Important top-level files:
+
+- `index.html`: Vite HTML shell
+- `package.json`: scripts and dependency contract
+- `vite.config.js`: Vite plugins and build config
+- `tailwind.config.js`: Tailwind content scan config
+- `wrangler.toml`: Cloudflare Pages config
+- `README.md`: setup and architecture overview
+- `VANGUARDTRACE_COMPLETE_GUIDE.md`: long-form system guide
+- `VANGUARDTRACE_TEARDOWN.md`: this repo-accurate technical teardown
+- `CLOUDFLARE_DEPLOYMENT.md`: deployment instructions
+
+Main source grouping under `src/`:
+
+- `components/`: reusable UI elements
+- `context/`: auth context and hooks
+- `data/`: static content and seeded UI content
+- `layouts/`: app shell layout
+- `pages/`: route surfaces
+- `services/`: Supabase-facing and feature service layer
+- `store/`: Zustand client state
+- `styles/`: page and component CSS
+- `animations/`: motion presets and page animation variants
+- `lib/`: infrastructure helpers such as Supabase client bootstrapping
 
 ## 3. Core Technology Stack
 
-Current frontend/runtime stack from `package.json`:
+Current runtime stack from `package.json`:
 
-- React `19.2.6`
-- React DOM `19.2.6`
-- React Router DOM `7.15.0`
-- Vite `8.0.12`
-- Tailwind CSS `4.3.0` via `@tailwindcss/vite`
-- Framer Motion `12.38.0`
-- Three `0.184.0`
-- `@react-three/fiber` `9.6.1`
-- Lucide React `1.14.0`
-- Supabase JS `2.105.4`
+- `react` `^19.2.6`
+- `react-dom` `^19.2.6`
+- `react-router-dom` `^7.15.0`
+- `@supabase/supabase-js` `^2.105.4`
+- `framer-motion` `^12.38.0`
+- `three` `^0.184.0`
+- `@react-three/fiber` `^9.6.1`
+- `lucide-react` `^1.14.0`
+- `react-hook-form` `^7.75.0`
+- `@hookform/resolvers` `^5.2.2`
+- `zod` `^4.4.3`
+- `recharts` `^3.8.1`
+- `zustand` `^5.0.13`
+- `tailwindcss` `^4.3.0`
+- `@tailwindcss/vite` `^4.3.0`
 
-Supporting tooling:
+Developer tooling:
 
-- ESLint `10`
-- Prettier `3.5.3`
-- Wrangler `4.90.0`
-- GitHub Actions CI/CD
+- `vite` `^8.0.12`
+- `@vitejs/plugin-react` `^6.0.1`
+- `eslint` `^10.3.0`
+- `prettier` `^3.5.3`
+- `wrangler` `^4.90.0`
 
-This is an updated frontend stack by current standards, not a legacy jQuery or server-rendered system.
+This is a current-generation frontend stack, not a legacy jQuery or server-rendered HTML system.
 
 ## 4. Runtime Architecture
 
-Entry path:
+Startup flow:
 
-- `src/main.jsx` mounts the app under `BrowserRouter`
-- `src/App.jsx` wraps all routes in `AuthProvider`
-- `ProtectedRoute` blocks protected pages until session state resolves
-- Unauthenticated access redirects to `/login`
+1. `index.html` provides the Vite mount shell.
+2. `src/main.jsx` mounts the React tree into `#root`.
+3. The app renders inside `BrowserRouter`.
+4. `src/App.jsx` wraps the route tree in `AuthProvider`.
+5. `AuthProvider` checks Supabase session state if Supabase is ready.
+6. Protected routes render only when a session exists.
+7. Unauthenticated users are redirected to `/login`.
 
-Auth ownership:
+Architectural consequence:
 
-- `src/context/AuthContext.jsx` subscribes to Supabase auth session changes
-- If Supabase is not ready, the provider exits early and the app never establishes a session
-- `ProtectedRoute` then sends the user to `/login`
+The repo documentation describes a frontend-only demo path, but the actual route tree is still centered on authenticated access for all major product pages.
+That means demo mode currently preserves service fallbacks, not anonymous product navigation.
 
-That creates an important operational behavior:
-
-The app is documented as supporting frontend-only demo mode, but the route tree is still auth-gated. In practice, full navigation depends on a valid Supabase auth session unless the auth strategy is expanded.
-
-## 5. Application Information Architecture
+## 5. Route And Page Information Architecture
 
 Actual route map from `src/App.jsx`:
 
@@ -99,80 +131,68 @@ Protected routes:
 - `/services`
 - `/intel`
 - `/contact`
+- `/about`
 - `/traces`
 - `/settings`
 
-Fallback:
+Fallback route:
 
-- `*` -> not-found page
+- `*` -> `NotFoundPage`
 
-Additional note:
+Navigation model:
 
-- `About.jsx` exists and is exported from `src/pages/index.js`, but is not currently wired into routing
+- Centralized in `src/data/navigation.js`
+- Rendered in `src/components/Navbar.jsx`
+- Shared shell provided by `src/layouts/ShellLayout.jsx`
 
-So the repo contains more page surfaces than the live route table currently exposes.
+This is a route-driven SPA with a consistent product shell rather than a page-per-file HTML site.
 
-## 6. Shared UI Shell
+## 6. Shared Shell, Layout, And Styling System
 
-The app uses a stable dashboard shell rather than page-specific layouts.
+Shared UI shell includes:
 
-Shared shell structure:
+- top bar with page title and eyebrow label
+- primary navigation links
+- logout action
+- hero-style content wrapper
+- global footer
 
-- `ShellLayout.jsx` renders the top bar, page eyebrow, title, and description
-- `Navbar.jsx` maps links from `src/data/navigation.js`
-- `Footer.jsx` renders a global footer with deep links and static legal anchors
+Styling architecture is mixed but intentional:
 
-Styling model:
+- Tailwind 4 is available and used heavily on auth surfaces
+- Dashboard and feature pages rely on custom CSS in `src/App.css` and `src/styles/*`
+- Global tokens and typography live in `src/index.css`
 
-- Tailwind is available and used heavily on auth pages
-- The dashboard pages also rely on a substantial custom CSS layer under `src/styles/`
-- Global design tokens live in `src/index.css`
-- Typography uses Google Fonts: Orbitron, JetBrains Mono, IBM Plex Mono
-- Visual direction is surveillance/logistics themed rather than generic SaaS
+Typography and visual direction:
 
-This is a mixed styling architecture: utility-first for some surfaces, custom authored CSS for the shell and feature panels.
+- `Orbitron` for display headings
+- `JetBrains Mono` and `IBM Plex Mono` for UI and console-like surfaces
+- warm neutral background with logistics-console accent colors
+- glass panels, gradients, and operational dashboard styling rather than generic SaaS defaults
 
-## 7. Visual And Motion Layer
+## 7. Visual, Motion, And Frontend Presentation Layer
 
-The main visual differentiator is the hero/intelligence presentation layer.
+Primary branded visual surface:
 
-Primary motion/visual components:
+- `src/components/VanguardHeroScene.jsx`
 
-- `VanguardHeroScene.jsx`
+Animation support:
+
+- `src/animations/motionPresets.js`
 - `src/animations/vanguardTraceMotion.js`
-- `src/data/vanguardTraceContent.js`
 
-What it does:
+Current behavior:
 
-- Uses Framer Motion for reveal, floating-node, and radar-sweep animations
-- Uses Lucide icons for logistics and monitoring symbology
-- Simulates a route-map / command-terminal / radar interface
-- Supplies brand framing such as `Secure Freight Intelligence`
+- Framer Motion powers reveal and UI motion
+- hero image and content tags come from `src/data/vanguardTraceContent.js`
+- operations-map style visuals are DOM/CSS driven
 
-Although `three` and `@react-three/fiber` are installed, the current hero implementation shown in source is still DOM/SVG/motion-driven rather than an actual WebGL scene. That means 3D capability is present in dependencies but not yet central to the implementation shown here.
+Important nuance:
 
-## 8. Data Model: Static Content vs Dynamic Services
+`three` and `@react-three/fiber` are installed, but the current hero implementation shown in source is not a live 3D canvas experience.
+The codebase has 3D-capable dependencies, but the shipped branded hero is still motion-driven UI rather than a deeply integrated WebGL scene.
 
-There are two distinct data paths in this app.
-
-Static content path:
-
-- Overview stats and feed items come from `src/data/dashboardData.js`
-- Navigation comes from `src/data/navigation.js`
-- Hero messaging and animated node coordinates come from `src/data/vanguardTraceContent.js`
-- Most non-form pages are currently content/config driven rather than API-driven
-
-Dynamic service path:
-
-- Tracking lookup and summary
-- Contact submission
-- Auth sign-in/sign-up/sign-out
-- Customer profile helpers
-- Reports, messages, uploads, admin snapshot helpers
-
-The repo is structured so static UI works as a branded product shell while live services can be enabled incrementally.
-
-## 9. Feature Breakdown By User Surface
+## 8. Functional Features (User-Facing)
 
 ### A. Authentication
 
@@ -184,14 +204,15 @@ Implemented in:
 
 Behavior:
 
-- Email/password sign-in through Supabase Auth
-- Email/password sign-up through Supabase Auth
-- Inline error feedback from Supabase responses
-- Signup confirmation message instructs users to verify email
+- email/password sign-in through Supabase Auth
+- email/password sign-up through Supabase Auth
+- inline error rendering from Supabase responses
+- success guidance after signup for email confirmation
 
-Failure mode:
+Operational reality:
 
-- If Supabase is not configured, auth service methods throw because auth is treated as required for login/signup
+- if Supabase auth is not configured, login and signup cannot function
+- auth is currently required for access to all primary product routes
 
 ### B. Overview Dashboard
 
@@ -201,11 +222,18 @@ Implemented in:
 
 Behavior:
 
-- Renders KPI cards from static data
-- Renders a trace event feed from static data
-- Provides CTA into `/tracking`
+- renders headline KPI cards
+- renders a live-events style feed
+- links the user into tracking flow
 
-This is currently a polished dashboard landing page, but not yet wired to live analytics.
+Data source:
+
+- static data from `src/data/dashboardData.js`
+
+Current state:
+
+- polished visual dashboard
+- not yet wired to live analytics or admin snapshot data
 
 ### C. Home Experience
 
@@ -216,17 +244,18 @@ Implemented in:
 
 Behavior:
 
-- Hero visualization
-- Static tracking input field
-- Service module cards
-- Simulated operations map
-- Static intelligence metrics and alert banner
+- animated hero section
+- static shipment tracking form UI
+- services module cards
+- simulated operations coverage map
+- static intelligence metrics
 
 Important nuance:
 
-The tracking form on Home is presentation-only right now. It prevents default submit and does not invoke the tracking service.
+- the tracking form on this page is presentation-only
+- it calls `event.preventDefault()` and does not invoke tracking lookup services
 
-### D. Shipment Tracking
+### D. Tracking
 
 Implemented in:
 
@@ -235,25 +264,28 @@ Implemented in:
 
 Behavior:
 
-- Summary counters load on mount through `getTrackingSummary()`
-- User can submit a tracking code through `getTrackingByCode()`
-- UI shows whether data came from `supabase` or `demo`
-- Displays error messages for empty or unknown codes
+- loads summary counters on mount
+- looks up shipment by tracking code
+- reports whether result came from `supabase` or `demo`
+- renders tracking result with code, status, location, and ETA
 
-Live backend behavior:
+Live behavior:
 
-- Reads from `shipments` table in Supabase
-- Falls back to hardcoded demo shipments when Supabase is unavailable or rows are missing
+- reads from `public.shipments` in Supabase
 
-Demo shipment examples included:
+Demo fallback:
+
+- uses built-in demo shipment rows when live data is unavailable
+
+Built-in sample tracking codes:
 
 - `VGX-44591`
 - `VGX-20391`
 - `VGX-44291`
 
-This is the strongest implemented operational workflow in the app today.
+This is one of the most complete live workflows in the app today.
 
-### E. Contact / Support Submission
+### E. Contact
 
 Implemented in:
 
@@ -262,50 +294,134 @@ Implemented in:
 
 Behavior:
 
-- Captures `name`, `email`, `subject`, `message`
-- Performs required-field validation in service layer
-- Submits to Supabase `messages` table when configured
-- Falls back to accepting locally in demo mode
-- Shows different success copy for live vs demo mode
+- captures `name`, `email`, `subject`, and `message`
+- validates required values in service layer
+- inserts message into Supabase when configured
+- falls back to demo/local acceptance when live backend is unavailable
+- changes success copy depending on source
 
-There is no CAPTCHA, email delivery pipeline, or external CRM integration in the current code.
+What is not present:
 
-### F. Operations, Services, Intel, Traces, Settings
+- captcha
+- email delivery pipeline
+- CRM integration
+- ticket routing or threaded support workflow
+
+### F. Operations
 
 Implemented in:
 
-- `Operations.jsx`
-- `Services.jsx`
-- `Intel.jsx`
-- `TracesPage.jsx`
-- `SettingsPage.jsx`
+- `src/pages/Operations.jsx`
+- `src/services/operationsService.js`
+- `src/store/uiStore.js`
 
-Behavior today:
+Behavior:
 
-- These pages are present, styled, and navigable
-- Their content is mostly static dashboard/panel data
-- They communicate intended product direction more than fully integrated business workflows
+- renders an operations queue
+- supports a critical-only filter using Zustand UI state
+- can load grouped queue items from `operations_events`
+- exposes a file upload control
 
-This is important architecturally:
+Operational reality:
 
-The app already has product surface area and information architecture for a much larger platform, but only selected flows currently persist or fetch real data.
+- queue data can be live
+- surrounding workflow is still dashboard-grade rather than full task orchestration
 
-## 10. Backend And Integration Surface
+### G. Intel
 
-Current backend integration is exclusively Supabase from the frontend.
+Implemented in:
 
-Observed live integration classes:
+- `src/pages/Intel.jsx`
+- `src/services/intelService.js`
 
-- Supabase Auth
-- Supabase Postgres tables
-- Supabase Storage
-- Supabase Row Level Security policies
+Behavior:
 
-No custom REST API server is present in the repository.
+- renders active alert board
+- calculates high-risk corridor count
+- charts weekly risk trend with Recharts
 
-No Cloudflare Worker API entrypoint is currently implemented.
+Live behavior:
 
-Service modules currently exposed in source:
+- reads from `intel_alerts`
+- derives alert severity from numeric `risk_score`
+
+Fallback behavior:
+
+- uses static seeded alerts and trend values
+
+### H. Services
+
+Implemented in:
+
+- `src/pages/Services.jsx`
+
+Behavior:
+
+- displays service health cards
+- shows p95 latency bar chart
+- renders an SLO snapshot list
+
+Operational reality:
+
+- this page is currently static and presentation-led
+- no live service health backend is wired in the current implementation
+
+### I. Traces
+
+Implemented in:
+
+- `src/pages/TracesPage.jsx`
+- `src/services/tracesService.js`
+
+Behavior:
+
+- displays route medians under watch
+- draws route median trends with Recharts
+- exposes file upload control
+
+Live behavior:
+
+- reads from `trace_events`
+- computes medians by route and time bucket in client-side service layer
+
+Fallback behavior:
+
+- uses local demo telemetry arrays
+
+### J. Settings
+
+Implemented in:
+
+- `src/pages/SettingsPage.jsx`
+- `src/services/settingsService.js`
+
+Behavior:
+
+- uses React Hook Form with Zod validation
+- loads user settings from `customer_settings`
+- saves alert threshold, retention period, preferred corridor, and digest flag
+- shows toast feedback on save
+
+Important nuance:
+
+- this page reads `userId` from Zustand auth store, while the main auth gate is driven by `AuthContext`
+- unless the auth store is hydrated elsewhere, settings can behave as if the user is unsigned even when route access is allowed
+
+This is a real integration gap in the current architecture.
+
+### K. About
+
+Implemented in:
+
+- `src/pages/About.jsx`
+
+Behavior:
+
+- static mission, product framing, and enterprise integration copy
+
+## 9. Service Layer And Data Flow
+
+Current service modules in `src/services/`:
 
 - `authService.js`
 - `trackingService.js`
@@ -315,14 +431,42 @@ Service modules currently exposed in source:
 - `messagesService.js`
 - `uploadsService.js`
 - `adminService.js`
+- `settingsService.js`
+- `intelService.js`
+- `operationsService.js`
+- `tracesService.js`
 
-Meaning:
+Observed integration pattern:
 
-This project uses frontend-to-Supabase integration directly, not frontend -> custom backend -> database.
+- page components call service functions
+- services talk directly to Supabase client
+- most services degrade to local/demo mode when Supabase is not ready
+- no custom API server exists between frontend and Supabase
 
-## 11. Supabase Data Contract
+This means the repo is using frontend-to-Supabase integration directly rather than frontend-to-custom-backend-to-database.
 
-The schema in `supabase/schema.sql` creates these tables:
+## 10. Backend And Integration Surface
+
+Current backend classes actually used by the app:
+
+- Supabase Auth
+- Supabase Postgres
+- Supabase Storage
+- Supabase Row Level Security
+
+What is not currently present in the repo:
+
+- custom REST API server
+- Express app
+- Next.js API routes
+- Cloudflare Worker API implementation
+- server-side job processor
+
+This is a frontend-first architecture with direct managed-backend integration.
+
+## 11. Supabase Schema And Data Contract
+
+The schema in `supabase/schema.sql` creates these core tables:
 
 - `customers`
 - `shipments`
@@ -330,134 +474,211 @@ The schema in `supabase/schema.sql` creates these tables:
 - `messages`
 - `uploads`
 - `saved_reports`
+- `operations_events`
+- `intel_alerts`
+- `trace_events`
+- `customer_settings`
 
-What is already enforced:
+It also includes:
 
-- `pgcrypto` extension for UUID support
-- `updated_at` trigger function for mutable tables
-- RLS enabled on all core tables
-- Policies for user-owned profile/report/upload access
-- Public insertion policy for contact-form messages
-- Demo shipment seed data for tracking lookups
+- `pgcrypto` extension enablement
+- `updated_at` touch triggers for mutable tables
+- RLS enablement on core tables
+- ownership and public-insert policies
+- indexes for tracking, status, and analytics-style queries
+- seed shipment rows for demo tracking lookups
 
-This is a credible baseline schema for the current UI, and it is ahead of the actual page integration level.
+Current schema posture is credible and aligned with the intended app surface.
+The data model is ahead of the actual UI coverage, which is a good sign for expansion.
 
-## 12. Deployment And Operations
+## 12. File Upload And Storage Reality
 
-Deployment model implemented in source:
+Upload UI:
 
-- Build tool: Vite
-- Host: Cloudflare Pages
-- CLI deploy: `wrangler pages deploy dist --project-name=vanguardtrace`
-- SPA rewrite config: `public/_routes.json`
-- CI: `.github/workflows/cloudflare-deploy.yml`
+- `src/components/FileUpload.jsx`
 
-GitHub Actions flow:
+Storage helper:
 
-- Trigger on push to `main` or `production`
-- Trigger on pull request to `main`
-- `npm ci`
-- `npm run lint`
+- `src/services/uploadsService.js`
+
+Behavior:
+
+- user selects a file
+- app uploads it directly to the configured Supabase Storage bucket
+- success or error state is shown inline
+
+Important nuance:
+
+- the current upload flow does not also insert upload metadata into the `uploads` SQL table
+- storage and relational upload history are therefore not yet fully integrated end-to-end
+
+## 13. State Management Model
+
+The app uses three state strategies:
+
+- React local state for most page interactions
+- React context for session access
+- Zustand for supplemental client state
+
+Zustand stores:
+
+- `authStore.js`
+- `shipmentStore.js`
+- `uiStore.js`
+
+Current architectural issue:
+
+- auth truth is split between `AuthContext` and `authStore`
+- route protection uses context
+- some page logic uses store state
+- this can create drift and inconsistent behavior
+
+If this project is being pushed toward a highly integrated production state, unifying auth ownership is one of the most important cleanup steps.
+
+## 14. Runtime Behavior: What Works Live vs What Is Still Shell-Level
+
+Already functional with real backend support:
+
+- sign in
+- sign up
+- sign out
+- tracking summary
+- tracking lookup
+- contact submission
+- operations queue reads
+- intel alert reads
+- trace analytics reads
+- settings load/save
+- direct file upload to Supabase Storage
+
+Present but mostly static or incomplete:
+
+- overview dashboard metrics
+- home page tracking form
+- services health data
+- admin dashboard exposure in UI
+- reports workflow in UI
+- messages inbox workflow in UI
+- customer profile management in UI
+- upload metadata/history view
+
+This is not a fake shell, but it is not yet a fully integrated logistics operations platform either.
+
+## 15. Dependency And Operational Details
+
+Current npm scripts:
+
+- `npm run dev`
 - `npm run build`
-- Validate Cloudflare credentials on push events
-- Deploy `dist` via Wrangler Pages
+- `npm run preview`
+- `npm run lint`
+- `npm run format`
+- `npm run format:check`
+- `npm run deploy`
+- `npm run deploy:preview`
+- `npm run auto-commit`
+- `npm run auto-commit:once`
 
-Important operational note:
-
-The workflow will fail before deploy if lint fails, even when the build itself would otherwise succeed.
-
-## 13. Environment And Mode Switching
-
-Supabase readiness is derived from:
+Environment variables for live mode:
 
 - `VITE_ENABLE_SUPABASE`
 - `VITE_SUPABASE_URL`
-- `VITE_SUPABASE_ANON_KEY` or `VITE_SUPABASE_PUBLISHABLE_KEY`
-- Optional `VITE_SUPABASE_STORAGE_BUCKET`
+- `VITE_SUPABASE_ANON_KEY`
+- `VITE_SUPABASE_PUBLISHABLE_KEY`
+- `VITE_SUPABASE_STORAGE_BUCKET`
 
-Behavior model from `src/lib/supabase.js`:
+Supabase readiness rules:
 
-- If no meaningful credentials are present, the client is not created
-- Placeholder strings such as `your_url` and `your_anon_key` are scrubbed out
-- Some services fall back to demo/local behavior
-- Auth does not currently have a demo fallback path
+- placeholder env values are stripped out
+- live mode activates when valid credentials are present
+- services fall back when client is unavailable
 
-This creates a partially live-capable architecture rather than a pure offline/demo architecture.
+## 16. Deployment Model
 
-## 14. What Is Fully Working vs Prepared vs Missing
+Current deployment target:
 
-### Clearly Working In Current Source
+- Cloudflare Pages
 
-- React SPA routing
-- Protected navigation model
-- Login/sign-up UI tied to Supabase auth
-- Tracking summary and per-code lookup with demo/live fallback
-- Contact form submission with validation and Supabase/local fallback
-- Cloudflare Pages build and deploy flow
-- Baseline Supabase schema and policies
+Key config files:
 
-### Prepared In Service Layer But Not Fully Surfaced In UI
+- `vite.config.js`
+- `wrangler.toml`
+- `public/_routes.json`
+- `public/_headers`
+- `.github/workflows/cloudflare-deploy.yml`
 
-- Customer profile reads/upserts
-- Report creation and listing
-- Message listing and direct send operations
-- File uploads to Supabase Storage
-- Admin dashboard aggregate snapshot
+Wrangler config currently specifies:
 
-### Not Yet Present As Full Product Workflows
+- project name `vanguardtrace`
+- build output `dist`
+- compatibility date `2024-12-16`
+- `nodejs_compat` flag
 
-- Real-time subscriptions
-- Webhooks/event ingestion
-- External carrier integrations
-- Search/filter-heavy operational tooling
-- Admin control panel UI
-- Report management UI
-- Upload/document center UI
-- Privacy and terms pages behind the footer anchors
-- A production-grade unauthenticated demo mode
+CI/CD posture:
 
-## 15. Known Constraints And Behavioral Gaps
+- local `npm run build` passes
+- local `npm run lint` passes
+- editor diagnostics currently flag GitHub Actions context access warnings around Cloudflare secret fallbacks, which is an operational cleanup item rather than an application build failure
 
-1. Auth is effectively mandatory for route access even though the repo messaging emphasizes demo mode.
-2. Home page tracking input is currently visual only and does not connect to the tracking workflow.
-3. Footer privacy/terms links are anchors, not routed legal pages.
-4. Several service-layer capabilities exist without corresponding page-level integration.
-5. Cloudflare deployment docs mention future Worker possibilities, but the actual implemented backend path is Supabase.
-6. The route shell is comprehensive, but much of the operational data is still static placeholder content.
+## 17. Performance And Complexity Characteristics
 
-## 16. Security And Data Handling Posture
+Observed build behavior:
 
-Positive signs in current repo:
+- production build succeeds
+- main JS bundle is large, roughly `1.09 MB` before gzip in the current build output
+- Vite warns that chunks exceed the default warning limit
 
-- Row Level Security is enabled across core tables
-- Public message submission is constrained by policy intent
-- The README explicitly warns against storing passwords or sensitive payment secrets
-- Service-role usage is kept out of the frontend
+Likely causes:
 
-Things to keep in mind:
+- route tree ships largely as one application bundle
+- charting, motion, iconography, and 3D-capable dependencies are bundled together
 
-- Public contact insertion is intentionally open and should eventually add abuse controls
-- Frontend-only auth flows depend on correct Supabase project configuration
-- Storage policies beyond app-side upload helpers are not defined in this repo and must be managed in Supabase
+Implication:
 
-## 17. Architectural Summary In One Shot
+- app is healthy enough to build and deploy now
+- route-level code splitting is one of the clearest next technical optimizations
 
-VanguardTrace.site is a modern React 19 logistics intelligence SPA deployed to Cloudflare Pages and backed directly by Supabase for authentication, persistence, and storage.
+## 18. Security And Operational Risk Notes
 
-The codebase is already structured like a product platform: protected route shell, branded monitoring UI, service abstractions, deploy automation, and a baseline database schema with RLS. But the implementation depth is uneven by design. Tracking, contact, and auth are the main integrated flows today; the rest of the app establishes the platform surface area and service contracts for future expansion.
+Current positives:
 
-In short:
+- Supabase keys are expected via env vars rather than hardcoded in source
+- RLS is enabled in schema
+- contact form allows limited public insert behavior instead of broad table access
 
-- This is a real source repo, not a mirrored website snapshot
-- The frontend architecture is current and maintainable
-- The backend model is integrated through Supabase, not a custom API server
-- The deployment path is Cloudflare Pages with GitHub Actions automation
-- The project is already highly structured, but still mid-transition from branded product shell to fully integrated logistics platform
+Current cautions:
 
-## 18. If You Want The Next Layer
+- auth requirement and demo-mode messaging are not fully aligned
+- split auth ownership can create subtle permission UX issues
+- storage uploads are not fully reconciled to upload metadata table
+- footer contains placeholder privacy/terms anchors rather than real policy routes
 
-Natural follow-up deliverables from this repo would be:
+## 19. Architectural Summary In One Shot
 
-1. A route-by-route functionality matrix with exact data sources, auth requirements, and live/demo behavior
-2. A service-by-service integration map showing which UI surfaces consume each Supabase table and which are still unused
-3. A gap-closure plan that preserves the current architecture and only adds the missing integrations needed to make the whole platform feel complete
+This project is:
+
+- a real source-based React + Vite application
+- visually positioned as a logistics intelligence and freight tracking platform
+- deployed to Cloudflare Pages
+- optionally backed by Supabase for auth, data, and storage
+- partially integrated today, with several real workflows already live-capable
+- still evolving from branded operational dashboard into a more complete product system
+
+The best exact description is:
+
+Vanguard Trace is not a static mirror, not a legacy site, and not just a landing page.
+It is a modern frontend platform with a real service layer, real auth/data integration points, and a solid deployment model, but it still contains several dashboard-grade surfaces and a few architectural gaps that need to be closed to make it fully integrated end-to-end.
+
+## 20. Best Next Upgrade Path
+
+If the goal is the best, updated, and highly integrated version of this project, the highest-value next steps are:
+
+1. Unify auth ownership so both route protection and page persistence use the same source of truth.
+2. Make demo mode and route access consistent so frontend-only previews do not dead-end at auth.
+3. Replace static Overview and Services metrics with live service-backed aggregations.
+4. Connect uploads to both Storage and the `uploads` metadata table.
+5. Surface reports, messages, customers, and admin snapshot helpers in real UI routes.
+6. Introduce route-level code splitting to reduce the large initial JS bundle.
+7. Replace footer placeholder links with real content routes or policies.
+
+That path would move Vanguard Trace from a strong product shell with selected live workflows into a cohesive, production-grade integrated platform.

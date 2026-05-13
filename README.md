@@ -43,6 +43,14 @@ This project now includes a non-breaking Supabase integration foundation.
 
 Tracking and Contact pages are already wired to use these services while preserving demo behavior.
 
+## Project Guides
+
+For deeper project-level documentation, use:
+
+- `VANGUARDTRACE_TEARDOWN.md`: structured end-to-end architecture, runtime, feature, and operational teardown
+- `VANGUARDTRACE_COMPLETE_GUIDE.md`: fuller reference guide for routes, services, environment, and deployment shape
+- `CLOUDFLARE_DEPLOYMENT.md`: deployment-specific Cloudflare Pages instructions
+
 ## Supabase Setup
 
 ### 1) Create a Supabase project
