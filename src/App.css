@@ -4,6 +4,13 @@
   box-sizing: border-box;
 }
 
+.shell-gtm-noscript {
+  display: none;
+  width: 0;
+  height: 0;
+  border: 0;
+}
+
 .route-fallback {
   min-height: 100svh;
   display: grid;

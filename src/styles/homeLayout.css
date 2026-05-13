@@ -200,6 +200,11 @@
   padding: 0.55rem 0.7rem;
 }
 
+.home-inline-form input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .home-inline-form button {
   min-width: 42px;
   min-height: 40px;
@@ -564,6 +569,14 @@
   margin: 0;
 }
 
+.home-promo-iframe {
+  width: 100%;
+  min-height: 420px;
+  border: 1px solid #d1d5db;
+  border-radius: 0.7rem;
+  background: #ffffff;
+}
+
 .home-modal header button {
   border: 0;
   border-radius: 999px;
@@ -712,13 +725,15 @@
   }
 
   .home-toolbar-card .home-toolbar-grid,
-  .home-toolbar-card .home-inline-form {
+  .home-toolbar-card .home-inline-form,
+  .home-toolbar-card .home-toolbar-links {
     display: none;
     margin-top: 0.6rem;
   }
 
   .home-toolbar-card.home-toolbar-card-open .home-toolbar-grid,
-  .home-toolbar-card.home-toolbar-card-open .home-inline-form {
+  .home-toolbar-card.home-toolbar-card-open .home-inline-form,
+  .home-toolbar-card.home-toolbar-card-open .home-toolbar-links {
     display: grid;
   }
 
