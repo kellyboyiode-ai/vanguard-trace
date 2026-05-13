@@ -49,6 +49,38 @@ export default function About() {
             Vanguard Trace integrates with customs authorities, port operators, carrier networks, and regulatory bodies. Our API-first architecture enables seamless integration with existing logistics management systems and enterprise workflows.
           </p>
         </section>
+
+        <section id="leadership" className="panel">
+          <div className="panel-header">
+            <h2>Leadership team</h2>
+          </div>
+          <p>Our leadership team brings decades of experience across global logistics, supply chain security, and enterprise technology.</p>
+        </section>
+
+        <section id="history" className="panel">
+          <div className="panel-header">
+            <h2>History</h2>
+          </div>
+          <p>Founded to address the growing complexity and risk in global freight, Vanguard Trace has grown from a specialist monitoring service into a full-spectrum supply chain intelligence platform.</p>
+        </section>
+
+        <section id="values" className="panel">
+          <div className="panel-header">
+            <h2>Our values</h2>
+          </div>
+          <ul className="route-list">
+            <li><span>Transparency</span><span>Honest, real-time reporting for every shipment</span></li>
+            <li><span>Security</span><span>Zero-compromise approach to data and cargo protection</span></li>
+            <li><span>Resilience</span><span>Built to perform under disruption and uncertainty</span></li>
+          </ul>
+        </section>
+
+        <section id="careers" className="panel">
+          <div className="panel-header">
+            <h2>Careers</h2>
+          </div>
+          <p>We are building the future of freight intelligence. If you are passionate about logistics, security, or data engineering, we want to hear from you.</p>
+        </section>
       </div>
     </ShellLayout>
   );
