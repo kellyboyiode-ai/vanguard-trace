@@ -339,6 +339,13 @@ export default function Home() {
   const [quickTrack, setQuickTrack] = useState('');
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
+  const [originCode, setOriginCode] = useState('');
+  const [destinationCode, setDestinationCode] = useState('');
+  const [originOptions, setOriginOptions] = useState([]);
+  const [destinationOptions, setDestinationOptions] = useState([]);
+  const [sailingLookupError, setSailingLookupError] = useState('');
+  const originLookupTimer = useRef(null);
+  const destinationLookupTimer = useRef(null);
   const [departureDate, setDepartureDate] = useState('');
   const [departureAnchor] = useState(() => Date.now());
   const [region, setRegion] = useState(regions[0]);
@@ -383,6 +390,28 @@ export default function Home() {
     return '';
   }, [departureAnchor, departureDate]);
 
+  const minDepartureDate = useMemo(
+    () => new Date().toISOString().slice(0, 10),
+    [],
+  );
+
+  const selectedOriginLabel = useMemo(() => {
+    return (
+      originOptions.find(
+        (item) => item.label.toLowerCase() === origin.trim().toLowerCase(),
+      )?.label || ''
+    );
+  }, [origin, originOptions]);
+
+  const selectedDestinationLabel = useMemo(() => {
+    return (
+      destinationOptions.find(
+        (item) =>
+          item.label.toLowerCase() === destination.trim().toLowerCase(),
+      )?.label || ''
+    );
+  }, [destination, destinationOptions]);
+
   function handleAcceptCookies() {
     const acceptedPrefs = {
       necessary: true,
@@ -426,15 +455,28 @@ export default function Home() {
   function handleServiceSearch(event) {
     event.preventDefault();
 
-    if (!origin.trim() || !destination.trim() || !departureDate) {
+    if (!originCode || !destinationCode || !departureDate) {
       toast.error(
-        'Add origin, destination, and departure date to search sailing routes.',
+        'Select a valid origin, destination, and departure date to search sailing routes.',
       );
       return;
     }
 
+    if (departureDate < minDepartureDate) {
+      toast.error('Departure date must be today or later.');
+      return;
+    }
+
+    const target = new URL(
+      'https://portal.vanguardlogistics.com/apps/sailing-schedule/',
+    );
+    target.searchParams.set('origin', originCode);
+    target.searchParams.set('destination', destinationCode);
+    target.searchParams.set('departureDate', departureDate);
+    window.open(target.toString(), '_blank', 'noopener,noreferrer');
+
     toast.success(
-      `Searching route: ${origin.toUpperCase()} -> ${destination.toUpperCase()} on ${departureDate}`,
+      `Searching route: ${originCode.toUpperCase()} -> ${destinationCode.toUpperCase()} on ${departureDate}`,
     );
   }
 
@@ -480,6 +522,7 @@ export default function Home() {
       targetDate: form.get('targetDate'),
       name: form.get('name'),
       city: form.get('city'),
+      country: form.get('country'),
       email: form.get('email'),
       phone: form.get('phone'),
       company: form.get('company'),
@@ -516,6 +559,84 @@ export default function Home() {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, []);
 
+  useEffect(() => {
+    if (originLookupTimer.current) {
+      clearTimeout(originLookupTimer.current);
+    }
+
+    if (origin.trim().length < 2) {
+      setOriginOptions([]);
+      setOriginCode('');
+      setDestination('');
+      setDestinationCode('');
+      setDestinationOptions([]);
+      setSailingLookupError('');
+      return;
+    }
+
+    originLookupTimer.current = setTimeout(async () => {
+      try {
+        const items = await fetchSailingOrigins(origin);
+        setOriginOptions(items);
+        setSailingLookupError('');
+      } catch {
+        setOriginOptions(
+          locationSuggestions.map((item) => ({
+            code: item,
+            label: item,
+            value: item,
+          })),
+        );
+        setSailingLookupError(
+          'Live origin lookup unavailable. Showing fallback suggestions.',
+        );
+      }
+    }, 280);
+
+    return () => {
+      if (originLookupTimer.current) {
+        clearTimeout(originLookupTimer.current);
+      }
+    };
+  }, [origin]);
+
+  useEffect(() => {
+    if (destinationLookupTimer.current) {
+      clearTimeout(destinationLookupTimer.current);
+    }
+
+    if (!originCode || destination.trim().length < 2) {
+      setDestinationOptions([]);
+      setDestinationCode('');
+      return;
+    }
+
+    destinationLookupTimer.current = setTimeout(async () => {
+      try {
+        const items = await fetchSailingDestinations(destination, originCode);
+        setDestinationOptions(items);
+        setSailingLookupError('');
+      } catch {
+        setDestinationOptions(
+          locationSuggestions.map((item) => ({
+            code: item,
+            label: item,
+            value: item,
+          })),
+        );
+        setSailingLookupError(
+          'Live destination lookup unavailable. Showing fallback suggestions.',
+        );
+      }
+    }, 280);
+
+    return () => {
+      if (destinationLookupTimer.current) {
+        clearTimeout(destinationLookupTimer.current);
+      }
+    };
+  }, [destination, originCode]);
+
   return (
     <ShellLayout
       eyebrow={vanguardTraceHero.eyebrow}
@@ -536,7 +657,7 @@ export default function Home() {
           </div>
           <div className="home-cookie-actions">
             <button type="button" onClick={handleAcceptCookies}>
-              Accept All
+              Got It
             </button>
             <button type="button" onClick={handleRejectNonEssentialCookies}>
               Reject Optional
@@ -638,26 +759,68 @@ export default function Home() {
                 type="text"
                 placeholder="Origin"
                 value={origin}
-                onChange={(event) => setOrigin(event.target.value)}
+                onChange={(event) => {
+                  setOrigin(event.target.value);
+                  setOriginCode('');
+                }}
+                onBlur={() => {
+                  const matchedOrigin = originOptions.find(
+                    (item) =>
+                      item.label.toLowerCase() === origin.trim().toLowerCase(),
+                  );
+
+                  if (!matchedOrigin) {
+                    return;
+                  }
+
+                  setOrigin(matchedOrigin.label);
+                  setOriginCode(matchedOrigin.code || matchedOrigin.value);
+                  setDestination('');
+                  setDestinationCode('');
+                  setDestinationOptions([]);
+                }}
                 aria-label="Service origin"
                 list="home-origin-options"
               />
               <datalist id="home-origin-options">
-                {locationSuggestions.map((item) => (
-                  <option key={`origin-${item}`} value={item} />
+                {originOptions.map((item) => (
+                  <option key={`origin-${item.code}`} value={item.label} />
                 ))}
               </datalist>
               <input
                 type="text"
                 placeholder="Destination"
                 value={destination}
-                onChange={(event) => setDestination(event.target.value)}
+                onChange={(event) => {
+                  setDestination(event.target.value);
+                  setDestinationCode('');
+                }}
+                onBlur={() => {
+                  const matchedDestination = destinationOptions.find(
+                    (item) =>
+                      item.label.toLowerCase() ===
+                      destination.trim().toLowerCase(),
+                  );
+
+                  if (!matchedDestination) {
+                    return;
+                  }
+
+                  setDestination(matchedDestination.label);
+                  setDestinationCode(
+                    matchedDestination.code || matchedDestination.value,
+                  );
+                }}
                 aria-label="Service destination"
                 list="home-destination-options"
+                disabled={!originCode}
               />
               <datalist id="home-destination-options">
-                {locationSuggestions.map((item) => (
-                  <option key={`destination-${item}`} value={item} />
+                {destinationOptions.map((item) => (
+                  <option
+                    key={`destination-${item.code}`}
+                    value={item.label}
+                  />
                 ))}
               </datalist>
               <input
@@ -665,11 +828,27 @@ export default function Home() {
                 value={departureDate}
                 onChange={(event) => setDepartureDate(event.target.value)}
                 aria-label="Departure date"
+                min={minDepartureDate}
               />
               <button type="submit">
                 <Search size={16} />
               </button>
             </form>
+            {sailingLookupError && (
+              <p className="home-inline-warning" role="status">
+                {sailingLookupError}
+              </p>
+            )}
+            {origin.trim() && !selectedOriginLabel && (
+              <p className="home-inline-warning" role="status">
+                Choose an origin from the suggestion list.
+              </p>
+            )}
+            {originCode && destination.trim() && !selectedDestinationLabel && (
+              <p className="home-inline-warning" role="status">
+                Choose a destination from the suggestion list.
+              </p>
+            )}
             {departureWarning && (
               <p className="home-inline-warning" role="status">
                 {departureWarning}
@@ -925,10 +1104,12 @@ export default function Home() {
                 X
               </button>
             </header>
-            <p>
-              Thank you. We have added {promoEmail || 'your email'} to promotion
-              updates.
-            </p>
+            <iframe
+              title="Promotions signup"
+              src={`${promoIframeUrl}?email=${encodeURIComponent(promoEmail)}`}
+              loading="lazy"
+              className="home-promo-iframe"
+            />
           </article>
         </div>
       )}
@@ -1037,6 +1218,8 @@ function QuoteModal({
   onClose,
   onSubmit,
 }) {
+  const minTargetDate = useMemo(() => new Date().toISOString().slice(0, 10), []);
+
   return (
     <div className="home-modal-backdrop" role="presentation" onClick={onClose}>
       <article
@@ -1059,9 +1242,19 @@ function QuoteModal({
             placeholder="Destination"
             required
           />
-          <input name="targetDate" type="date" required />
+          <input name="targetDate" type="date" min={minTargetDate} required />
           <input name="name" type="text" placeholder="Name" required />
           <input name="city" type="text" placeholder="City" required />
+          <select name="country" required defaultValue="">
+            <option value="" disabled>
+              Country
+            </option>
+            {countryOptions.map((country) => (
+              <option key={country} value={country}>
+                {country}
+              </option>
+            ))}
+          </select>
           <input name="email" type="email" placeholder="Email" required />
           <input name="phone" type="tel" placeholder="Phone" required />
           <input name="company" type="text" placeholder="Company" />

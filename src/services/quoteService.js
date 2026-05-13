@@ -11,6 +11,7 @@ function validateQuotePayload(payload) {
   const targetDate = clean(payload.targetDate);
   const name = clean(payload.name);
   const city = clean(payload.city);
+  const country = clean(payload.country);
   const email = clean(payload.email);
   const phone = clean(payload.phone);
   const company = clean(payload.company);
@@ -29,6 +30,7 @@ function validateQuotePayload(payload) {
     !targetDate ||
     !name ||
     !city ||
+    !country ||
     !email ||
     !phone ||
     !commodity ||
@@ -75,6 +77,7 @@ function validateQuotePayload(payload) {
       targetDate,
       name,
       city,
+      country,
       email,
       phone,
       company,
@@ -141,7 +144,9 @@ export async function submitQuoteRequest(payload) {
       company: validation.data.company || null,
       commodity: validation.data.commodity,
       incoterm: validation.data.incoterm,
-      notes: validation.data.notes || null,
+      notes: validation.data.notes
+        ? `Country: ${validation.data.country}\n${validation.data.notes}`
+        : `Country: ${validation.data.country}`,
       terms_accepted: validation.data.termsAccepted,
       captcha_provider: validation.data.recaptchaEnabled
         ? 'google_recaptcha'
