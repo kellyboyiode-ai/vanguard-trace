@@ -16,6 +16,7 @@ import {
 import { VanguardHeroScene } from '../components/index.js';
 import { vanguardTraceHero } from '../data/index.js';
 import { ShellLayout } from '../layouts/index.js';
+import { submitQuoteRequest } from '../services/quoteService.js';
 import '../styles/homeLayout.css';
 import '../styles/vanguardTraceHero.css';
 
@@ -181,9 +182,28 @@ const locationSuggestions = [
 ];
 
 export default function Home() {
-  const [cookieAccepted, setCookieAccepted] = useState(
-    () => localStorage.getItem('vt-cookie-ok') === 'true',
-  );
+  const [cookieAccepted, setCookieAccepted] = useState(() => {
+    const stored = localStorage.getItem('vt-cookie-ok');
+    return stored === 'true';
+  });
+  const [cookiePreferencesOpen, setCookiePreferencesOpen] = useState(false);
+  const [cookiePreferences, setCookiePreferences] = useState(() => {
+    const stored = localStorage.getItem('vt-cookie-preferences');
+    if (!stored) {
+      return { necessary: true, analytics: false, marketing: false };
+    }
+
+    try {
+      const parsed = JSON.parse(stored);
+      return {
+        necessary: true,
+        analytics: Boolean(parsed.analytics),
+        marketing: Boolean(parsed.marketing),
+      };
+    } catch {
+      return { necessary: true, analytics: false, marketing: false };
+    }
+  });
   const [heroPlaying, setHeroPlaying] = useState(true);
   const [activeTab, setActiveTab] = useState('quotation');
   const [activeTool, setActiveTool] = useState('Vanguard ADESSO');
@@ -234,8 +254,37 @@ export default function Home() {
   }, [departureAnchor, departureDate]);
 
   function handleAcceptCookies() {
+    const acceptedPrefs = {
+      necessary: true,
+      analytics: true,
+      marketing: true,
+    };
+    localStorage.setItem('vt-cookie-preferences', JSON.stringify(acceptedPrefs));
+    localStorage.setItem('vt-cookie-ok', 'true');
+    setCookiePreferences(acceptedPrefs);
+    setCookieAccepted(true);
+  }
+
+  function handleRejectNonEssentialCookies() {
+    const rejectedPrefs = {
+      necessary: true,
+      analytics: false,
+      marketing: false,
+    };
+    localStorage.setItem('vt-cookie-preferences', JSON.stringify(rejectedPrefs));
+    localStorage.setItem('vt-cookie-ok', 'true');
+    setCookiePreferences(rejectedPrefs);
+    setCookieAccepted(true);
+  }
+
+  function handleSaveCookiePreferences() {
+    localStorage.setItem(
+      'vt-cookie-preferences',
+      JSON.stringify(cookiePreferences),
+    );
     localStorage.setItem('vt-cookie-ok', 'true');
     setCookieAccepted(true);
+    setCookiePreferencesOpen(false);
   }
 
   function handleServiceSearch(event) {
@@ -285,19 +334,34 @@ export default function Home() {
     setOpenModal('promo');
   }
 
-  function handleQuoteSubmit(event, quoteType) {
+  async function handleQuoteSubmit(event, quoteType) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const originValue = `${form.get('origin') ?? ''}`.trim();
-    const destinationValue = `${form.get('destination') ?? ''}`.trim();
-    const emailValue = `${form.get('email') ?? ''}`.trim();
+    const result = await submitQuoteRequest({
+      quoteType,
+      origin: form.get('origin'),
+      destination: form.get('destination'),
+      targetDate: form.get('targetDate'),
+      name: form.get('name'),
+      city: form.get('city'),
+      email: form.get('email'),
+      phone: form.get('phone'),
+      company: form.get('company'),
+      commodity: form.get('commodity'),
+      incoterm: form.get('incoterm'),
+      notes: form.get('notes'),
+      termsAccepted: form.get('termsAccepted') === 'on',
+      captchaAccepted: form.get('captchaAccepted') === 'on',
+    });
 
-    if (!originValue || !destinationValue || !emailValue) {
-      toast.error('Complete required fields before submitting quote request.');
+    if (!result.accepted) {
+      toast.error(result.error || 'Quote request failed. Please retry.');
       return;
     }
 
-    toast.success(`${quoteType} quote request submitted successfully.`);
+    toast.success(
+      `${quoteType} quote request submitted (${result.source === 'supabase' ? 'live' : 'local'} mode).`,
+    );
     event.currentTarget.reset();
     setOpenModal(null);
   }
@@ -331,9 +395,20 @@ export default function Home() {
               We use cookies to enhance your experience and analyze site usage.
             </p>
           </div>
-          <button type="button" onClick={handleAcceptCookies}>
-            Got it
-          </button>
+          <div className="home-cookie-actions">
+            <button type="button" onClick={handleAcceptCookies}>
+              Accept All
+            </button>
+            <button type="button" onClick={handleRejectNonEssentialCookies}>
+              Reject Optional
+            </button>
+            <button
+              type="button"
+              onClick={() => setCookiePreferencesOpen(true)}
+            >
+              Manage Preferences
+            </button>
+          </div>
         </section>
       )}
 
@@ -703,6 +778,7 @@ export default function Home() {
       {openModal === 'air' && (
         <QuoteModal
           title="Airfreight Quoting Tool"
+          quoteType="AIR"
           onClose={() => setOpenModal(null)}
           onSubmit={(event) => handleQuoteSubmit(event, 'AIR')}
         />
@@ -711,15 +787,78 @@ export default function Home() {
       {openModal === 'fcl' && (
         <QuoteModal
           title="Request an FCL Quote"
+          quoteType="FCL"
           onClose={() => setOpenModal(null)}
           onSubmit={(event) => handleQuoteSubmit(event, 'FCL')}
         />
+      )}
+
+      {cookiePreferencesOpen && (
+        <div
+          className="home-modal-backdrop"
+          role="presentation"
+          onClick={() => setCookiePreferencesOpen(false)}
+        >
+          <article
+            className="home-modal"
+            role="dialog"
+            aria-label="Cookie Preferences"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <header>
+              <h3>Cookie Preferences</h3>
+              <button
+                type="button"
+                onClick={() => setCookiePreferencesOpen(false)}
+              >
+                X
+              </button>
+            </header>
+            <div className="home-cookie-preferences">
+              <label>
+                <input type="checkbox" checked disabled />
+                <span>Necessary Cookies (always active)</span>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={cookiePreferences.analytics}
+                  onChange={(event) =>
+                    setCookiePreferences((current) => ({
+                      ...current,
+                      analytics: event.target.checked,
+                    }))
+                  }
+                />
+                <span>Performance and Analytics Cookies</span>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={cookiePreferences.marketing}
+                  onChange={(event) =>
+                    setCookiePreferences((current) => ({
+                      ...current,
+                      marketing: event.target.checked,
+                    }))
+                  }
+                />
+                <span>Marketing Cookies</span>
+              </label>
+            </div>
+            <div className="home-cookie-preferences-actions">
+              <button type="button" onClick={handleSaveCookiePreferences}>
+                Save Preferences
+              </button>
+            </div>
+          </article>
+        </div>
       )}
     </ShellLayout>
   );
 }
 
-function QuoteModal({ title, onClose, onSubmit }) {
+function QuoteModal({ title, quoteType, onClose, onSubmit }) {
   return (
     <div className="home-modal-backdrop" role="presentation" onClick={onClose}>
       <article
@@ -748,6 +887,37 @@ function QuoteModal({ title, onClose, onSubmit }) {
           <input name="email" type="email" placeholder="Email" required />
           <input name="phone" type="tel" placeholder="Phone" required />
           <input name="company" type="text" placeholder="Company" />
+          <select name="commodity" required defaultValue="">
+            <option value="" disabled>
+              Commodity Type
+            </option>
+            <option value="general">General Cargo</option>
+            <option value="hazmat">Hazmat</option>
+            <option value="perishable">Perishable</option>
+            <option value="oversized">Oversized</option>
+          </select>
+          <select name="incoterm" required defaultValue="">
+            <option value="" disabled>
+              Incoterm
+            </option>
+            <option value="EXW">EXW</option>
+            <option value="FOB">FOB</option>
+            <option value="CIF">CIF</option>
+            <option value="DAP">DAP</option>
+          </select>
+          <textarea
+            name="notes"
+            rows={3}
+            placeholder={`${quoteType} quote notes and additional requirements`}
+          />
+          <label className="home-quote-check">
+            <input name="termsAccepted" type="checkbox" required />
+            <span>I accept terms and conditions for quote submission.</span>
+          </label>
+          <label className="home-quote-check">
+            <input name="captchaAccepted" type="checkbox" required />
+            <span>I am not a robot (verification check).</span>
+          </label>
           <div className="home-quote-actions">
             <button type="submit">Submit</button>
             <button type="button" onClick={onClose}>

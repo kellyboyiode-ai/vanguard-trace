@@ -18,3 +18,4 @@ export { getSettings, upsertSettings } from './settingsService.js';
 export { getIntelAlerts, getIntelRiskTrend } from './intelService.js';
 export { getOperationsQueue } from './operationsService.js';
 export { getTraceTimeline, getRouteMedians } from './tracesService.js';
+export { submitQuoteRequest } from './quoteService.js';

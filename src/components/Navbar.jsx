@@ -8,6 +8,36 @@ const desktopMenus = [
   {
     id: 'services',
     label: 'Services',
+    sections: [
+      {
+        id: 'service-types',
+        label: 'Service Types',
+        links: [
+          { href: '/services', text: 'Airfreight' },
+          { href: '/services', text: 'FCL Ocean Freight' },
+          { href: '/services', text: 'LCL Consolidation' },
+          { href: '/services', text: 'CFS and Warehouse' },
+        ],
+      },
+      {
+        id: 'digital-tools',
+        label: 'Digital Tools',
+        links: [
+          {
+            href: 'https://portal.vanguardlogistics.com/apps/ui/#/adesso',
+            text: 'Vanguard ADESSO',
+          },
+          {
+            href: 'https://portal.vanguardlogistics.com/apps/sailing-schedule/',
+            text: 'Sailing Schedule',
+          },
+          {
+            href: 'https://portal.vanguardlogistics.com/apps/documentation/',
+            text: 'Documentation Portal',
+          },
+        ],
+      },
+    ],
     links: [
       { href: '/services', text: 'Overview' },
       { href: '/services', text: 'Airfreight' },
@@ -21,6 +51,25 @@ const desktopMenus = [
   {
     id: 'company',
     label: 'Our Company',
+    sections: [
+      {
+        id: 'about',
+        label: 'About Vanguard',
+        links: [
+          { href: '/about', text: 'About Us' },
+          { href: '/about', text: 'Leadership Team' },
+          { href: '/about', text: 'History' },
+        ],
+      },
+      {
+        id: 'careers',
+        label: 'People and Careers',
+        links: [
+          { href: '/about', text: 'Our Values' },
+          { href: '/about', text: 'Careers' },
+        ],
+      },
+    ],
     links: [
       { href: '/about', text: 'About Us' },
       { href: '/about', text: 'Leadership Team' },
@@ -31,6 +80,25 @@ const desktopMenus = [
   {
     id: 'insights',
     label: 'Insights',
+    sections: [
+      {
+        id: 'intel',
+        label: 'Market Intelligence',
+        links: [
+          { href: '/intel', text: 'News and Articles' },
+          { href: '/intel', text: 'General Rate Increases' },
+          { href: '/intel', text: 'Customer Advisories' },
+        ],
+      },
+      {
+        id: 'updates',
+        label: 'Operations Updates',
+        links: [
+          { href: '/intel', text: 'Market Updates' },
+          { href: '/operations', text: 'Operations Status' },
+        ],
+      },
+    ],
     links: [
       { href: '/intel', text: 'News and Articles' },
       { href: '/intel', text: 'General Rate Increases' },
@@ -41,6 +109,24 @@ const desktopMenus = [
   {
     id: 'contact',
     label: 'Contact',
+    sections: [
+      {
+        id: 'reach-us',
+        label: 'Reach Us',
+        links: [
+          { href: '/contact', text: 'Contact Us' },
+          { href: '/contact', text: 'Locations' },
+        ],
+      },
+      {
+        id: 'support',
+        label: 'Support',
+        links: [
+          { href: '/settings', text: 'Account Settings' },
+          { href: '/traces', text: 'Shipment Traces' },
+        ],
+      },
+    ],
     links: [
       { href: '/contact', text: 'Contact Us' },
       { href: '/contact', text: 'Locations' },
@@ -67,6 +153,7 @@ export default function Navbar() {
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileMenuView, setMobileMenuView] = useState('root');
+  const [mobileMenuSection, setMobileMenuSection] = useState(null);
   const [openDesktopMenu, setOpenDesktopMenu] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const menuRef = useRef(null);
@@ -109,6 +196,7 @@ export default function Navbar() {
     function closeMenu() {
       setMobileOpen(false);
       setMobileMenuView('root');
+      setMobileMenuSection(null);
       requestAnimationFrame(() => {
         toggleRef.current?.focus();
       });
@@ -213,6 +301,7 @@ export default function Navbar() {
       if (window.innerWidth > 980) {
         setMobileOpen(false);
         setMobileMenuView('root');
+        setMobileMenuSection(null);
       }
     }
 
@@ -240,12 +329,20 @@ export default function Navbar() {
   function handleMobileNavigate() {
     setMobileOpen(false);
     setMobileMenuView('root');
+    setMobileMenuSection(null);
   }
 
   const activeMobileGroup =
     mobileMenuView === 'root'
       ? null
       : (desktopMenus.find((menu) => menu.id === mobileMenuView) ?? null);
+
+  const activeMobileSection =
+    !activeMobileGroup || !mobileMenuSection
+      ? null
+      : (activeMobileGroup.sections?.find(
+          (section) => section.id === mobileMenuSection,
+        ) ?? null);
 
   return (
     <nav className="navbar" aria-label="Primary navigation">
@@ -370,6 +467,7 @@ export default function Navbar() {
             const next = !state;
             if (!next) {
               setMobileMenuView('root');
+              setMobileMenuSection(null);
             }
             return next;
           });
@@ -463,18 +561,69 @@ export default function Navbar() {
             <button
               type="button"
               className="navbar-drawer-back"
-              onClick={() => setMobileMenuView('root')}
+              onClick={() => {
+                if (mobileMenuSection) {
+                  setMobileMenuSection(null);
+                  return;
+                }
+
+                setMobileMenuView('root');
+              }}
             >
               <span aria-hidden="true">{'<'}</span>
               <span>Back</span>
             </button>
 
             <p className="navbar-mobile-submenu-title">
-              {activeMobileGroup?.label ?? 'Navigation'}
+              {activeMobileSection?.label ??
+                activeMobileGroup?.label ??
+                'Navigation'}
             </p>
 
             <div className="navbar-mobile-submenu-links" role="menu">
-              {(activeMobileGroup?.links ?? []).map((link) => {
+              {activeMobileSection
+                ? activeMobileSection.links.map((link) => {
+                    if (isExternalLink(link.href)) {
+                      return (
+                        <a
+                          key={`${activeMobileSection.id}-${link.text}`}
+                          href={link.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          role="menuitem"
+                          onClick={handleMobileNavigate}
+                        >
+                          {link.text}
+                        </a>
+                      );
+                    }
+
+                    return (
+                      <NavLink
+                        key={`${activeMobileSection.id}-${link.text}`}
+                        to={link.href}
+                        role="menuitem"
+                        onClick={handleMobileNavigate}
+                      >
+                        {link.text}
+                      </NavLink>
+                    );
+                  })
+                : (activeMobileGroup?.sections ?? []).map((section) => (
+                    <button
+                      key={section.id}
+                      type="button"
+                      className="navbar-mobile-section-trigger"
+                      onClick={() => setMobileMenuSection(section.id)}
+                    >
+                      <span>{section.label}</span>
+                      <span aria-hidden="true">{'>'}</span>
+                    </button>
+                  ))}
+
+              {!activeMobileSection &&
+                !activeMobileGroup?.sections?.length &&
+                (activeMobileGroup?.links ?? []).map((link) => {
                 if (isExternalLink(link.href)) {
                   return (
                     <a

@@ -214,6 +214,26 @@
   gap: 0.35rem;
 }
 
+.navbar-mobile-section-trigger {
+  width: 100%;
+  border: 1px solid var(--border-soft);
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--ink);
+  min-height: 40px;
+  padding: 0.45rem 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-ui);
+  cursor: pointer;
+}
+
+.navbar-mobile-section-trigger:hover,
+.navbar-mobile-section-trigger:focus-visible {
+  background: rgba(255, 255, 255, 0.92);
+}
+
 .navbar-mobile-submenu-links a {
   text-decoration: none;
   color: var(--ink);
