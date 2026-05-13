@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth.jsx';
 import { signOut } from '../services/authService.js';
 
@@ -46,8 +46,7 @@ export default function PendingApprovalPage() {
   }
 
   if (isApproved || isAdmin) {
-    navigate('/', { replace: true });
-    return null;
+    return <Navigate to="/" replace />;
   }
 
   return (

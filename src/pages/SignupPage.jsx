@@ -1,8 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { createPendingApprovalRequest } from '../services/approvalService.js';
 import { signUpWithEmail } from '../services/authService';
 
 export default function SignupPage() {
+  const [fullName, setFullName] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [kycReference, setKycReference] = useState('');
+  const [kycVerified, setKycVerified] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -18,13 +24,37 @@ export default function SignupPage() {
       setError('Passwords do not match.');
       return;
     }
+
+    if (!kycVerified) {
+      setError('Please confirm your KYC verification is complete before registering.');
+      return;
+    }
+
     setLoading(true);
-    const { error } = await signUpWithEmail(email, password);
+
+    const { data, error } = await signUpWithEmail(email, password, {
+      full_name: fullName,
+      phone,
+    });
+
+    if (!error && data?.user?.id) {
+      await createPendingApprovalRequest({
+        userId: data.user.id,
+        fullName,
+        companyName,
+        phone,
+        kycReference,
+        kycVerified,
+      });
+    }
+
     setLoading(false);
     if (error) {
       setError(error.message);
     } else {
-      setMessage('Account created! Check your email to confirm, then sign in.');
+      setMessage(
+        'Account created. Complete email or phone confirmation, then wait for admin approval to access the platform.',
+      );
     }
   }
 
@@ -47,6 +77,34 @@ export default function SignupPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
+            <label className="block text-sm text-zinc-300 mb-1" htmlFor="fullName">
+              Full Name
+            </label>
+            <input
+              id="fullName"
+              type="text"
+              autoComplete="name"
+              required
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              placeholder="Jane Doe"
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-zinc-300 mb-1" htmlFor="companyName">
+              Company Name
+            </label>
+            <input
+              id="companyName"
+              type="text"
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              placeholder="Vanguard Logistics"
+            />
+          </div>
+          <div>
             <label className="block text-sm text-zinc-300 mb-1" htmlFor="email">
               Email
             </label>
@@ -59,6 +117,35 @@ export default function SignupPage() {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
               placeholder="you@example.com"
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-zinc-300 mb-1" htmlFor="phone">
+              Phone
+            </label>
+            <input
+              id="phone"
+              type="tel"
+              autoComplete="tel"
+              required
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              placeholder="+1 555 0100"
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-zinc-300 mb-1" htmlFor="kycReference">
+              KYC Reference
+            </label>
+            <input
+              id="kycReference"
+              type="text"
+              required
+              value={kycReference}
+              onChange={(e) => setKycReference(e.target.value)}
+              className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              placeholder="KYC case or ticket ID"
             />
           </div>
           <div>
@@ -98,6 +185,17 @@ export default function SignupPage() {
               placeholder="••••••••"
             />
           </div>
+          <label className="flex items-start gap-3 rounded-lg border border-zinc-800 bg-zinc-950 p-3">
+            <input
+              type="checkbox"
+              checked={kycVerified}
+              onChange={(e) => setKycVerified(e.target.checked)}
+              className="mt-0.5"
+            />
+            <span className="text-sm text-zinc-300">
+              I confirm that my KYC verification has been submitted and can be reviewed by the admin.
+            </span>
+          </label>
           <button
             type="submit"
             disabled={loading}

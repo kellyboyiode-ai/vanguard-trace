@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { signInWithEmail } from '../services/authService';
+import { syncMyApprovalState } from '../services/approvalService.js';
+import { getSession, signInWithEmail } from '../services/authService';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -14,12 +15,28 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
     const { error } = await signInWithEmail(email, password);
-    setLoading(false);
+
     if (error) {
+      setLoading(false);
       setError(error.message);
-    } else {
-      navigate('/');
+      return;
     }
+
+    const { data: sessionData } = await getSession();
+    const signedInUser = sessionData?.session?.user || null;
+
+    if (signedInUser) {
+      const approvalState = await syncMyApprovalState(signedInUser);
+
+      if (!approvalState.isAdmin && !approvalState.isApproved) {
+        setLoading(false);
+        navigate('/pending-approval', { replace: true });
+        return;
+      }
+    }
+
+    setLoading(false);
+    navigate('/');
   }
 
   return (
