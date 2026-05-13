@@ -136,6 +136,10 @@ export default function Intel() {
           </div>
         </section>
       </div>
+      <div id="news" />
+      <div id="gri" />
+      <div id="advisories" />
+      <div id="market-updates" />
     </ShellLayout>
   );
 }

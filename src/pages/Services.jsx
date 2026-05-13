@@ -90,6 +90,12 @@ export default function Services() {
           </div>
         </section>
       </div>
+      <div id="airfreight" />
+      <div id="fcl" />
+      <div id="lcl" />
+      <div id="cfs" />
+      <div id="customs" />
+      <div id="technology" />
     </ShellLayout>
   );
 }
