@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 import {
   ArrowRight,
@@ -182,6 +182,7 @@ export default function Home() {
   const [region, setRegion] = useState(regions[0]);
   const [promoEmail, setPromoEmail] = useState('');
   const [openModal, setOpenModal] = useState(null);
+  const [openToolbarCard, setOpenToolbarCard] = useState('quote-book');
 
   const activeTabData = useMemo(
     () => toolboxTabs.find((tab) => tab.id === activeTab) ?? toolboxTabs[0],
@@ -229,7 +230,10 @@ export default function Home() {
 
   function handleRegionLookup(event) {
     event.preventDefault();
-    toast.success(`Opening locations for ${region}.`);
+    const target = `https://www.vanguardlogistics.com/contact/locations?region=${encodeURIComponent(
+      region,
+    )}`;
+    window.open(target, '_blank', 'noopener,noreferrer');
   }
 
   function handlePromoSubmit(event) {
@@ -258,6 +262,17 @@ export default function Home() {
     event.currentTarget.reset();
     setOpenModal(null);
   }
+
+  useEffect(() => {
+    function onKeyDown(event) {
+      if (event.key === 'Escape') {
+        setOpenModal(null);
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   return (
     <ShellLayout
@@ -304,8 +319,25 @@ export default function Home() {
         </section>
 
         <section className="home-toolbar" aria-label="Shipping tools">
-          <article className="home-toolbar-card">
-            <h3>Quote and Book</h3>
+          <article
+            className={
+              openToolbarCard === 'quote-book'
+                ? 'home-toolbar-card home-toolbar-card-open'
+                : 'home-toolbar-card'
+            }
+          >
+            <button
+              type="button"
+              className="home-toolbar-heading"
+              onClick={() =>
+                setOpenToolbarCard((current) =>
+                  current === 'quote-book' ? '' : 'quote-book',
+                )
+              }
+              aria-expanded={openToolbarCard === 'quote-book'}
+            >
+              <h3>Quote and Book</h3>
+            </button>
             <div className="home-toolbar-grid">
               {topTools.map((tool) => (
                 <a
@@ -329,8 +361,25 @@ export default function Home() {
             </div>
           </article>
 
-          <article className="home-toolbar-card">
-            <h3>Find a Service</h3>
+          <article
+            className={
+              openToolbarCard === 'find-service'
+                ? 'home-toolbar-card home-toolbar-card-open'
+                : 'home-toolbar-card'
+            }
+          >
+            <button
+              type="button"
+              className="home-toolbar-heading"
+              onClick={() =>
+                setOpenToolbarCard((current) =>
+                  current === 'find-service' ? '' : 'find-service',
+                )
+              }
+              aria-expanded={openToolbarCard === 'find-service'}
+            >
+              <h3>Find a Service</h3>
+            </button>
             <form className="home-inline-form" onSubmit={handleServiceSearch}>
               <input
                 type="text"
@@ -352,8 +401,25 @@ export default function Home() {
             </form>
           </article>
 
-          <article className="home-toolbar-card">
-            <h3>Manage a Shipment</h3>
+          <article
+            className={
+              openToolbarCard === 'manage-shipment'
+                ? 'home-toolbar-card home-toolbar-card-open'
+                : 'home-toolbar-card'
+            }
+          >
+            <button
+              type="button"
+              className="home-toolbar-heading"
+              onClick={() =>
+                setOpenToolbarCard((current) =>
+                  current === 'manage-shipment' ? '' : 'manage-shipment',
+                )
+              }
+              aria-expanded={openToolbarCard === 'manage-shipment'}
+            >
+              <h3>Manage a Shipment</h3>
+            </button>
             <form className="home-inline-form" onSubmit={handleQuickTrack}>
               <input
                 type="text"
@@ -368,8 +434,25 @@ export default function Home() {
             </form>
           </article>
 
-          <article className="home-toolbar-card">
-            <h3>Our Locations</h3>
+          <article
+            className={
+              openToolbarCard === 'locations'
+                ? 'home-toolbar-card home-toolbar-card-open'
+                : 'home-toolbar-card'
+            }
+          >
+            <button
+              type="button"
+              className="home-toolbar-heading"
+              onClick={() =>
+                setOpenToolbarCard((current) =>
+                  current === 'locations' ? '' : 'locations',
+                )
+              }
+              aria-expanded={openToolbarCard === 'locations'}
+            >
+              <h3>Our Locations</h3>
+            </button>
             <form className="home-inline-form" onSubmit={handleRegionLookup}>
               <select
                 value={region}

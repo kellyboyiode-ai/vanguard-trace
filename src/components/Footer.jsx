@@ -37,7 +37,67 @@ const footerColumns = [
       { to: '/traces', label: 'System Traces' },
     ],
   },
+  {
+    heading: 'Legal and Documentation',
+    links: [
+      {
+        to: 'https://www.vanguardlogistics.com/bill-of-lading-tc',
+        label: 'Bill of Lading Terms',
+        external: true,
+      },
+      {
+        to: 'https://www.vanguardlogistics.com/fmc-tariff-links',
+        label: 'FMC Tariffs',
+        external: true,
+      },
+      {
+        to: 'https://www.vanguardlogistics.com/terms-and-conditions',
+        label: 'Website Terms of Use',
+        external: true,
+      },
+      {
+        to: 'https://www.vanguardlogistics.com/privacy-policy',
+        label: 'Privacy Policy',
+        external: true,
+      },
+    ],
+  },
 ];
+
+const footerBottomLinks = [
+  {
+    to: 'https://www.vanguardlogistics.com/terms-and-conditions',
+    label: 'Terms of Use',
+    external: true,
+  },
+  {
+    to: 'https://www.vanguardlogistics.com/cookie-policy',
+    label: 'Cookies Policy',
+    external: true,
+  },
+  {
+    to: 'https://www.vanguardlogistics.com/privacy-policy',
+    label: 'Privacy Policy',
+    external: true,
+  },
+  {
+    to: 'https://www.vanguardlogistics.com/whistleblower-hotline',
+    label: 'Whistleblower Hotline',
+    external: true,
+  },
+];
+
+function FooterLink({ to, label, external = false }) {
+  if (external) {
+    return (
+      <a href={to} target="_blank" rel="noreferrer">
+        {label}
+      </a>
+    );
+  }
+
+  return <NavLink to={to}>{label}</NavLink>;
+}
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -51,7 +111,11 @@ export default function Footer() {
             <ul>
               {column.links.map((link) => (
                 <li key={`${column.heading}-${link.label}`}>
-                  <NavLink to={link.to}>{link.label}</NavLink>
+                  <FooterLink
+                    to={link.to}
+                    label={link.label}
+                    external={link.external}
+                  />
                 </li>
               ))}
             </ul>
@@ -106,20 +170,30 @@ export default function Footer() {
         <div className="footer-section">
           <h4 className="footer-heading">Legal</h4>
           <ul className="footer-links">
-            <li>
-              <NavLink to="/settings">Settings</NavLink>
-            </li>
-            <li>
-              <a href="#privacy">Privacy Policy</a>
-            </li>
-            <li>
-              <a href="#terms">Terms of Use</a>
-            </li>
+            {footerBottomLinks.slice(0, 3).map((link) => (
+              <li key={`legal-${link.label}`}>
+                <FooterLink
+                  to={link.to}
+                  label={link.label}
+                  external={link.external}
+                />
+              </li>
+            ))}
           </ul>
         </div>
       </div>
 
       <div className="footer-bottom">
+        <div className="footer-bottom-links">
+          {footerBottomLinks.map((link) => (
+            <FooterLink
+              key={`bottom-${link.label}`}
+              to={link.to}
+              label={link.label}
+              external={link.external}
+            />
+          ))}
+        </div>
         <p className="footer-copyright">
           © {year} Vanguard Trace. All rights reserved.
         </p>
