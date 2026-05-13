@@ -111,12 +111,11 @@
   position: relative;
   min-height: 240px;
   border-radius: 0.9rem;
-  border: 1px solid rgba(var(--vt-accent-rgb), 0.24);
-  background: radial-gradient(
-    circle at 18% 20%,
-    rgba(var(--vt-accent-rgb), 0.15),
-    rgba(var(--vt-secondary-rgb), 0.9) 56%,
-    rgba(var(--vt-background-rgb), 1)
+  border: 1px solid rgba(var(--vt-text-rgb), 0.2);
+  background: linear-gradient(
+    180deg,
+    rgba(var(--vt-secondary-rgb), 0.78),
+    rgba(var(--vt-background-rgb), 0.94)
   );
   overflow: hidden;
 }
@@ -125,10 +124,10 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(var(--vt-accent-rgb), 0.13) 1px, transparent 1px),
+    linear-gradient(rgba(var(--vt-text-rgb), 0.08) 1px, transparent 1px),
     linear-gradient(
       90deg,
-      rgba(var(--vt-accent-rgb), 0.13) 1px,
+      rgba(var(--vt-text-rgb), 0.08) 1px,
       transparent 1px
     );
   background-size: 40px 40px;
@@ -137,22 +136,21 @@
 .home-ops-sweep {
   position: absolute;
   inset: 0;
-  background: conic-gradient(
-    from 180deg at 75% 35%,
-    rgba(var(--vt-accent-rgb), 0.45),
-    rgba(var(--vt-accent-rgb), 0.04) 24%,
-    transparent 60%
+  background: linear-gradient(
+    120deg,
+    rgba(var(--vt-text-rgb), 0.04),
+    rgba(var(--vt-text-rgb), 0.01) 45%,
+    transparent
   );
-  animation: home-ops-spin 8s linear infinite;
 }
 
 .home-ops-point {
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 999px;
-  background: var(--vt-accent-cyan);
-  box-shadow: 0 0 12px rgba(var(--vt-accent-rgb), 0.8);
+  background: rgba(var(--vt-text-rgb), 0.75);
+  box-shadow: none;
 }
 
 .home-ops-point::after {
@@ -160,21 +158,21 @@
   position: absolute;
   inset: -6px;
   border-radius: 999px;
-  border: 1px solid rgba(var(--vt-accent-rgb), 0.42);
+  border: 1px solid rgba(var(--vt-text-rgb), 0.25);
 }
 
 .home-ops-point-primary {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
 }
 
 .home-ops-point-alert {
-  background: var(--vt-warning-red);
-  box-shadow: 0 0 12px rgba(var(--vt-warning-rgb), 0.82);
+  background: rgba(var(--vt-warning-rgb), 0.75);
+  box-shadow: none;
 }
 
 .home-ops-point-alert::after {
-  border-color: rgba(var(--vt-warning-rgb), 0.46);
+  border-color: rgba(var(--vt-warning-rgb), 0.36);
 }
 
 .home-intel-grid {
@@ -216,16 +214,6 @@
 
 .home-intel-alert svg {
   color: var(--vt-warning-red);
-}
-
-@keyframes home-ops-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 @media (max-width: 980px) {

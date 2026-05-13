@@ -8,24 +8,22 @@ import '../styles/vanguardTraceHero.css';
 const serviceModules = [
   {
     name: 'Secure Tracking',
-    description: 'Tamper-aware visibility from origin through final delivery.',
+    description: 'Clear shipment visibility from origin through delivery.',
     Icon: Truck,
   },
   {
     name: 'Cargo Integrity',
-    description:
-      'Package state intelligence with anomaly alerts and chain logs.',
+    description: 'Package condition updates and documented handoff history.',
     Icon: Package,
   },
   {
     name: 'Route Intelligence',
-    description: 'Corridor scoring with geopolitical and weather overlays.',
+    description: 'Route updates with weather and transit delay context.',
     Icon: Globe,
   },
   {
-    name: 'Risk Monitoring',
-    description:
-      'Radar-based threat scans for incident detection and escalation.',
+    name: 'Status Monitoring',
+    description: 'Simple status checks for exceptions and delivery changes.',
     Icon: Radar,
   },
 ];
@@ -47,7 +45,7 @@ export default function Home() {
       <div className="home-layout">
         <section className="home-section" aria-label="Hero animation">
           <div className="home-section-label">Section 1</div>
-          <h2>Hero animation</h2>
+          <h2>Overview image</h2>
           <VanguardHeroScene />
         </section>
 
@@ -97,7 +95,7 @@ export default function Home() {
 
         <section className="home-section" aria-label="Live operations map">
           <div className="home-section-label">Section 4</div>
-          <h2>Live operations map</h2>
+          <h2>Operations coverage</h2>
 
           <div
             className="home-ops-map"
@@ -127,7 +125,7 @@ export default function Home() {
 
         <section className="home-section" aria-label="Intelligence metrics">
           <div className="home-section-label">Section 5</div>
-          <h2>Intelligence metrics</h2>
+          <h2>Service metrics</h2>
 
           <div className="home-intel-grid">
             {intelMetrics.map((metric) => (
@@ -141,8 +139,8 @@ export default function Home() {
           <div className="home-intel-alert">
             <ShieldAlert size={18} strokeWidth={2} aria-hidden="true" />
             <p>
-              Risk channel elevated on North Atlantic lane. Last update: 40
-              seconds ago.
+              One lane update requires manual review. Last update: 40 seconds
+              ago.
             </p>
           </div>
         </section>

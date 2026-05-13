@@ -1,13 +1,17 @@
 export const vanguardTraceHero = {
   eyebrow: 'VANGUARD TRACE',
-  title: 'Secure Freight Intelligence',
-  subtitle:
-    'Global Shipment Monitoring with Advanced Logistics Infrastructure.',
+  title: 'Reliable Freight Tracking',
+  subtitle: 'Track shipments and delivery status across routes in one place.',
   tags: [
-    'Encrypted lane telemetry',
-    'Cross-border risk detection',
-    'Live port and route visibility',
+    'Live shipment updates',
+    'Route status visibility',
+    'Delivery confirmation timeline',
   ],
+};
+
+export const heroImage = {
+  src: 'https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1400&q=80',
+  alt: 'Warehouse shelves and freight aisle in a commercial logistics facility',
 };
 
 export const terminalEvents = [
