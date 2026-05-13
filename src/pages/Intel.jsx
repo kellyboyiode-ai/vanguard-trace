@@ -54,11 +54,19 @@ export default function Intel() {
 
       if (!mounted) return;
 
-      if (!alertsResult.error && Array.isArray(alertsResult.data) && alertsResult.data.length) {
+      if (
+        !alertsResult.error &&
+        Array.isArray(alertsResult.data) &&
+        alertsResult.data.length
+      ) {
         setActiveAlerts(alertsResult.data);
       }
 
-      if (!trendResult.error && Array.isArray(trendResult.data) && trendResult.data.length) {
+      if (
+        !trendResult.error &&
+        Array.isArray(trendResult.data) &&
+        trendResult.data.length
+      ) {
         setRiskTrend(trendResult.data);
       }
     }
@@ -70,7 +78,9 @@ export default function Intel() {
     };
   }, []);
 
-  const highRiskCount = activeAlerts.filter((alert) => alert.severity === 'High').length;
+  const highRiskCount = activeAlerts.filter(
+    (alert) => alert.severity === 'High',
+  ).length;
 
   return (
     <ShellLayout
