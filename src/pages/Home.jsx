@@ -68,7 +68,6 @@ const toolboxTabs = [
     id: 'quotation',
     label: 'Quotation Tools',
     Icon: Package,
-    tools: [
       {
         name: 'Vanguard ADESSO',
         desc: 'Quote, book, and manage LCL online with door-to-door visibility.',
@@ -371,21 +370,37 @@ export default function Home() {
     [],
   );
 
+  const fallbackSailingOptions = useMemo(
+    () =>
+      locationSuggestions.map((item) => ({
+        code: item,
+        label: item,
+        value: item,
+      })),
+    [],
+  );
+
   const selectedOriginLabel = useMemo(() => {
+    const source = originOptions.length ? originOptions : fallbackSailingOptions;
+
     return (
-      originOptions.find(
+      source.find(
         (item) => item.label.toLowerCase() === origin.trim().toLowerCase(),
       )?.label || ''
     );
-  }, [origin, originOptions]);
+  }, [fallbackSailingOptions, origin, originOptions]);
 
   const selectedDestinationLabel = useMemo(() => {
+    const source = destinationOptions.length
+      ? destinationOptions
+      : fallbackSailingOptions;
+
     return (
-      destinationOptions.find(
+      source.find(
         (item) => item.label.toLowerCase() === destination.trim().toLowerCase(),
       )?.label || ''
     );
-  }, [destination, destinationOptions]);
+  }, [destination, destinationOptions, fallbackSailingOptions]);
 
   function handleAcceptCookies() {
     const acceptedPrefs = {
@@ -741,9 +756,12 @@ export default function Home() {
                   }
                 }}
                 onBlur={() => {
+                  const originSource = originOptions.length
+                    ? originOptions
+                    : fallbackSailingOptions;
                   const matchedOrigin = findSailingOption(
                     origin,
-                    originOptions,
+                    originSource,
                   );
 
                   if (!matchedOrigin) {
@@ -761,9 +779,12 @@ export default function Home() {
                     return;
                   }
 
+                  const originSource = originOptions.length
+                    ? originOptions
+                    : fallbackSailingOptions;
                   const matchedOrigin = findSailingOption(
                     origin,
-                    originOptions,
+                    originSource,
                   );
 
                   if (!matchedOrigin) {
@@ -813,9 +834,12 @@ export default function Home() {
                   }
                 }}
                 onBlur={() => {
+                  const destinationSource = destinationOptions.length
+                    ? destinationOptions
+                    : fallbackSailingOptions;
                   const matchedDestination = findSailingOption(
                     destination,
-                    destinationOptions,
+                    destinationSource,
                   );
 
                   if (!matchedDestination) {
@@ -832,9 +856,12 @@ export default function Home() {
                     return;
                   }
 
+                  const destinationSource = destinationOptions.length
+                    ? destinationOptions
+                    : fallbackSailingOptions;
                   const matchedDestination = findSailingOption(
                     destination,
-                    destinationOptions,
+                    destinationSource,
                   );
 
                   if (!matchedDestination) {
