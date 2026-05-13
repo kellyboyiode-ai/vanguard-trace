@@ -149,6 +149,118 @@ const mobileQuickTools = [
   },
 ];
 
+const mobileToolMenus = [
+  {
+    id: 'quotationtools',
+    label: 'Quotation Tools',
+    links: [
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/ui/#/adesso',
+        text: 'Vanguard ADESSO',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/ui/#/imo',
+        text: 'IMO 2020 Rate Search',
+      },
+      { href: 'https://avanti.vanguardlogistics.com/', text: 'FCL Rate Search' },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/dashboard/?login=Y&mod=1DA358DF153386C0A920220E2670594622ED6024',
+        text: 'vRate Calculator',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/shiprite-on-demand/',
+        text: 'Shiprite on Demand',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/dashboard/?login=Y&mod=FC714E7FC4F7AD193AABB32D588769C2FAE5D448',
+        text: 'Shiprite',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/ui/#/adesso',
+        text: 'eFulfillment Connect',
+      },
+    ],
+  },
+  {
+    id: 'shippingtools',
+    label: 'Shipping Tools',
+    links: [
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/ocean-booking/',
+        text: 'Ocean Booking',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/freight-release/',
+        text: 'Freight Release',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/sailing-schedule/',
+        text: 'Sailing Schedule',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/verified-gross-mass/',
+        text: 'Solas VGM',
+      },
+    ],
+  },
+  {
+    id: 'trackingtools',
+    label: 'Tracking Tools',
+    links: [
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/dashboard/?show-fa-list=Y',
+        text: 'Freight Availability',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/track-shipment/',
+        text: 'Track & Trace',
+      },
+      {
+        href: 'https://www.vanguardlogistics.com/tracking-results?tracking=',
+        text: 'Quick Track',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/shipment-status/',
+        text: 'Statusmate',
+      },
+    ],
+  },
+  {
+    id: 'documentationtools',
+    label: 'Documentation Tools',
+    links: [
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/documentation/',
+        text: 'Documentation Portal',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/create-sli/',
+        text: 'Create SLI',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/print-labels/',
+        text: 'Print Shipping Labels',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/customer-advisory/',
+        text: 'Customer/Agent Advisory',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/extranet/',
+        text: 'Useful Information',
+      },
+      {
+        href: 'https://portal.vanguardlogistics.com/apps/cargo-release-order/',
+        text: 'Cargo Release Order',
+      },
+      {
+        href: 'http://www.onlinecargoinsurance.com/oci/index.jsp',
+        text: 'Cargo Insurance',
+      },
+    ],
+  },
+];
+
 export default function Navbar() {
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -332,10 +444,12 @@ export default function Navbar() {
     setMobileMenuSection(null);
   }
 
+  const allMobileMenus = [...mobileToolMenus, ...desktopMenus];
+
   const activeMobileGroup =
     mobileMenuView === 'root'
       ? null
-      : (desktopMenus.find((menu) => menu.id === mobileMenuView) ?? null);
+      : (allMobileMenus.find((menu) => menu.id === mobileMenuView) ?? null);
 
   const activeMobileSection =
     !activeMobileGroup || !mobileMenuSection
@@ -506,6 +620,18 @@ export default function Navbar() {
             </div>
 
             <div className="navbar-mobile-drawer" aria-label="Main sections">
+              {mobileToolMenus.map((menu) => (
+                <button
+                  key={menu.id}
+                  type="button"
+                  className="navbar-drawer-trigger"
+                  onClick={() => setMobileMenuView(menu.id)}
+                >
+                  <span>{menu.label}</span>
+                  <span aria-hidden="true">{'>'}</span>
+                </button>
+              ))}
+
               {desktopMenus.map((menu) => (
                 <button
                   key={menu.id}

@@ -162,6 +162,28 @@
   font-size: 0.82rem;
 }
 
+.home-toolbar-links {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.home-toolbar-links a {
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 0.7rem;
+  background: rgba(0, 24, 113, 0.5);
+  color: #ffffff;
+  padding: 0.7rem;
+  text-decoration: none;
+  display: grid;
+  gap: 0.2rem;
+  text-align: left;
+}
+
+.home-toolbar-links a span {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.82rem;
+}
+
 .home-inline-form {
   display: grid;
   grid-template-columns: 1fr 1fr 180px auto;
@@ -592,6 +614,10 @@
   color: #111827;
 }
 
+.home-quote-recaptcha {
+  grid-column: 1 / -1;
+}
+
 .home-cookie-preferences {
   display: grid;
   gap: 0.7rem;
@@ -639,6 +665,11 @@
 .home-quote-actions button:last-child {
   background: transparent;
   color: #e03c31;
+}
+
+.home-quote-actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 @media (max-width: 980px) {

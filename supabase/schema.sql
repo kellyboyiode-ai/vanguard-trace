@@ -109,6 +109,29 @@ create table if not exists public.customer_settings (
   updated_at timestamptz not null default now()
 );
 
+create table if not exists public.quote_requests (
+  id uuid primary key default gen_random_uuid(),
+  customer_id uuid references public.customers(id) on delete set null,
+  quote_type text not null,
+  origin text not null,
+  destination text not null,
+  target_date date not null,
+  contact_name text not null,
+  city text not null,
+  email text not null,
+  phone text not null,
+  company text,
+  commodity text not null,
+  incoterm text not null,
+  notes text,
+  terms_accepted boolean not null default false,
+  captcha_provider text not null default 'manual_checkbox',
+  captcha_token text,
+  status text not null default 'submitted',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 alter table public.customers enable row level security;
 alter table public.shipments enable row level security;
 alter table public.reports enable row level security;
@@ -119,6 +142,7 @@ alter table public.operations_events enable row level security;
 alter table public.intel_alerts enable row level security;
 alter table public.trace_events enable row level security;
 alter table public.customer_settings enable row level security;
+alter table public.quote_requests enable row level security;
 
 create or replace function public.touch_updated_at()
 returns trigger
@@ -163,6 +187,12 @@ execute function public.touch_updated_at();
 drop trigger if exists touch_customer_settings_updated_at on public.customer_settings;
 create trigger touch_customer_settings_updated_at
 before update on public.customer_settings
+for each row
+execute function public.touch_updated_at();
+
+drop trigger if exists touch_quote_requests_updated_at on public.quote_requests;
+create trigger touch_quote_requests_updated_at
+before update on public.quote_requests
 for each row
 execute function public.touch_updated_at();
 
@@ -283,6 +313,19 @@ create policy "authenticated can update customer settings"
   using (auth.uid() = customer_id)
   with check (auth.uid() = customer_id);
 
+drop policy if exists "public can submit quote requests" on public.quote_requests;
+create policy "public can submit quote requests"
+  on public.quote_requests for insert
+  with check (
+    (customer_id is null and terms_accepted = true)
+    or (auth.role() = 'authenticated' and customer_id = auth.uid() and terms_accepted = true)
+  );
+
+drop policy if exists "authenticated can read own quote requests" on public.quote_requests;
+create policy "authenticated can read own quote requests"
+  on public.quote_requests for select
+  using (auth.uid() = customer_id);
+
 create index if not exists shipments_tracking_code_idx
   on public.shipments(tracking_code);
 
@@ -303,6 +346,12 @@ create index if not exists intel_alerts_customer_status_idx
 
 create index if not exists trace_events_customer_recorded_at_idx
   on public.trace_events(customer_id, recorded_at desc);
+
+create index if not exists quote_requests_created_at_idx
+  on public.quote_requests(created_at desc);
+
+create index if not exists quote_requests_email_idx
+  on public.quote_requests(email);
 
 insert into public.shipments (tracking_code, status, location, eta)
 values

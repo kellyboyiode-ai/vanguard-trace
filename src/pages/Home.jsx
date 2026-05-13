@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import toast from 'react-hot-toast';
 import {
   ArrowRight,
@@ -22,21 +23,40 @@ import '../styles/vanguardTraceHero.css';
 
 const topTools = [
   {
-    title: 'Vanguard ADESSO',
-    description: 'Quote, book, and manage LCL in one workflow.',
+    title: 'LCL',
+    description: 'Vanguard ADESSO LCL quoting and booking.',
     url: 'https://portal.vanguardlogistics.com/apps/ui/#/adesso',
   },
   {
-    title: 'FCL Rate Search',
-    description: 'Search full-container rates in Avanti.',
+    title: 'FCL',
+    description: 'Avanti full-container quoting tool.',
     url: 'https://avanti.vanguardlogistics.com/',
   },
   {
-    title: 'Shiprite',
-    description: 'LTL quoting and lane planning.',
-    url: 'https://portal.vanguardlogistics.com/apps/shiprite-on-demand/',
+    title: 'LTL',
+    description: 'Shiprite LTL quoting workflow.',
+    url: 'http://shiprite.nacalogistics.com/index.cfm',
   },
 ];
+
+const manageShipmentLinks = [
+  {
+    title: 'Track & Trace',
+    description: 'Detailed shipment visibility dashboard.',
+    url: 'https://portal.vanguardlogistics.com/apps/track-shipment/',
+  },
+  {
+    title: 'Statusmate',
+    description: 'Schedule shipment status reports.',
+    url: 'https://portal.vanguardlogistics.com/apps/shipment-status/',
+  },
+];
+
+const locationQuickLink = {
+  title: 'See Our Locations',
+  description: 'Browse all global offices and regional contacts.',
+  url: 'https://www.vanguardlogistics.com/locations',
+};
 
 const toolboxTabs = [
   {
@@ -58,6 +78,26 @@ const toolboxTabs = [
         name: 'IMO 2020 Rate Search',
         desc: 'Compare rate structures with fuel and compliance context.',
         url: 'https://portal.vanguardlogistics.com/apps/ui/#/imo',
+      },
+      {
+        name: 'vRate Calculator',
+        desc: 'LCL quoting and routing calculator.',
+        url: 'https://portal.vanguardlogistics.com/apps/dashboard/?login=Y&mod=1DA358DF153386C0A920220E2670594622ED6024',
+      },
+      {
+        name: 'Shiprite on Demand',
+        desc: 'On-demand LTL rating and shipment setup.',
+        url: 'https://portal.vanguardlogistics.com/apps/shiprite-on-demand/',
+      },
+      {
+        name: 'Shiprite',
+        desc: 'LTL quoting tool for contract and spot rates.',
+        url: 'https://portal.vanguardlogistics.com/apps/dashboard/?login=Y&mod=FC714E7FC4F7AD193AABB32D588769C2FAE5D448',
+      },
+      {
+        name: 'eFulfillment Connect',
+        desc: 'LCL shipping to eCommerce distribution networks.',
+        url: 'https://portal.vanguardlogistics.com/apps/ui/#/adesso',
       },
     ],
   },
@@ -81,6 +121,11 @@ const toolboxTabs = [
         desc: 'Submit VGM details with audit-ready confirmations.',
         url: 'https://portal.vanguardlogistics.com/apps/verified-gross-mass/',
       },
+      {
+        name: 'Freight Release',
+        desc: 'Approve invoices and release import freight.',
+        url: 'https://portal.vanguardlogistics.com/apps/freight-release/',
+      },
     ],
   },
   {
@@ -88,6 +133,11 @@ const toolboxTabs = [
     label: 'Tracking Tools',
     Icon: Radar,
     tools: [
+      {
+        name: 'Freight Availability',
+        desc: 'Visibility of import shipment release readiness.',
+        url: 'https://portal.vanguardlogistics.com/apps/dashboard/?show-fa-list=Y',
+      },
       {
         name: 'Track & Trace',
         desc: 'Deep shipment visibility across checkpoints and handoffs.',
@@ -124,6 +174,26 @@ const toolboxTabs = [
         name: 'Cargo Release Order',
         desc: 'Manage import release documentation workflows.',
         url: 'https://portal.vanguardlogistics.com/apps/cargo-release-order/',
+      },
+      {
+        name: 'Print Shipping Labels',
+        desc: 'Generate shipping labels for operational handoff.',
+        url: 'https://portal.vanguardlogistics.com/apps/print-labels/',
+      },
+      {
+        name: 'Customer/Agent Advisory',
+        desc: 'Review customer and agent advisory updates.',
+        url: 'https://portal.vanguardlogistics.com/apps/customer-advisory/',
+      },
+      {
+        name: 'Useful Information',
+        desc: 'Extranet resources, forms, and references.',
+        url: 'https://portal.vanguardlogistics.com/apps/extranet/',
+      },
+      {
+        name: 'Cargo Insurance',
+        desc: 'Arrange cargo insurance through partner platform.',
+        url: 'http://www.onlinecargoinsurance.com/oci/index.jsp',
       },
     ],
   },
@@ -181,6 +251,8 @@ const locationSuggestions = [
   'Hong Kong, HK',
 ];
 
+const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '';
+
 export default function Home() {
   const [cookieAccepted, setCookieAccepted] = useState(() => {
     const stored = localStorage.getItem('vt-cookie-ok');
@@ -216,6 +288,7 @@ export default function Home() {
   const [promoEmail, setPromoEmail] = useState('');
   const [openModal, setOpenModal] = useState(null);
   const [openToolbarCard, setOpenToolbarCard] = useState('quote-book');
+  const [quoteCaptchaToken, setQuoteCaptchaToken] = useState('');
 
   const activeTabData = useMemo(
     () => toolboxTabs.find((tab) => tab.id === activeTab) ?? toolboxTabs[0],
@@ -357,6 +430,8 @@ export default function Home() {
       incoterm: form.get('incoterm'),
       notes: form.get('notes'),
       termsAccepted: form.get('termsAccepted') === 'on',
+      recaptchaEnabled: Boolean(recaptchaSiteKey),
+      captchaToken: quoteCaptchaToken,
       captchaAccepted: form.get('captchaAccepted') === 'on',
     });
 
@@ -369,6 +444,7 @@ export default function Home() {
       `${quoteType} quote request submitted (${result.source === 'supabase' ? 'live' : 'local'} mode).`,
     );
     event.currentTarget.reset();
+    setQuoteCaptchaToken('');
     setOpenModal(null);
   }
 
@@ -471,11 +547,11 @@ export default function Home() {
                 </a>
               ))}
               <button type="button" onClick={() => setOpenModal('air')}>
-                <strong>Airfreight Quote</strong>
-                <span>Open air quote request form.</span>
+                <strong>AIR</strong>
+                <span>Open airfreight quote request form.</span>
               </button>
               <button type="button" onClick={() => setOpenModal('fcl')}>
-                <strong>FCL Quote</strong>
+                <strong>FCL Form</strong>
                 <span>Open full-container quote request form.</span>
               </button>
             </div>
@@ -575,6 +651,14 @@ export default function Home() {
                 <ArrowRight size={16} />
               </button>
             </form>
+            <div className="home-toolbar-links">
+              {manageShipmentLinks.map((link) => (
+                <a key={link.title} href={link.url} target="_blank" rel="noreferrer">
+                  <strong>{link.title}</strong>
+                  <span>{link.description}</span>
+                </a>
+              ))}
+            </div>
           </article>
 
           <article
@@ -611,6 +695,16 @@ export default function Home() {
                 <MapPin size={16} />
               </button>
             </form>
+            <div className="home-toolbar-links">
+              <a
+                href={locationQuickLink.url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <strong>{locationQuickLink.title}</strong>
+                <span>{locationQuickLink.description}</span>
+              </a>
+            </div>
           </article>
         </section>
 
@@ -785,7 +879,13 @@ export default function Home() {
         <QuoteModal
           title="Airfreight Quoting Tool"
           quoteType="AIR"
-          onClose={() => setOpenModal(null)}
+          captchaToken={quoteCaptchaToken}
+          recaptchaSiteKey={recaptchaSiteKey}
+          onCaptchaChange={(value) => setQuoteCaptchaToken(value || '')}
+          onClose={() => {
+            setQuoteCaptchaToken('');
+            setOpenModal(null);
+          }}
           onSubmit={(event) => handleQuoteSubmit(event, 'AIR')}
         />
       )}
@@ -794,7 +894,13 @@ export default function Home() {
         <QuoteModal
           title="Request an FCL Quote"
           quoteType="FCL"
-          onClose={() => setOpenModal(null)}
+          captchaToken={quoteCaptchaToken}
+          recaptchaSiteKey={recaptchaSiteKey}
+          onCaptchaChange={(value) => setQuoteCaptchaToken(value || '')}
+          onClose={() => {
+            setQuoteCaptchaToken('');
+            setOpenModal(null);
+          }}
           onSubmit={(event) => handleQuoteSubmit(event, 'FCL')}
         />
       )}
@@ -864,7 +970,15 @@ export default function Home() {
   );
 }
 
-function QuoteModal({ title, quoteType, onClose, onSubmit }) {
+function QuoteModal({
+  title,
+  quoteType,
+  captchaToken,
+  recaptchaSiteKey,
+  onCaptchaChange,
+  onClose,
+  onSubmit,
+}) {
   return (
     <div className="home-modal-backdrop" role="presentation" onClick={onClose}>
       <article
@@ -920,12 +1034,28 @@ function QuoteModal({ title, quoteType, onClose, onSubmit }) {
             <input name="termsAccepted" type="checkbox" required />
             <span>I accept terms and conditions for quote submission.</span>
           </label>
-          <label className="home-quote-check">
-            <input name="captchaAccepted" type="checkbox" required />
-            <span>I am not a robot (verification check).</span>
-          </label>
+          {recaptchaSiteKey ? (
+            <div className="home-quote-recaptcha">
+              <ReCAPTCHA
+                sitekey={recaptchaSiteKey}
+                onChange={onCaptchaChange}
+                onExpired={() => onCaptchaChange('')}
+                onErrored={() => onCaptchaChange('')}
+              />
+            </div>
+          ) : (
+            <label className="home-quote-check">
+              <input name="captchaAccepted" type="checkbox" required />
+              <span>I am not a robot (verification check).</span>
+            </label>
+          )}
           <div className="home-quote-actions">
-            <button type="submit">Submit</button>
+            <button
+              type="submit"
+              disabled={Boolean(recaptchaSiteKey) && !captchaToken}
+            >
+              Submit
+            </button>
             <button type="button" onClick={onClose}>
               Cancel
             </button>

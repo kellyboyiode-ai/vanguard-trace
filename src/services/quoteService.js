@@ -19,6 +19,8 @@ function validateQuotePayload(payload) {
   const notes = clean(payload.notes);
   const termsAccepted = Boolean(payload.termsAccepted);
   const captchaAccepted = Boolean(payload.captchaAccepted);
+  const captchaToken = clean(payload.captchaToken);
+  const recaptchaEnabled = Boolean(payload.recaptchaEnabled);
 
   if (
     !quoteType ||
@@ -47,7 +49,15 @@ function validateQuotePayload(payload) {
     };
   }
 
-  if (!captchaAccepted) {
+  if (recaptchaEnabled && !captchaToken) {
+    return {
+      valid: false,
+      error: 'Please complete the reCAPTCHA challenge.',
+      data: null,
+    };
+  }
+
+  if (!recaptchaEnabled && !captchaAccepted) {
     return {
       valid: false,
       error: 'Please complete the anti-bot verification check.',
@@ -73,6 +83,8 @@ function validateQuotePayload(payload) {
       notes,
       termsAccepted,
       captchaAccepted,
+      captchaToken,
+      recaptchaEnabled,
     },
   };
 }
@@ -88,25 +100,53 @@ export async function submitQuoteRequest(payload) {
     };
   }
 
+  if (validation.data.recaptchaEnabled && (!supabaseState.ready || !supabase)) {
+    return {
+      accepted: false,
+      source: 'local',
+      error:
+        'Secure captcha verification is unavailable. Configure Supabase to submit quote requests.',
+    };
+  }
+
   if (supabaseState.ready && supabase) {
-    const summary = JSON.stringify({
+    if (validation.data.recaptchaEnabled) {
+      const { data: verifyResult, error: verifyError } =
+        await supabase.functions.invoke('verify-recaptcha', {
+          body: {
+            token: validation.data.captchaToken,
+          },
+        });
+
+      if (verifyError || !verifyResult?.success) {
+        return {
+          accepted: false,
+          source: 'supabase',
+          error:
+            verifyResult?.error ||
+            'reCAPTCHA verification failed. Please retry the challenge.',
+        };
+      }
+    }
+
+    const { error } = await supabase.from('quote_requests').insert({
+      quote_type: validation.data.quoteType,
       origin: validation.data.origin,
       destination: validation.data.destination,
-      targetDate: validation.data.targetDate,
+      target_date: validation.data.targetDate,
+      contact_name: validation.data.name,
       city: validation.data.city,
+      email: validation.data.email,
       phone: validation.data.phone,
-      company: validation.data.company,
+      company: validation.data.company || null,
       commodity: validation.data.commodity,
       incoterm: validation.data.incoterm,
-      notes: validation.data.notes,
-    });
-
-    const { error } = await supabase.from('messages').insert({
-      name: validation.data.name,
-      email: validation.data.email,
-      subject: `${validation.data.quoteType} Quote Request`,
-      message: summary,
-      channel: 'quote_request',
+      notes: validation.data.notes || null,
+      terms_accepted: validation.data.termsAccepted,
+      captcha_provider: validation.data.recaptchaEnabled
+        ? 'google_recaptcha'
+        : 'manual_checkbox',
+      captcha_token: validation.data.captchaToken || null,
     });
 
     if (error) {
