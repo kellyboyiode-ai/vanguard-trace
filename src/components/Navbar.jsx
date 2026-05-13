@@ -48,11 +48,6 @@ export default function Navbar() {
       return undefined;
     }
 
-    if (window.innerWidth > 980) {
-      setMobileOpen(false);
-      return undefined;
-    }
-
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
@@ -137,6 +132,23 @@ export default function Navbar() {
       document.body.style.overflow = '';
     };
   }, []);
+
+  useEffect(() => {
+    if (!mobileOpen) {
+      return undefined;
+    }
+
+    function onResize() {
+      if (window.innerWidth > 980) {
+        setMobileOpen(false);
+      }
+    }
+
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+    };
+  }, [mobileOpen]);
 
   return (
     <nav className="navbar" aria-label="Primary navigation">

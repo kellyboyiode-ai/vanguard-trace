@@ -4,6 +4,15 @@
   box-sizing: border-box;
 }
 
+.route-fallback {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+}
+
 .shell-frame,
 .topbar,
 .content,
@@ -81,15 +90,6 @@ h1 {
   line-height: 0.95;
   max-width: 10ch;
   font-family: var(--font-display);
-
-  .route-fallback {
-    min-height: 100svh;
-    display: grid;
-    place-items: center;
-    color: var(--ink);
-    font-family: var(--font-ui);
-    font-size: 0.95rem;
-  }
   letter-spacing: 0.02em;
 }
 
