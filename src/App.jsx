@@ -1,8 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import { Footer } from './components/index.js';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-import './styles/footer.css';
 import { AuthProvider } from './context/AuthContext.jsx';
 import {
   About,
@@ -108,7 +106,6 @@ function App() {
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-      <Footer />
     </AuthProvider>
   );
 }
