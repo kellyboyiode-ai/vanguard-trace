@@ -6,9 +6,15 @@ function assertAuthReady() {
   }
 }
 
-export async function signUpWithEmail(email, password) {
+export async function signUpWithEmail(email, password, metadata = {}) {
   assertAuthReady();
-  return supabase.auth.signUp({ email, password });
+  return supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: metadata,
+    },
+  });
 }
 
 export async function signInWithEmail(email, password) {

@@ -109,6 +109,26 @@ create table if not exists public.customer_settings (
   updated_at timestamptz not null default now()
 );
 
+create table if not exists public.account_admins (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.account_onboarding (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  full_name text,
+  company_name text,
+  phone text,
+  kyc_reference text,
+  kyc_verified boolean not null default false,
+  contact_confirmed boolean not null default false,
+  admin_approved boolean not null default false,
+  admin_note text,
+  status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 create table if not exists public.quote_requests (
   id uuid primary key default gen_random_uuid(),
   customer_id uuid references public.customers(id) on delete set null,
@@ -143,6 +163,8 @@ alter table public.intel_alerts enable row level security;
 alter table public.trace_events enable row level security;
 alter table public.customer_settings enable row level security;
 alter table public.quote_requests enable row level security;
+alter table public.account_admins enable row level security;
+alter table public.account_onboarding enable row level security;
 
 create or replace function public.touch_updated_at()
 returns trigger
@@ -193,6 +215,12 @@ execute function public.touch_updated_at();
 drop trigger if exists touch_quote_requests_updated_at on public.quote_requests;
 create trigger touch_quote_requests_updated_at
 before update on public.quote_requests
+for each row
+execute function public.touch_updated_at();
+
+drop trigger if exists touch_account_onboarding_updated_at on public.account_onboarding;
+create trigger touch_account_onboarding_updated_at
+before update on public.account_onboarding
 for each row
 execute function public.touch_updated_at();
 
@@ -326,6 +354,54 @@ create policy "authenticated can read own quote requests"
   on public.quote_requests for select
   using (auth.uid() = customer_id);
 
+drop policy if exists "user can read own admin marker" on public.account_admins;
+create policy "user can read own admin marker"
+  on public.account_admins for select
+  using (auth.uid() = user_id);
+
+drop policy if exists "user can read own onboarding" on public.account_onboarding;
+create policy "user can read own onboarding"
+  on public.account_onboarding for select
+  using (auth.uid() = user_id);
+
+drop policy if exists "user can create own onboarding" on public.account_onboarding;
+create policy "user can create own onboarding"
+  on public.account_onboarding for insert
+  with check (
+    auth.uid() = user_id
+    and admin_approved = false
+    and status = 'pending'
+  );
+
+drop policy if exists "admin can read all onboarding" on public.account_onboarding;
+create policy "admin can read all onboarding"
+  on public.account_onboarding for select
+  using (
+    exists (
+      select 1
+      from public.account_admins admins
+      where admins.user_id = auth.uid()
+    )
+  );
+
+drop policy if exists "admin can update onboarding" on public.account_onboarding;
+create policy "admin can update onboarding"
+  on public.account_onboarding for update
+  using (
+    exists (
+      select 1
+      from public.account_admins admins
+      where admins.user_id = auth.uid()
+    )
+  )
+  with check (
+    exists (
+      select 1
+      from public.account_admins admins
+      where admins.user_id = auth.uid()
+    )
+  );
+
 create index if not exists shipments_tracking_code_idx
   on public.shipments(tracking_code);
 
@@ -352,6 +428,18 @@ create index if not exists quote_requests_created_at_idx
 
 create index if not exists quote_requests_email_idx
   on public.quote_requests(email);
+
+create index if not exists account_onboarding_status_idx
+  on public.account_onboarding(status);
+
+create index if not exists account_onboarding_admin_approved_idx
+  on public.account_onboarding(admin_approved);
+
+-- Add exactly one row with your own auth user ID to make yourself the only admin approver.
+-- Example:
+-- insert into public.account_admins (user_id)
+-- values ('00000000-0000-0000-0000-000000000000')
+-- on conflict (user_id) do nothing;
 
 insert into public.shipments (tracking_code, status, location, eta)
 values

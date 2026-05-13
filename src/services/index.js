@@ -4,6 +4,15 @@ export {
   signOut,
   signUpWithEmail,
 } from './authService.js';
+export {
+  approveAccountRequest,
+  createPendingApprovalRequest,
+  getMyApprovalState,
+  isCurrentUserAdmin,
+  listAccountApprovalRequests,
+  rejectAccountRequest,
+  syncMyApprovalState,
+} from './approvalService.js';
 export { submitContactSubmission } from './contactService.js';
 export {
   getCustomerProfile,

@@ -1,8 +1,8 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth.jsx';
 
-export default function ProtectedRoute({ children }) {
-  const { session, loading } = useAuth();
+export default function ProtectedRoute({ children, requireAdmin = false }) {
+  const { session, loading, isAdmin, isApproved } = useAuth();
 
   if (loading) {
     return (
@@ -14,6 +14,14 @@ export default function ProtectedRoute({ children }) {
 
   if (!session) {
     return <Navigate to="/login" replace />;
+  }
+
+  if (requireAdmin && !isAdmin) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (!isAdmin && !isApproved) {
+    return <Navigate to="/pending-approval" replace />;
   }
 
   return children;
