@@ -565,12 +565,6 @@ export default function Home() {
     }
 
     if (origin.trim().length < 2) {
-      setOriginOptions([]);
-      setOriginCode('');
-      setDestination('');
-      setDestinationCode('');
-      setDestinationOptions([]);
-      setSailingLookupError('');
       return;
     }
 
@@ -606,8 +600,6 @@ export default function Home() {
     }
 
     if (!originCode || destination.trim().length < 2) {
-      setDestinationOptions([]);
-      setDestinationCode('');
       return;
     }
 
@@ -760,8 +752,17 @@ export default function Home() {
                 placeholder="Origin"
                 value={origin}
                 onChange={(event) => {
-                  setOrigin(event.target.value);
+                  const nextOrigin = event.target.value;
+                  setOrigin(nextOrigin);
                   setOriginCode('');
+                  setDestination('');
+                  setDestinationCode('');
+                  setDestinationOptions([]);
+                  setSailingLookupError('');
+
+                  if (nextOrigin.trim().length < 2) {
+                    setOriginOptions([]);
+                  }
                 }}
                 onBlur={() => {
                   const matchedOrigin = originOptions.find(
@@ -792,8 +793,13 @@ export default function Home() {
                 placeholder="Destination"
                 value={destination}
                 onChange={(event) => {
-                  setDestination(event.target.value);
+                  const nextDestination = event.target.value;
+                  setDestination(nextDestination);
                   setDestinationCode('');
+
+                  if (nextDestination.trim().length < 2) {
+                    setDestinationOptions([]);
+                  }
                 }}
                 onBlur={() => {
                   const matchedDestination = destinationOptions.find(
