@@ -4,37 +4,121 @@ const footerColumns = [
   {
     heading: 'Quotation and Book Tools',
     links: [
-      { to: '/home', label: 'Vanguard ADESSO' },
-      { to: '/services', label: 'Services Overview' },
-      { to: '/operations', label: 'Operations Planning' },
-      { to: '/tracking', label: 'Sailing Schedules' },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/ui/#/adesso',
+        label: 'Vanguard ADESSO',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/ocean-booking/',
+        label: 'Ocean Booking',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/sailing-schedule/',
+        label: 'Sailing Schedule',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/dashboard/?login=Y&mod=1DA358DF153386C0A920220E2670594622ED6024',
+        label: 'vRate Calculator',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/dashboard/?login=Y&mod=FC714E7FC4F7AD193AABB32D588769C2FAE5D448',
+        label: 'Shiprite',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/shiprite-on-demand/',
+        label: 'Shiprite on Demand',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/efulfillment-connect/',
+        label: 'eFulfillment Connect',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/measurement-calculator/',
+        label: 'Measurement Calculator',
+        external: true,
+      },
     ],
   },
   {
     heading: 'Manage Shipment Tools',
     links: [
-      { to: '/tracking', label: 'Track & Trace' },
-      { to: '/traces', label: 'Freight Availability' },
-      { to: '/intel', label: 'Status Insights' },
-      { to: '/operations', label: 'Release Workflows' },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/freight-availability/',
+        label: 'Freight Availability',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/track-shipment/',
+        label: 'Track & Trace',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/',
+        label: 'IMO 2020 Calculator',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/freight-release/',
+        label: 'Freight Release',
+        external: true,
+      },
+      {
+        to: 'https://www.vanguardlogistics.com/tracking-results?tracking=',
+        label: 'Quick Track',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/shipment-status/',
+        label: 'Statusmate',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/verified-gross-mass/',
+        label: 'Solas VGM',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/cargo-release-order/',
+        label: 'Cargo Release Order',
+        external: true,
+      },
     ],
   },
   {
     heading: 'Documentation Tools',
     links: [
-      { to: '/services', label: 'Shipping Instructions' },
-      { to: '/contact', label: 'Document Support' },
-      { to: '/intel', label: 'Customer Advisories' },
-      { to: '/about', label: 'Useful Information' },
-    ],
-  },
-  {
-    heading: 'Admin and Help',
-    links: [
-      { to: '/contact', label: 'Contact Us' },
-      { to: '/settings', label: 'Account Settings' },
-      { to: '/about', label: 'About Vanguard Trace' },
-      { to: '/traces', label: 'System Traces' },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/create-sli/',
+        label: 'Create SLI',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/documentation/',
+        label: 'Documentation Portal',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/extranet/',
+        label: 'Useful Information',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/customer-advisory/',
+        label: 'Customer / Agent Advisory',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/print-labels/',
+        label: 'Print Shipping Labels',
+        external: true,
+      },
     ],
   },
   {
@@ -56,8 +140,53 @@ const footerColumns = [
         external: true,
       },
       {
-        to: 'https://www.vanguardlogistics.com/privacy-policy',
-        label: 'Privacy Policy',
+        to: 'https://www.vanguardlogistics.com/usa-brokerage-terms',
+        label: 'USA Brokerage Terms and Conditions',
+        external: true,
+      },
+      {
+        to: 'https://www.vanguardlogistics.com/usa-terms-service',
+        label: 'USA Terms and Conditions of Service',
+        external: true,
+      },
+      {
+        to: 'https://www.vanguardlogistics.com/au-terms-service',
+        label: 'AU Standard Trading Conditions',
+        external: true,
+      },
+      {
+        to: 'https://www.vanguardlogistics.com/nz-terms-service',
+        label: 'NZ trade terms',
+        external: true,
+      },
+      {
+        to: 'https://www.vanguardlogistics.com/au-nz-downloadable-resources',
+        label: 'AU/NZ Downloadable Resources',
+        external: true,
+      },
+      {
+        to: 'https://www.vanguardlogistics.com/whistleblower-hotline',
+        label: 'Whistleblower Hotline',
+        external: true,
+      },
+    ],
+  },
+  {
+    heading: 'Admin and Help',
+    links: [
+      {
+        to: 'https://www.vanguardlogistics.com/contact-us',
+        label: 'Contact Us',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/signup/',
+        label: 'Request a Login',
+        external: true,
+      },
+      {
+        to: 'https://portal.vanguardlogistics.com/apps/user/get-password.jsp',
+        label: 'Forgot Password',
         external: true,
       },
     ],
@@ -83,6 +212,11 @@ const footerBottomLinks = [
   {
     to: 'https://www.vanguardlogistics.com/whistleblower-hotline',
     label: 'Whistleblower Hotline',
+    external: true,
+  },
+  {
+    to: 'https://www.linkedin.com/company/vanguard-logistics-services',
+    label: 'LinkedIn',
     external: true,
   },
 ];
