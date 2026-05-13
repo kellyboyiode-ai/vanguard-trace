@@ -121,6 +121,31 @@ Install dependencies:
 npm install
 ```
 
+Run the complete local stack (Supabase + env wiring + frontend on 4173):
+
+```bash
+npm run dev:full
+```
+
+This command will:
+
+- start local Supabase services
+- generate `.env.local` with local Supabase URL/key
+- start Vite on `http://127.0.0.1:4173`
+
+If you only want frontend after backend is already running:
+
+```bash
+npm run dev:4173
+```
+
+Manage local backend manually:
+
+```bash
+npm run backend:start
+npm run backend:stop
+```
+
 Start dev server:
 
 ```bash

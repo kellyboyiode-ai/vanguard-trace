@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:4173": "vite --host=127.0.0.1 --port=4173",
     "build": "vite build",
     "deploy": "npm run build && wrangler pages deploy dist --project-name vanguardtrace",
     "deploy:preview": "npm run build && wrangler pages deploy dist --project-name vanguardtrace --branch preview",
@@ -12,6 +13,10 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "preview": "vite preview",
+    "backend:start": "npx supabase start",
+    "backend:stop": "npx supabase stop",
+    "backend:setup-local": "node scripts/setup-local-backend.mjs",
+    "dev:full": "npm run backend:setup-local && npm run dev:4173",
     "auto-commit": "node scripts/auto-commit.mjs",
     "auto-commit:once": "node scripts/auto-commit.mjs --once"
   },
