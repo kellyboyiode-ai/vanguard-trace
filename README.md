@@ -130,6 +130,7 @@ npm run dev:full
 This command will:
 
 - start local Supabase services
+- reset local DB and apply `supabase/schema.sql`
 - generate `.env.local` with local Supabase URL/key
 - start Vite on `http://127.0.0.1:4173`
 

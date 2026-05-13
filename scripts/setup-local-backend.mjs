@@ -35,6 +35,9 @@ function main() {
     console.log('Starting local Supabase services...');
     run('npx supabase start', { stdio: 'inherit' });
 
+    console.log('Applying local database schema...');
+    run('npx supabase db reset --local --yes', { stdio: 'inherit' });
+
     console.log('Reading local Supabase connection values...');
     const envRaw = run('npx supabase status -o env');
     const env = parseEnvOutput(envRaw);

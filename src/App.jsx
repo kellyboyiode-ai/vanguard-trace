@@ -1,117 +1,38 @@
-import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import ProtectedRoute from './components/ProtectedRoute.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
-
-const About = lazy(() => import('./pages/About.jsx'));
-const Home = lazy(() => import('./pages/Home.jsx'));
-const Intel = lazy(() => import('./pages/Intel.jsx'));
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage.jsx'));
-const Operations = lazy(() => import('./pages/Operations.jsx'));
-const Contact = lazy(() => import('./pages/Contact.jsx'));
-const OverviewPage = lazy(() => import('./pages/OverviewPage.jsx'));
-const SettingsPage = lazy(() => import('./pages/SettingsPage.jsx'));
-const Services = lazy(() => import('./pages/Services.jsx'));
-const TracesPage = lazy(() => import('./pages/TracesPage.jsx'));
-const Tracking = lazy(() => import('./pages/Tracking.jsx'));
-const LoginPage = lazy(() => import('./pages/LoginPage.jsx'));
-const SignupPage = lazy(() => import('./pages/SignupPage.jsx'));
-
-function RouteFallback() {
-  return <div className="route-fallback">Loading page...</div>;
-}
+import About from './pages/About.jsx';
+import Contact from './pages/Contact.jsx';
+import Home from './pages/Home.jsx';
+import Intel from './pages/Intel.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
+import Operations from './pages/Operations.jsx';
+import OverviewPage from './pages/OverviewPage.jsx';
+import Services from './pages/Services.jsx';
+import SettingsPage from './pages/SettingsPage.jsx';
+import SignupPage from './pages/SignupPage.jsx';
+import TracesPage from './pages/TracesPage.jsx';
+import Tracking from './pages/Tracking.jsx';
 
 function App() {
   return (
     <AuthProvider>
-      <Suspense fallback={<RouteFallback />}>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <OverviewPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/home"
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/tracking"
-            element={
-              <ProtectedRoute>
-                <Tracking />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/operations"
-            element={
-              <ProtectedRoute>
-                <Operations />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/services"
-            element={
-              <ProtectedRoute>
-                <Services />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/intel"
-            element={
-              <ProtectedRoute>
-                <Intel />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              <ProtectedRoute>
-                <Contact />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <ProtectedRoute>
-                <About />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/traces"
-            element={
-              <ProtectedRoute>
-                <TracesPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <SettingsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/" element={<OverviewPage />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/tracking" element={<Tracking />} />
+        <Route path="/operations" element={<Operations />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/intel" element={<Intel />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/traces" element={<TracesPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </AuthProvider>
   );
 }
