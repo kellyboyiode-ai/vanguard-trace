@@ -26,7 +26,9 @@ export default function SignupPage() {
     }
 
     if (!kycVerified) {
-      setError('Please confirm your KYC verification is complete before registering.');
+      setError(
+        'Please confirm your KYC verification is complete before registering.',
+      );
       return;
     }
 
@@ -34,6 +36,7 @@ export default function SignupPage() {
 
     const { data, error } = await signUpWithEmail(email, password, {
       full_name: fullName,
+      company_name: companyName,
       phone,
     });
 
@@ -77,7 +80,10 @@ export default function SignupPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm text-zinc-300 mb-1" htmlFor="fullName">
+            <label
+              className="block text-sm text-zinc-300 mb-1"
+              htmlFor="fullName"
+            >
               Full Name
             </label>
             <input
@@ -92,7 +98,10 @@ export default function SignupPage() {
             />
           </div>
           <div>
-            <label className="block text-sm text-zinc-300 mb-1" htmlFor="companyName">
+            <label
+              className="block text-sm text-zinc-300 mb-1"
+              htmlFor="companyName"
+            >
               Company Name
             </label>
             <input
@@ -135,7 +144,10 @@ export default function SignupPage() {
             />
           </div>
           <div>
-            <label className="block text-sm text-zinc-300 mb-1" htmlFor="kycReference">
+            <label
+              className="block text-sm text-zinc-300 mb-1"
+              htmlFor="kycReference"
+            >
               KYC Reference
             </label>
             <input
@@ -193,7 +205,8 @@ export default function SignupPage() {
               className="mt-0.5"
             />
             <span className="text-sm text-zinc-300">
-              I confirm that my KYC verification has been submitted and can be reviewed by the admin.
+              I confirm that my KYC verification has been submitted and can be
+              reviewed by the admin.
             </span>
           </label>
           <button

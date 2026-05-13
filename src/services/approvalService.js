@@ -15,7 +15,9 @@ function deriveApprovalState(onboarding, isAdmin) {
   const kycVerified = Boolean(onboarding?.kyc_verified);
   const contactConfirmed = Boolean(onboarding?.contact_confirmed);
   const adminApproved = Boolean(onboarding?.admin_approved);
-  const isApproved = Boolean(isAdmin || (kycVerified && contactConfirmed && adminApproved));
+  const isApproved = Boolean(
+    isAdmin || (kycVerified && contactConfirmed && adminApproved),
+  );
 
   return {
     isApproved,
@@ -98,7 +100,11 @@ export async function createPendingApprovalRequest({
       company_name: companyName || null,
       phone: phone || null,
     }),
-    supabase.from('account_onboarding').upsert(onboardingPayload).select().single(),
+    supabase
+      .from('account_onboarding')
+      .upsert(onboardingPayload)
+      .select()
+      .single(),
   ]);
 
   const error = onboardingResult.error || customerResult.error;
@@ -115,7 +121,9 @@ export async function refreshMyContactConfirmation(user) {
     return { source: 'local', data: null, error: null };
   }
 
-  const contactConfirmed = Boolean(user.email_confirmed_at || user.phone_confirmed_at);
+  const contactConfirmed = Boolean(
+    user.email_confirmed_at || user.phone_confirmed_at,
+  );
   const { data, error } = await supabase
     .from('account_onboarding')
     .update({ contact_confirmed: contactConfirmed })

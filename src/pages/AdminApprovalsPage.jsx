@@ -104,7 +104,9 @@ export default function AdminApprovalsPage() {
               <h2 className="text-lg font-semibold mb-3">Pending requests</h2>
 
               {pendingRequests.length === 0 ? (
-                <p className="text-zinc-400 text-sm">No pending account requests.</p>
+                <p className="text-zinc-400 text-sm">
+                  No pending account requests.
+                </p>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
@@ -114,24 +116,39 @@ export default function AdminApprovalsPage() {
                         <th className="text-left py-2 pr-3">Name</th>
                         <th className="text-left py-2 pr-3">Phone</th>
                         <th className="text-left py-2 pr-3">KYC</th>
-                        <th className="text-left py-2 pr-3">Contact Confirmed</th>
+                        <th className="text-left py-2 pr-3">
+                          Contact Confirmed
+                        </th>
                         <th className="text-left py-2 pr-3">Created</th>
                         <th className="text-left py-2">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       {pendingRequests.map((request) => (
-                        <tr key={request.user_id} className="border-b border-zinc-800">
-                          <td className="py-3 pr-3 text-zinc-300">{request.user_id}</td>
-                          <td className="py-3 pr-3">{request.full_name || 'N/A'}</td>
-                          <td className="py-3 pr-3">{request.phone || 'N/A'}</td>
+                        <tr
+                          key={request.user_id}
+                          className="border-b border-zinc-800"
+                        >
+                          <td className="py-3 pr-3 text-zinc-300">
+                            {request.user_id}
+                          </td>
+                          <td className="py-3 pr-3">
+                            {request.full_name || 'N/A'}
+                          </td>
+                          <td className="py-3 pr-3">
+                            {request.phone || 'N/A'}
+                          </td>
                           <td className="py-3 pr-3">
                             {request.kyc_verified ? 'Verified' : 'Not verified'}
                           </td>
                           <td className="py-3 pr-3">
-                            {request.contact_confirmed ? 'Confirmed' : 'Not confirmed'}
+                            {request.contact_confirmed
+                              ? 'Confirmed'
+                              : 'Not confirmed'}
                           </td>
-                          <td className="py-3 pr-3">{formatTimestamp(request.created_at)}</td>
+                          <td className="py-3 pr-3">
+                            {formatTimestamp(request.created_at)}
+                          </td>
                           <td className="py-3">
                             <div className="flex gap-2">
                               <button
@@ -168,7 +185,8 @@ export default function AdminApprovalsPage() {
                   .slice(0, 10)
                   .map((item) => (
                     <li key={`${item.user_id}-${item.updated_at}`}>
-                      {item.full_name || item.user_id}: {item.status} at {formatTimestamp(item.updated_at)}
+                      {item.full_name || item.user_id}: {item.status} at{' '}
+                      {formatTimestamp(item.updated_at)}
                     </li>
                   ))}
               </ul>

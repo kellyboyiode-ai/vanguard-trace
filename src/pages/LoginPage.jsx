@@ -43,7 +43,9 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-black px-4">
       <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-xl p-8">
         <h1 className="text-2xl font-bold text-white mb-2">Sign In</h1>
-        <p className="text-zinc-400 text-sm mb-6">Access your Vanguard Trace account</p>
+        <p className="text-zinc-400 text-sm mb-6">
+          Access your Vanguard Trace account
+        </p>
 
         {error && (
           <div className="mb-4 px-4 py-3 rounded-lg bg-red-900/40 border border-red-700 text-red-300 text-sm">
@@ -53,27 +55,34 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm text-zinc-300 mb-1" htmlFor="email">Email</label>
+            <label className="block text-sm text-zinc-300 mb-1" htmlFor="email">
+              Email
+            </label>
             <input
               id="email"
               type="email"
               autoComplete="email"
               required
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
               placeholder="you@example.com"
             />
           </div>
           <div>
-            <label className="block text-sm text-zinc-300 mb-1" htmlFor="password">Password</label>
+            <label
+              className="block text-sm text-zinc-300 mb-1"
+              htmlFor="password"
+            >
+              Password
+            </label>
             <input
               id="password"
               type="password"
               autoComplete="current-password"
               required
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
               placeholder="••••••••"
             />
@@ -89,7 +98,9 @@ export default function LoginPage() {
 
         <p className="mt-6 text-center text-sm text-zinc-500">
           Don&apos;t have an account?{' '}
-          <Link to="/signup" className="text-blue-400 hover:underline">Sign up</Link>
+          <Link to="/signup" className="text-blue-400 hover:underline">
+            Sign up
+          </Link>
         </p>
       </div>
     </div>

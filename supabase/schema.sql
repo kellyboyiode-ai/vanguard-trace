@@ -176,6 +176,62 @@ begin
 end;
 $$;
 
+create or replace function public.handle_new_auth_user()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  meta_full_name text;
+  meta_company_name text;
+  meta_phone text;
+begin
+  meta_full_name := nullif(new.raw_user_meta_data ->> 'full_name', '');
+  meta_company_name := nullif(new.raw_user_meta_data ->> 'company_name', '');
+  meta_phone := nullif(new.raw_user_meta_data ->> 'phone', '');
+
+  insert into public.customers (id, full_name, company_name, phone)
+  values (new.id, meta_full_name, meta_company_name, meta_phone)
+  on conflict (id) do update
+  set
+    full_name = coalesce(excluded.full_name, public.customers.full_name),
+    company_name = coalesce(excluded.company_name, public.customers.company_name),
+    phone = coalesce(excluded.phone, public.customers.phone),
+    updated_at = now();
+
+  insert into public.account_onboarding (
+    user_id,
+    full_name,
+    company_name,
+    phone,
+    kyc_verified,
+    contact_confirmed,
+    admin_approved,
+    status
+  )
+  values (
+    new.id,
+    meta_full_name,
+    meta_company_name,
+    meta_phone,
+    false,
+    (new.email_confirmed_at is not null or new.phone_confirmed_at is not null),
+    false,
+    'pending'
+  )
+  on conflict (user_id) do nothing;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
+after insert on auth.users
+for each row
+execute function public.handle_new_auth_user();
+
 drop trigger if exists touch_customers_updated_at on public.customers;
 create trigger touch_customers_updated_at
 before update on public.customers
