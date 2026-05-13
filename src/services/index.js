@@ -19,3 +19,7 @@ export { getIntelAlerts, getIntelRiskTrend } from './intelService.js';
 export { getOperationsQueue } from './operationsService.js';
 export { getTraceTimeline, getRouteMedians } from './tracesService.js';
 export { submitQuoteRequest } from './quoteService.js';
+export {
+  fetchSailingDestinations,
+  fetchSailingOrigins,
+} from './sailingsService.js';
