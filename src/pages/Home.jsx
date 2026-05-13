@@ -68,6 +68,7 @@ const toolboxTabs = [
     id: 'quotation',
     label: 'Quotation Tools',
     Icon: Package,
+    tools: [
       {
         name: 'Vanguard ADESSO',
         desc: 'Quote, book, and manage LCL online with door-to-door visibility.',
@@ -381,7 +382,9 @@ export default function Home() {
   );
 
   const selectedOriginLabel = useMemo(() => {
-    const source = originOptions.length ? originOptions : fallbackSailingOptions;
+    const source = originOptions.length
+      ? originOptions
+      : fallbackSailingOptions;
 
     return (
       source.find(
@@ -759,10 +762,7 @@ export default function Home() {
                   const originSource = originOptions.length
                     ? originOptions
                     : fallbackSailingOptions;
-                  const matchedOrigin = findSailingOption(
-                    origin,
-                    originSource,
-                  );
+                  const matchedOrigin = findSailingOption(origin, originSource);
 
                   if (!matchedOrigin) {
                     return;
@@ -782,10 +782,7 @@ export default function Home() {
                   const originSource = originOptions.length
                     ? originOptions
                     : fallbackSailingOptions;
-                  const matchedOrigin = findSailingOption(
-                    origin,
-                    originSource,
-                  );
+                  const matchedOrigin = findSailingOption(origin, originSource);
 
                   if (!matchedOrigin) {
                     if (event.key === 'Enter') {
