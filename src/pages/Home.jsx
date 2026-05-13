@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import toast from 'react-hot-toast';
 import {
@@ -18,6 +18,10 @@ import { VanguardHeroScene } from '../components/index.js';
 import { vanguardTraceHero } from '../data/index.js';
 import { ShellLayout } from '../layouts/index.js';
 import { submitQuoteRequest } from '../services/quoteService.js';
+import {
+  fetchSailingDestinations,
+  fetchSailingOrigins,
+} from '../services/sailingsService.js';
 import '../styles/homeLayout.css';
 import '../styles/vanguardTraceHero.css';
 
@@ -249,6 +253,59 @@ const locationSuggestions = [
   'Dubai, AE',
   'Singapore, SG',
   'Hong Kong, HK',
+];
+
+const promoIframeUrl =
+  import.meta.env.VITE_PROMO_IFRAME_URL ||
+  'https://www.vanguardlogistics.com/email-signup';
+
+const countryOptions = [
+  'United States',
+  'Canada',
+  'Mexico',
+  'Brazil',
+  'Argentina',
+  'Chile',
+  'Colombia',
+  'Peru',
+  'Panama',
+  'United Kingdom',
+  'Ireland',
+  'France',
+  'Germany',
+  'Netherlands',
+  'Belgium',
+  'Spain',
+  'Portugal',
+  'Italy',
+  'Sweden',
+  'Norway',
+  'Denmark',
+  'Poland',
+  'Turkey',
+  'United Arab Emirates',
+  'Saudi Arabia',
+  'South Africa',
+  'Kenya',
+  'Nigeria',
+  'India',
+  'Pakistan',
+  'Bangladesh',
+  'Sri Lanka',
+  'China',
+  'Hong Kong',
+  'Taiwan',
+  'Japan',
+  'South Korea',
+  'Singapore',
+  'Malaysia',
+  'Thailand',
+  'Vietnam',
+  'Indonesia',
+  'Philippines',
+  'Australia',
+  'New Zealand',
+  'Other',
 ];
 
 const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '';
