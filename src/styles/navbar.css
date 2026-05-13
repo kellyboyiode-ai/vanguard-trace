@@ -132,6 +132,105 @@
   gap: 0.55rem;
 }
 
+.navbar-mobile-drawer {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.navbar-drawer-trigger {
+  width: 100%;
+  border: 1px solid var(--border-soft);
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--ink);
+  min-height: 42px;
+  padding: 0.45rem 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-ui);
+  cursor: pointer;
+}
+
+.navbar-mobile-tools {
+  border: 1px solid var(--border-soft);
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.65rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.navbar-mobile-tools p {
+  margin: 0;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.navbar-mobile-tools a {
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: 0.55rem;
+  padding: 0.35rem 0.45rem;
+  font-size: 0.84rem;
+}
+
+.navbar-mobile-tools a:hover,
+.navbar-mobile-tools a:focus-visible {
+  background: rgba(16, 24, 40, 0.06);
+}
+
+.navbar-mobile-submenu {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.navbar-drawer-back {
+  width: fit-content;
+  border: 1px solid var(--border-soft);
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--ink);
+  min-height: 40px;
+  padding: 0.3rem 0.65rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+}
+
+.navbar-mobile-submenu-title {
+  margin: 0;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.navbar-mobile-submenu-links {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.navbar-mobile-submenu-links a {
+  text-decoration: none;
+  color: var(--ink);
+  border: 1px solid var(--border-soft);
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.76);
+  min-height: 40px;
+  padding: 0.45rem 0.6rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.navbar-mobile-submenu-links a:hover,
+.navbar-mobile-submenu-links a:focus-visible {
+  background: rgba(255, 255, 255, 0.92);
+}
+
 .navbar-group-card {
   border: 1px solid var(--border-soft);
   border-radius: 0.85rem;

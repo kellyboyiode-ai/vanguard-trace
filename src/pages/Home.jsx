@@ -169,6 +169,17 @@ const regions = [
   'USA & Canada',
 ];
 
+const locationSuggestions = [
+  'Los Angeles, US',
+  'Long Beach, US',
+  'New York, US',
+  'Rotterdam, NL',
+  'Hamburg, DE',
+  'Dubai, AE',
+  'Singapore, SG',
+  'Hong Kong, HK',
+];
+
 export default function Home() {
   const [cookieAccepted, setCookieAccepted] = useState(
     () => localStorage.getItem('vt-cookie-ok') === 'true',
@@ -179,6 +190,7 @@ export default function Home() {
   const [quickTrack, setQuickTrack] = useState('');
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
+  const [departureDate, setDepartureDate] = useState('');
   const [region, setRegion] = useState(regions[0]);
   const [promoEmail, setPromoEmail] = useState('');
   const [openModal, setOpenModal] = useState(null);
@@ -196,6 +208,30 @@ export default function Home() {
     );
   }, [activeTabData, activeTool]);
 
+  const departureWarning = useMemo(() => {
+    if (!departureDate) {
+      return '';
+    }
+
+    const departure = new Date(`${departureDate}T00:00:00`);
+    if (Number.isNaN(departure.getTime())) {
+      return '';
+    }
+
+    const hoursUntilDeparture =
+      (departure.getTime() - Date.now()) / (1000 * 60 * 60);
+
+    if (hoursUntilDeparture < 0) {
+      return 'Selected departure date is in the past.';
+    }
+
+    if (hoursUntilDeparture < 72) {
+      return 'Heads-up: departures within 72 hours may have limited schedule options.';
+    }
+
+    return '';
+  }, [departureDate]);
+
   function handleAcceptCookies() {
     localStorage.setItem('vt-cookie-ok', 'true');
     setCookieAccepted(true);
@@ -204,13 +240,15 @@ export default function Home() {
   function handleServiceSearch(event) {
     event.preventDefault();
 
-    if (!origin.trim() || !destination.trim()) {
-      toast.error('Add both origin and destination to search sailing routes.');
+    if (!origin.trim() || !destination.trim() || !departureDate) {
+      toast.error(
+        'Add origin, destination, and departure date to search sailing routes.',
+      );
       return;
     }
 
     toast.success(
-      `Searching route: ${origin.toUpperCase()} -> ${destination.toUpperCase()}`,
+      `Searching route: ${origin.toUpperCase()} -> ${destination.toUpperCase()} on ${departureDate}`,
     );
   }
 
@@ -387,18 +425,41 @@ export default function Home() {
                 value={origin}
                 onChange={(event) => setOrigin(event.target.value)}
                 aria-label="Service origin"
+                list="home-origin-options"
               />
+              <datalist id="home-origin-options">
+                {locationSuggestions.map((item) => (
+                  <option key={`origin-${item}`} value={item} />
+                ))}
+              </datalist>
               <input
                 type="text"
                 placeholder="Destination"
                 value={destination}
                 onChange={(event) => setDestination(event.target.value)}
                 aria-label="Service destination"
+                list="home-destination-options"
+              />
+              <datalist id="home-destination-options">
+                {locationSuggestions.map((item) => (
+                  <option key={`destination-${item}`} value={item} />
+                ))}
+              </datalist>
+              <input
+                type="date"
+                value={departureDate}
+                onChange={(event) => setDepartureDate(event.target.value)}
+                aria-label="Departure date"
               />
               <button type="submit">
                 <Search size={16} />
               </button>
             </form>
+            {departureWarning && (
+              <p className="home-inline-warning" role="status">
+                {departureWarning}
+              </p>
+            )}
           </article>
 
           <article

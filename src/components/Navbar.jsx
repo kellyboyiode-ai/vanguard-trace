@@ -4,25 +4,6 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { navigationLinks } from '../data/navigation.js';
 import { signOut } from '../services/authService.js';
 
-const featuredGroups = [
-  {
-    label: 'Services',
-    links: [
-      { href: '/services', text: 'Overview' },
-      { href: '/tracking', text: 'Track & Trace' },
-      { href: '/operations', text: 'Operations' },
-    ],
-  },
-  {
-    label: 'Company',
-    links: [
-      { href: '/about', text: 'About Us' },
-      { href: '/contact', text: 'Contact' },
-      { href: '/intel', text: 'Insights' },
-    ],
-  },
-];
-
 const desktopMenus = [
   {
     id: 'services',
@@ -67,9 +48,25 @@ const desktopMenus = [
   },
 ];
 
+const mobileQuickTools = [
+  {
+    href: 'https://portal.vanguardlogistics.com/apps/track-shipment/',
+    text: 'Track & Trace Tool',
+  },
+  {
+    href: 'https://portal.vanguardlogistics.com/apps/sailing-schedule/',
+    text: 'Sailing Schedule',
+  },
+  {
+    href: 'https://portal.vanguardlogistics.com/apps/documentation/',
+    text: 'Documentation Portal',
+  },
+];
+
 export default function Navbar() {
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileMenuView, setMobileMenuView] = useState('root');
   const [openDesktopMenu, setOpenDesktopMenu] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const menuRef = useRef(null);
@@ -111,6 +108,7 @@ export default function Navbar() {
 
     function closeMenu() {
       setMobileOpen(false);
+      setMobileMenuView('root');
       requestAnimationFrame(() => {
         toggleRef.current?.focus();
       });
@@ -214,6 +212,7 @@ export default function Navbar() {
     function onResize() {
       if (window.innerWidth > 980) {
         setMobileOpen(false);
+        setMobileMenuView('root');
       }
     }
 
@@ -237,6 +236,16 @@ export default function Navbar() {
     navigate(`/intel?query=${encodeURIComponent(cleaned)}`);
     setSearchTerm('');
   }
+
+  function handleMobileNavigate() {
+    setMobileOpen(false);
+    setMobileMenuView('root');
+  }
+
+  const activeMobileGroup =
+    mobileMenuView === 'root'
+      ? null
+      : desktopMenus.find((menu) => menu.id === mobileMenuView) ?? null;
 
   return (
     <nav className="navbar" aria-label="Primary navigation">
@@ -356,7 +365,15 @@ export default function Navbar() {
         ref={toggleRef}
         type="button"
         className="navbar-mobile-toggle"
-        onClick={() => setMobileOpen((state) => !state)}
+        onClick={() => {
+          setMobileOpen((state) => {
+            const next = !state;
+            if (!next) {
+              setMobileMenuView('root');
+            }
+            return next;
+          });
+        }}
         aria-expanded={mobileOpen}
         aria-controls="navbar-menu"
         aria-label={
@@ -372,62 +389,121 @@ export default function Navbar() {
         id="navbar-menu"
         className={mobileOpen ? 'navbar-menu navbar-menu-open' : 'navbar-menu'}
       >
-        <div className="navbar-primary">
-          {primaryLinks.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.to === '/'}
-              className={({ isActive }) =>
-                isActive ? 'navbar-link navbar-link-active' : 'navbar-link'
-              }
-              onClick={() => setMobileOpen(false)}
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </div>
-
-        <div className="navbar-groups" aria-label="Feature groups">
-          {featuredGroups.map((group) => (
-            <div key={group.label} className="navbar-group-card">
-              <p>{group.label}</p>
-              {group.links.map((link) => (
+        {mobileMenuView === 'root' ? (
+          <>
+            <div className="navbar-primary">
+              {primaryLinks.map((item) => (
                 <NavLink
-                  key={`${group.label}-${link.href}`}
-                  to={link.href}
-                  className="navbar-group-link"
-                  onClick={() => setMobileOpen(false)}
+                  key={item.to}
+                  to={item.to}
+                  end={item.to === '/'}
+                  className={({ isActive }) =>
+                    isActive ? 'navbar-link navbar-link-active' : 'navbar-link'
+                  }
+                  onClick={handleMobileNavigate}
                 >
-                  {link.text}
+                  {item.label}
                 </NavLink>
               ))}
             </div>
-          ))}
-        </div>
 
-        <div className="navbar-utility">
-          {utilityLinks.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                isActive ? 'navbar-link navbar-link-active' : 'navbar-link'
-              }
-              onClick={() => setMobileOpen(false)}
+            <div className="navbar-mobile-drawer" aria-label="Main sections">
+              {desktopMenus.map((menu) => (
+                <button
+                  key={menu.id}
+                  type="button"
+                  className="navbar-drawer-trigger"
+                  onClick={() => setMobileMenuView(menu.id)}
+                >
+                  <span>{menu.label}</span>
+                  <span aria-hidden="true">></span>
+                </button>
+              ))}
+            </div>
+
+            <div className="navbar-mobile-tools" aria-label="Quick tools">
+              <p>Quick Tools</p>
+              {mobileQuickTools.map((tool) => (
+                <a
+                  key={tool.href}
+                  href={tool.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {tool.text}
+                </a>
+              ))}
+            </div>
+
+            <div className="navbar-utility">
+              {utilityLinks.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    isActive ? 'navbar-link navbar-link-active' : 'navbar-link'
+                  }
+                  onClick={handleMobileNavigate}
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+              <button
+                type="button"
+                className="navbar-logout"
+                onClick={handleSignOut}
+                disabled={isSigningOut}
+              >
+                {isSigningOut ? 'Signing out...' : 'Logout'}
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="navbar-mobile-submenu">
+            <button
+              type="button"
+              className="navbar-drawer-back"
+              onClick={() => setMobileMenuView('root')}
             >
-              {item.label}
-            </NavLink>
-          ))}
-          <button
-            type="button"
-            className="navbar-logout"
-            onClick={handleSignOut}
-            disabled={isSigningOut}
-          >
-            {isSigningOut ? 'Signing out...' : 'Logout'}
-          </button>
-        </div>
+              <span aria-hidden="true"><</span>
+              <span>Back</span>
+            </button>
+
+            <p className="navbar-mobile-submenu-title">
+              {activeMobileGroup?.label ?? 'Navigation'}
+            </p>
+
+            <div className="navbar-mobile-submenu-links" role="menu">
+              {(activeMobileGroup?.links ?? []).map((link) => {
+                if (isExternalLink(link.href)) {
+                  return (
+                    <a
+                      key={`${activeMobileGroup?.id ?? 'mobile'}-${link.text}`}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      role="menuitem"
+                      onClick={handleMobileNavigate}
+                    >
+                      {link.text}
+                    </a>
+                  );
+                }
+
+                return (
+                  <NavLink
+                    key={`${activeMobileGroup?.id ?? 'mobile'}-${link.text}`}
+                    to={link.href}
+                    role="menuitem"
+                    onClick={handleMobileNavigate}
+                  >
+                    {link.text}
+                  </NavLink>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
