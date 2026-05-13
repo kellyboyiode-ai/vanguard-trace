@@ -3,6 +3,13 @@ import { useAuth } from '../context/useAuth.jsx';
 
 export default function ProtectedRoute({ children }) {
   const { session, loading } = useAuth();
+  const allowDevBypass =
+    import.meta.env.DEV &&
+    String(import.meta.env.VITE_DEV_AUTH_BYPASS || '').toLowerCase() === 'true';
+
+  if (allowDevBypass) {
+    return children;
+  }
 
   if (loading) {
     return (
