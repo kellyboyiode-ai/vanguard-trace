@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { FileUpload, SectionHeader } from '../components/index.js';
 import { ShellLayout } from '../layouts/index.js';
+import { getRouteMedians, getTraceTimeline } from '../services/index.js';
 import {
   CartesianGrid,
   Legend,
@@ -11,7 +13,7 @@ import {
   YAxis,
 } from 'recharts';
 
-const traceTimeline = [
+const defaultTraceTimeline = [
   { hour: '08:00', checkout: 1520, search: 2130, account: 1760 },
   { hour: '10:00', checkout: 1450, search: 2050, account: 1710 },
   { hour: '12:00', checkout: 1410, search: 2120, account: 1690 },
@@ -19,7 +21,51 @@ const traceTimeline = [
   { hour: '16:00', checkout: 1405, search: 2085, account: 1700 },
 ];
 
+const defaultRouteMedians = [
+  { route: '/checkout', median: 1400 },
+  { route: '/search', median: 2100 },
+  { route: '/account', median: 1700 },
+];
+
 export default function TracesPage() {
+  const [traceTimeline, setTraceTimeline] = useState(defaultTraceTimeline);
+  const [routeMedians, setRouteMedians] = useState(defaultRouteMedians);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadTraceData() {
+      const [timelineResult, mediansResult] = await Promise.all([
+        getTraceTimeline(),
+        getRouteMedians(),
+      ]);
+
+      if (!mounted) return;
+
+      if (
+        !timelineResult.error &&
+        Array.isArray(timelineResult.data) &&
+        timelineResult.data.length
+      ) {
+        setTraceTimeline(timelineResult.data);
+      }
+
+      if (
+        !mediansResult.error &&
+        Array.isArray(mediansResult.data) &&
+        mediansResult.data.length
+      ) {
+        setRouteMedians(mediansResult.data);
+      }
+    }
+
+    loadTraceData();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <ShellLayout
       eyebrow="Trace library"
@@ -34,18 +80,12 @@ export default function TracesPage() {
           />
 
           <ul className="route-list">
-            <li>
-              <span>/checkout</span>
-              <span>1.4s median | 98.7% success</span>
-            </li>
-            <li>
-              <span>/search</span>
-              <span>2.1s median | 96.8% success</span>
-            </li>
-            <li>
-              <span>/account</span>
-              <span>1.7s median | 99.1% success</span>
-            </li>
+            {routeMedians.map((item) => (
+              <li key={item.route}>
+                <span>{item.route}</span>
+                <span>{`${item.median}ms median | trace coverage active`}</span>
+              </li>
+            ))}
           </ul>
 
           <div className="panel panel-nested">

@@ -1,9 +1,19 @@
+import { useEffect } from 'react';
 import { FileUpload, SectionHeader } from '../components/index.js';
 import { ShellLayout } from '../layouts/index.js';
+import { getSettings, upsertSettings } from '../services/index.js';
+import { useAuthStore } from '../store/index.js';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
+
+const defaultValues = {
+  alertThresholdMs: 2500,
+  retentionDays: 30,
+  preferredCorridor: 'North Sea N1',
+  weeklyDigestEnabled: true,
+};
 
 const settingsSchema = z.object({
   alertThresholdMs: z.coerce
@@ -25,6 +35,8 @@ const settingsSchema = z.object({
 });
 
 export default function SettingsPage() {
+  const userId = useAuthStore((state) => state.user?.id);
+
   const {
     register,
     handleSubmit,
@@ -32,16 +44,50 @@ export default function SettingsPage() {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(settingsSchema),
-    defaultValues: {
-      alertThresholdMs: 2500,
-      retentionDays: 30,
-      preferredCorridor: 'North Sea N1',
-      weeklyDigestEnabled: true,
-    },
+    defaultValues,
   });
 
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadSettings() {
+      if (!userId) {
+        reset(defaultValues);
+        return;
+      }
+
+      const { data, error } = await getSettings(userId);
+      if (!mounted || error) return;
+      if (!data) return;
+
+      reset({
+        alertThresholdMs: data.alert_threshold_ms ?? defaultValues.alertThresholdMs,
+        retentionDays: data.report_retention_days ?? defaultValues.retentionDays,
+        preferredCorridor: data.preferred_corridor ?? defaultValues.preferredCorridor,
+        weeklyDigestEnabled:
+          data.weekly_digest_enabled ?? defaultValues.weeklyDigestEnabled,
+      });
+    }
+
+    loadSettings();
+
+    return () => {
+      mounted = false;
+    };
+  }, [reset, userId]);
+
   async function onSubmit(values) {
-    await new Promise((resolve) => setTimeout(resolve, 220));
+    if (!userId) {
+      toast.error('Sign in required to save settings.');
+      return;
+    }
+
+    const { error } = await upsertSettings(userId, values);
+    if (error) {
+      toast.error(error.message || 'Could not save settings.');
+      return;
+    }
+
     toast.success(
       `Saved: ${values.alertThresholdMs}ms threshold, ${values.retentionDays} day retention.`,
     );
@@ -139,14 +185,7 @@ export default function SettingsPage() {
               <button
                 className="form-button form-button-secondary"
                 type="button"
-                onClick={() =>
-                  reset({
-                    alertThresholdMs: 2500,
-                    retentionDays: 30,
-                    preferredCorridor: 'North Sea N1',
-                    weeklyDigestEnabled: true,
-                  })
-                }
+                onClick={() => reset(defaultValues)}
               >
                 Reset defaults
               </button>

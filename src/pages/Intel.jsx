@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { ShellLayout } from '../layouts/index.js';
+import { getIntelAlerts, getIntelRiskTrend } from '../services/index.js';
 import {
   Area,
   AreaChart,
@@ -9,7 +11,7 @@ import {
   YAxis,
 } from 'recharts';
 
-const riskTrend = [
+const defaultRiskTrend = [
   { day: 'Mon', risk: 31 },
   { day: 'Tue', risk: 27 },
   { day: 'Wed', risk: 35 },
@@ -19,7 +21,7 @@ const riskTrend = [
   { day: 'Sun', risk: 26 },
 ];
 
-const activeAlerts = [
+const defaultActiveAlerts = [
   {
     corridor: 'Baltic Route C7',
     severity: 'High',
@@ -38,6 +40,38 @@ const activeAlerts = [
 ];
 
 export default function Intel() {
+  const [riskTrend, setRiskTrend] = useState(defaultRiskTrend);
+  const [activeAlerts, setActiveAlerts] = useState(defaultActiveAlerts);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadIntel() {
+      const [alertsResult, trendResult] = await Promise.all([
+        getIntelAlerts(),
+        getIntelRiskTrend(),
+      ]);
+
+      if (!mounted) return;
+
+      if (!alertsResult.error && Array.isArray(alertsResult.data) && alertsResult.data.length) {
+        setActiveAlerts(alertsResult.data);
+      }
+
+      if (!trendResult.error && Array.isArray(trendResult.data) && trendResult.data.length) {
+        setRiskTrend(trendResult.data);
+      }
+    }
+
+    loadIntel();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const highRiskCount = activeAlerts.filter((alert) => alert.severity === 'High').length;
+
   return (
     <ShellLayout
       eyebrow="Intel"
@@ -58,7 +92,7 @@ export default function Intel() {
             </div>
             <div>
               <span>High-risk corridors</span>
-              <strong>1</strong>
+              <strong>{highRiskCount}</strong>
             </div>
             <div>
               <span>Last sync</span>

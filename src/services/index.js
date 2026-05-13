@@ -14,3 +14,7 @@ export { createReport, listReports } from './reportsService.js';
 export { listMessages, sendMessage } from './messagesService.js';
 export { getTrackingByCode, getTrackingSummary } from './trackingService.js';
 export { uploadDocument } from './uploadsService.js';
+export { getSettings, upsertSettings } from './settingsService.js';
+export { getIntelAlerts, getIntelRiskTrend } from './intelService.js';
+export { getOperationsQueue } from './operationsService.js';
+export { getTraceTimeline, getRouteMedians } from './tracesService.js';

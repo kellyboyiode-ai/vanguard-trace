@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
 import { ShellLayout } from '../layouts/index.js';
 import { FileUpload } from '../components/index.js';
+import { getOperationsQueue } from '../services/index.js';
 import { useUiStore } from '../store/index.js';
 
-const queueItems = [
+const defaultQueueItems = [
   { task: 'Reroute approval', count: 3, severity: 'critical' },
   { task: 'Customs clearance checks', count: 9, severity: 'high' },
   { task: 'Carrier handoff audits', count: 5, severity: 'medium' },
@@ -12,6 +14,25 @@ const queueItems = [
 
 export default function Operations() {
   const { quickFilters, setQuickFilter } = useUiStore();
+  const [queueItems, setQueueItems] = useState(defaultQueueItems);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadQueue() {
+      const { data, error } = await getOperationsQueue();
+      if (!mounted || error) return;
+      if (Array.isArray(data) && data.length) {
+        setQueueItems(data);
+      }
+    }
+
+    loadQueue();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const visibleItems = queueItems.filter((item) => {
     if (quickFilters.criticalOnly && item.severity !== 'critical') {
