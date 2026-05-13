@@ -15,6 +15,7 @@ import {
   Truck,
 } from 'lucide-react';
 import { VanguardHeroScene } from '../components/index.js';
+import { countryOptions } from '../constants/countryOptions.js';
 import { vanguardTraceHero } from '../data/index.js';
 import { ShellLayout } from '../layouts/index.js';
 import { submitQuoteRequest } from '../services/quoteService.js';
@@ -259,56 +260,31 @@ const promoIframeUrl =
   import.meta.env.VITE_PROMO_IFRAME_URL ||
   'https://www.vanguardlogistics.com/email-signup';
 
-const countryOptions = [
-  'United States',
-  'Canada',
-  'Mexico',
-  'Brazil',
-  'Argentina',
-  'Chile',
-  'Colombia',
-  'Peru',
-  'Panama',
-  'United Kingdom',
-  'Ireland',
-  'France',
-  'Germany',
-  'Netherlands',
-  'Belgium',
-  'Spain',
-  'Portugal',
-  'Italy',
-  'Sweden',
-  'Norway',
-  'Denmark',
-  'Poland',
-  'Turkey',
-  'United Arab Emirates',
-  'Saudi Arabia',
-  'South Africa',
-  'Kenya',
-  'Nigeria',
-  'India',
-  'Pakistan',
-  'Bangladesh',
-  'Sri Lanka',
-  'China',
-  'Hong Kong',
-  'Taiwan',
-  'Japan',
-  'South Korea',
-  'Singapore',
-  'Malaysia',
-  'Thailand',
-  'Vietnam',
-  'Indonesia',
-  'Philippines',
-  'Australia',
-  'New Zealand',
-  'Other',
-];
-
 const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '';
+
+function findSailingOption(rawValue, options) {
+  const value = String(rawValue || '')
+    .trim()
+    .toLowerCase();
+
+  if (!value || !Array.isArray(options) || options.length === 0) {
+    return null;
+  }
+
+  const exact = options.find((item) => item.label.toLowerCase() === value);
+  if (exact) {
+    return exact;
+  }
+
+  const prefix = options.find((item) =>
+    item.label.toLowerCase().startsWith(value),
+  );
+  if (prefix) {
+    return prefix;
+  }
+
+  return options[0] || null;
+}
 
 export default function Home() {
   const [cookieAccepted, setCookieAccepted] = useState(() => {
@@ -406,8 +382,7 @@ export default function Home() {
   const selectedDestinationLabel = useMemo(() => {
     return (
       destinationOptions.find(
-        (item) =>
-          item.label.toLowerCase() === destination.trim().toLowerCase(),
+        (item) => item.label.toLowerCase() === destination.trim().toLowerCase(),
       )?.label || ''
     );
   }, [destination, destinationOptions]);
@@ -751,6 +726,7 @@ export default function Home() {
                 type="text"
                 placeholder="Origin"
                 value={origin}
+                id="home-origin-input"
                 onChange={(event) => {
                   const nextOrigin = event.target.value;
                   setOrigin(nextOrigin);
@@ -765,9 +741,9 @@ export default function Home() {
                   }
                 }}
                 onBlur={() => {
-                  const matchedOrigin = originOptions.find(
-                    (item) =>
-                      item.label.toLowerCase() === origin.trim().toLowerCase(),
+                  const matchedOrigin = findSailingOption(
+                    origin,
+                    originOptions,
                   );
 
                   if (!matchedOrigin) {
@@ -779,6 +755,40 @@ export default function Home() {
                   setDestination('');
                   setDestinationCode('');
                   setDestinationOptions([]);
+                }}
+                onKeyDown={(event) => {
+                  if (event.key !== 'Enter' && event.key !== 'Tab') {
+                    return;
+                  }
+
+                  const matchedOrigin = findSailingOption(
+                    origin,
+                    originOptions,
+                  );
+
+                  if (!matchedOrigin) {
+                    if (event.key === 'Enter') {
+                      event.preventDefault();
+                    }
+                    toast.error(
+                      'Select an origin from the available suggestions.',
+                    );
+                    return;
+                  }
+
+                  setOrigin(matchedOrigin.label);
+                  setOriginCode(matchedOrigin.code || matchedOrigin.value);
+                  setDestination('');
+                  setDestinationCode('');
+                  setDestinationOptions([]);
+
+                  if (event.key === 'Enter') {
+                    event.preventDefault();
+                    const destinationInput = document.getElementById(
+                      'home-destination-input',
+                    );
+                    destinationInput?.focus();
+                  }
                 }}
                 aria-label="Service origin"
                 list="home-origin-options"
@@ -792,6 +802,7 @@ export default function Home() {
                 type="text"
                 placeholder="Destination"
                 value={destination}
+                id="home-destination-input"
                 onChange={(event) => {
                   const nextDestination = event.target.value;
                   setDestination(nextDestination);
@@ -802,13 +813,37 @@ export default function Home() {
                   }
                 }}
                 onBlur={() => {
-                  const matchedDestination = destinationOptions.find(
-                    (item) =>
-                      item.label.toLowerCase() ===
-                      destination.trim().toLowerCase(),
+                  const matchedDestination = findSailingOption(
+                    destination,
+                    destinationOptions,
                   );
 
                   if (!matchedDestination) {
+                    return;
+                  }
+
+                  setDestination(matchedDestination.label);
+                  setDestinationCode(
+                    matchedDestination.code || matchedDestination.value,
+                  );
+                }}
+                onKeyDown={(event) => {
+                  if (event.key !== 'Enter' && event.key !== 'Tab') {
+                    return;
+                  }
+
+                  const matchedDestination = findSailingOption(
+                    destination,
+                    destinationOptions,
+                  );
+
+                  if (!matchedDestination) {
+                    if (event.key === 'Enter') {
+                      event.preventDefault();
+                    }
+                    toast.error(
+                      'Select a destination from the available suggestions.',
+                    );
                     return;
                   }
 
@@ -823,10 +858,7 @@ export default function Home() {
               />
               <datalist id="home-destination-options">
                 {destinationOptions.map((item) => (
-                  <option
-                    key={`destination-${item.code}`}
-                    value={item.label}
-                  />
+                  <option key={`destination-${item.code}`} value={item.label} />
                 ))}
               </datalist>
               <input
@@ -1224,7 +1256,10 @@ function QuoteModal({
   onClose,
   onSubmit,
 }) {
-  const minTargetDate = useMemo(() => new Date().toISOString().slice(0, 10), []);
+  const minTargetDate = useMemo(
+    () => new Date().toISOString().slice(0, 10),
+    [],
+  );
 
   return (
     <div className="home-modal-backdrop" role="presentation" onClick={onClose}>

@@ -34,7 +34,8 @@ function normalizeLocationItem(item) {
 
 async function fetchSailingEndpoint(endpoint, params) {
   const baseUrl =
-    String(import.meta.env.VITE_LEGACY_API_BASE || '').trim() || LEGACY_API_BASE;
+    String(import.meta.env.VITE_LEGACY_API_BASE || '').trim() ||
+    LEGACY_API_BASE;
   const url = new URL(endpoint, baseUrl);
 
   Object.entries(params).forEach(([key, value]) => {
