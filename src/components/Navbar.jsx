@@ -162,7 +162,10 @@ const mobileToolMenus = [
         href: 'https://portal.vanguardlogistics.com/apps/ui/#/imo',
         text: 'IMO 2020 Rate Search',
       },
-      { href: 'https://avanti.vanguardlogistics.com/', text: 'FCL Rate Search' },
+      {
+        href: 'https://avanti.vanguardlogistics.com/',
+        text: 'FCL Rate Search',
+      },
       {
         href: 'https://portal.vanguardlogistics.com/apps/dashboard/?login=Y&mod=1DA358DF153386C0A920220E2670594622ED6024',
         text: 'vRate Calculator',

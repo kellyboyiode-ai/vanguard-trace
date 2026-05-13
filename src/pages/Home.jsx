@@ -653,7 +653,12 @@ export default function Home() {
             </form>
             <div className="home-toolbar-links">
               {manageShipmentLinks.map((link) => (
-                <a key={link.title} href={link.url} target="_blank" rel="noreferrer">
+                <a
+                  key={link.title}
+                  href={link.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <strong>{link.title}</strong>
                   <span>{link.description}</span>
                 </a>
@@ -696,11 +701,7 @@ export default function Home() {
               </button>
             </form>
             <div className="home-toolbar-links">
-              <a
-                href={locationQuickLink.url}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={locationQuickLink.url} target="_blank" rel="noreferrer">
                 <strong>{locationQuickLink.title}</strong>
                 <span>{locationQuickLink.description}</span>
               </a>
