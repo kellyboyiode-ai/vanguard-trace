@@ -14,6 +14,27 @@
   overflow: hidden;
 }
 
+.agency-hero-scene {
+  position: relative;
+  min-height: 220px;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(34, 211, 238, 0.18);
+  margin-bottom: 1.4rem;
+}
+
+.agency-hero-scene-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    130deg,
+    rgba(3, 6, 18, 0.38),
+    rgba(34, 211, 238, 0.08) 40%,
+    rgba(3, 6, 18, 0.44)
+  );
+}
+
 .agency-hero-row {
   display: flex;
   align-items: flex-end;
@@ -143,6 +164,42 @@
 }
 .agency-terminal-line:last-child {
   border-bottom: none;
+}
+
+.agency-telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.agency-telemetry-card {
+  border: 1px solid rgba(34, 211, 238, 0.24);
+  border-radius: 0.85rem;
+  background: linear-gradient(140deg, #111827cc, #0b1226cc);
+  padding: 0.85rem 0.95rem;
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.08) inset;
+}
+
+.agency-telemetry-label {
+  margin: 0 0 0.4rem;
+  color: rgba(125, 211, 252, 0.82);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.agency-telemetry-card h3 {
+  margin: 0;
+  color: #e2f8ff;
+  font-size: 0.96rem;
+  letter-spacing: 0.02em;
+}
+
+.agency-telemetry-detail {
+  margin: 0.48rem 0 0;
+  color: rgba(209, 213, 219, 0.9);
+  font-size: 0.84rem;
+  line-height: 1.38;
 }
 
 .agency-track-panel {
@@ -276,4 +333,17 @@
   content: '\26A0'; /* ⚠️ */
   color: #ef4444;
   font-size: 1.7rem;
+}
+
+@media (max-width: 980px) {
+  .agency-hero-row {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .agency-telemetry-grid,
+  .agency-track-result dl {
+    grid-template-columns: 1fr;
+  }
 }

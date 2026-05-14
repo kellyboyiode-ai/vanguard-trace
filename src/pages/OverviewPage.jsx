@@ -10,6 +10,27 @@ import {
 } from '../animations/vanguardTraceMotion.js';
 import { ShellLayout } from '../layouts/index.js';
 
+const telemetryWidgets = [
+  {
+    id: 'lane-encryption',
+    label: 'Encrypted lane telemetry',
+    value: 'AES-256 ACTIVE',
+    detail: '11 secured corridors with continuous key rotation.',
+  },
+  {
+    id: 'risk-detection',
+    label: 'Risk detection',
+    value: 'ELEVATED / NORTH ATLANTIC',
+    detail: 'Anomaly score crossed threshold 0.82 in the last 40 seconds.',
+  },
+  {
+    id: 'ops-integrity',
+    label: 'Integrity channel',
+    value: '98.4% VERIFIED',
+    detail: 'Tamper checks synced across customs and handoff nodes.',
+  },
+];
+
 export default function OverviewPage() {
   // Section 2: Tracking input state
   const [trackingCode, setTrackingCode] = useState('VX-2047-INTL');
@@ -52,6 +73,11 @@ export default function OverviewPage() {
         animate="animate"
         variants={staggerContainer}
       >
+        <motion.div className="agency-hero-scene" variants={panelReveal}>
+          <VanguardHeroScene />
+          <div className="agency-hero-scene-overlay" />
+        </motion.div>
+
         <div className="agency-hero-row">
           {/* Animated Radar */}
           <motion.div
@@ -112,6 +138,21 @@ export default function OverviewPage() {
             </motion.li>
           ))}
         </motion.ul>
+
+        <motion.div className="agency-telemetry-grid" variants={staggerContainer}>
+          {telemetryWidgets.map((item) => (
+            <motion.article
+              key={item.id}
+              className="agency-telemetry-card"
+              variants={fadeInUp}
+              whileHover={{ y: -3 }}
+            >
+              <p className="agency-telemetry-label">{item.label}</p>
+              <h3>{item.value}</h3>
+              <p className="agency-telemetry-detail">{item.detail}</p>
+            </motion.article>
+          ))}
+        </motion.div>
       </motion.section>
 
       {/* Section 2: Tracking Input */}
@@ -186,24 +227,40 @@ export default function OverviewPage() {
           subtitle="Advanced security, intelligence, and risk monitoring for global logistics."
         />
         <div className="agency-services-grid">
-          <motion.div className="agency-service-card" variants={fadeInUp}>
+          <motion.div
+            className="agency-service-card"
+            variants={fadeInUp}
+            whileHover={{ y: -4 }}
+          >
             <div className="agency-service-icon agency-service-secure" />
             <h3>Secure Tracking</h3>
             <p>Tamper-aware visibility from origin through final delivery.</p>
           </motion.div>
-          <motion.div className="agency-service-card" variants={fadeInUp}>
+          <motion.div
+            className="agency-service-card"
+            variants={fadeInUp}
+            whileHover={{ y: -4 }}
+          >
             <div className="agency-service-icon agency-service-integrity" />
             <h3>Cargo Integrity</h3>
             <p>
               Package state intelligence with anomaly alerts and chain logs.
             </p>
           </motion.div>
-          <motion.div className="agency-service-card" variants={fadeInUp}>
+          <motion.div
+            className="agency-service-card"
+            variants={fadeInUp}
+            whileHover={{ y: -4 }}
+          >
             <div className="agency-service-icon agency-service-route" />
             <h3>Route Intelligence</h3>
             <p>Corridor scoring with geopolitical and weather overlays.</p>
           </motion.div>
-          <motion.div className="agency-service-card" variants={fadeInUp}>
+          <motion.div
+            className="agency-service-card"
+            variants={fadeInUp}
+            whileHover={{ y: -4 }}
+          >
             <div className="agency-service-icon agency-service-risk" />
             <h3>Risk Monitoring</h3>
             <p>
