@@ -7,7 +7,10 @@ import '../styles/trackingLayout.css';
 const trackingTimeline = [
   { label: 'Dock Scan', meta: 'Container verified at outbound dock gate' },
   { label: 'Transit Link', meta: 'Carrier handoff complete with seal check' },
-  { label: 'Risk Monitor', meta: 'No route deviation detected in last 45 minutes' },
+  {
+    label: 'Risk Monitor',
+    meta: 'No route deviation detected in last 45 minutes',
+  },
   { label: 'Arrival Window', meta: 'ETA confidence above 90% threshold' },
 ];
 

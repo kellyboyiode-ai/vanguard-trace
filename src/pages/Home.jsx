@@ -131,9 +131,15 @@ const regions = [
 
 const commandTimeline = [
   { label: 'Customs Cleared', meta: 'VT-203 scanned at Rotterdam lane gate' },
-  { label: 'Route Integrity Check', meta: 'North Atlantic corridor deviation risk: low' },
+  {
+    label: 'Route Integrity Check',
+    meta: 'North Atlantic corridor deviation risk: low',
+  },
   { label: 'Warehouse Inbound', meta: 'Lagos distribution bay sync complete' },
-  { label: 'Last-mile Prediction', meta: 'ETA confidence: 92% within service window' },
+  {
+    label: 'Last-mile Prediction',
+    meta: 'ETA confidence: 92% within service window',
+  },
 ];
 
 const locationSuggestions = [
@@ -147,7 +153,8 @@ const locationSuggestions = [
   'Hong Kong, HK',
 ];
 
-const promoIframeUrl = import.meta.env.VITE_PROMO_IFRAME_URL || HOME_PROMO_IFRAME_URL;
+const promoIframeUrl =
+  import.meta.env.VITE_PROMO_IFRAME_URL || HOME_PROMO_IFRAME_URL;
 
 const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '';
 
@@ -565,7 +572,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="vt-bento-grid" aria-label="Command center live modules">
+        <section
+          className="vt-bento-grid"
+          aria-label="Command center live modules"
+        >
           <BentoWidget
             size="large"
             pulse

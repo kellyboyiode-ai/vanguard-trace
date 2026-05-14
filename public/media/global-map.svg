@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Global logistics map">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#021022"/>
+      <stop offset="55%" stop-color="#07213a"/>
+      <stop offset="100%" stop-color="#0b2f47"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+  <g fill="none" stroke="#38bdf8" stroke-opacity="0.28" stroke-width="2">
+    <path d="M120 480C260 390 430 360 560 410 700 470 830 500 940 450 1080 390 1200 360 1380 420"/>
+    <path d="M160 560C360 470 520 480 700 560 860 640 1030 640 1240 520"/>
+    <path d="M280 320C420 260 550 250 680 310 820 380 940 380 1120 300 1230 250 1320 250 1450 300"/>
+  </g>
+  <g fill="#67e8f9" fill-opacity="0.9">
+    <circle cx="310" cy="470" r="7"/>
+    <circle cx="610" cy="410" r="7"/>
+    <circle cx="920" cy="452" r="7"/>
+    <circle cx="1280" cy="420" r="7"/>
+    <circle cx="690" cy="555" r="7"/>
+    <circle cx="1210" cy="525" r="7"/>
+  </g>
+</svg>

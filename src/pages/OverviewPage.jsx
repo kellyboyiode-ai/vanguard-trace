@@ -27,7 +27,10 @@ const overviewStatusFeed = [
 const radarStatuses = ['LOCKED', 'TRACKING', 'SWEEPING', 'CONFIRMED'];
 
 const overviewTimeline = [
-  { label: 'Port Arrival', meta: 'Freight manifest validated at terminal gate' },
+  {
+    label: 'Port Arrival',
+    meta: 'Freight manifest validated at terminal gate',
+  },
   { label: 'Risk Scan', meta: 'Anomaly engine reports low-severity variance' },
   { label: 'Hub Transfer', meta: 'Air-to-ground handoff queued for dispatch' },
 ];

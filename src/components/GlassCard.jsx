@@ -1,4 +1,9 @@
-export default function GlassCard({ title, eyebrow, children, className = '' }) {
+export default function GlassCard({
+  title,
+  eyebrow,
+  children,
+  className = '',
+}) {
   return (
     <section className={`vt-glass-card ${className}`.trim()}>
       {(eyebrow || title) && (

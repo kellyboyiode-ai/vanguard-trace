@@ -8,7 +8,10 @@ const defaultRoutes = [
 
 export default function GlobeView({ routes = defaultRoutes }) {
   return (
-    <section className="vt-globe-view" aria-label="Global 3D logistics tracking">
+    <section
+      className="vt-globe-view"
+      aria-label="Global 3D logistics tracking"
+    >
       <div className="vt-globe-orbit">
         <motion.div
           className="vt-globe-core"

@@ -59,7 +59,9 @@ export default function LiveStatusStrip() {
               {latestEvent.severity.toUpperCase()}
             </span>
             <p>{latestEvent.message}</p>
-            <time dateTime={latestEvent.at}>{formatEventTime(latestEvent.at)}</time>
+            <time dateTime={latestEvent.at}>
+              {formatEventTime(latestEvent.at)}
+            </time>
           </>
         ) : (
           <p>Awaiting live telemetry...</p>

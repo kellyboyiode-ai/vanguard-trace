@@ -5,7 +5,11 @@ function safeNumber(value, fallback = 0) {
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
-export function predictDelayRisk({ congestionIndex = 0, weatherRisk = 0, customsLoad = 0 }) {
+export function predictDelayRisk({
+  congestionIndex = 0,
+  weatherRisk = 0,
+  customsLoad = 0,
+}) {
   const weighted =
     safeNumber(congestionIndex) * 0.5 +
     safeNumber(weatherRisk) * 0.3 +
@@ -31,7 +35,11 @@ export function predictDelayRisk({ congestionIndex = 0, weatherRisk = 0, customs
   };
 }
 
-export function summarizeOperations({ activeShipments = 0, delayedShipments = 0, riskIndex = 0 }) {
+export function summarizeOperations({
+  activeShipments = 0,
+  delayedShipments = 0,
+  riskIndex = 0,
+}) {
   if (delayedShipments > 12 || riskIndex > 35) {
     return 'Operational posture: caution. Route optimization and alert escalation recommended.';
   }

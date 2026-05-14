@@ -75,7 +75,9 @@ export default function CommandPalette() {
               <li key={item.to}>
                 <button
                   type="button"
-                  className={active ? 'vt-command-item is-active' : 'vt-command-item'}
+                  className={
+                    active ? 'vt-command-item is-active' : 'vt-command-item'
+                  }
                   onClick={() => {
                     navigate(item.to);
                     setOpen(false);
