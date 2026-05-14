@@ -57,7 +57,7 @@ export default function Contact() {
         <section className="panel">
           <div className="panel-header">
             <h2>Operations contacts</h2>
-            <p>Global coverage for logistics response teams</p>
+            <p>Global coverage for trace response teams</p>
           </div>
 
           <ul className="route-list">

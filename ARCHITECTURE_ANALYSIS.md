@@ -11,6 +11,7 @@
 ### ✅ WHAT EXISTS
 
 #### Frontend Stack
+
 - **Framework:** React 19.2.6 + React Router 7.15.0
 - **Build:** Vite 8.0.12 + Cloudflare Pages
 - **Styling:** Tailwind CSS 4.3.0 + PostCSS
@@ -25,12 +26,14 @@
 - **Text Animation:** React Type Animation 3.2.0
 
 #### Backend Stack
+
 - **Database:** Supabase (PostgreSQL)
 - **Auth:** Supabase Auth
 - **Storage:** Supabase Storage
 - **API Client:** @supabase/supabase-js 2.105.4
 
 #### Project Structure
+
 ```
 src/
 ├── App.jsx                    # Root routes + Suspense
@@ -55,6 +58,7 @@ src/
 ```
 
 #### Routes (Current)
+
 ```
 /                     → OverviewPage (protected)
 /home                 → Home (protected)
@@ -74,6 +78,7 @@ src/
 ```
 
 #### Services (16 API Layers)
+
 1. `authService.js` - Auth logic
 2. `approvalService.js` - User approval workflow
 3. `trackingService.js` - Shipment tracking
@@ -92,6 +97,7 @@ src/
 16. `index.js` - Export barrel
 
 #### Database Schema
+
 ```
 Tables:
 - auth.users (Supabase built-in)
@@ -107,6 +113,7 @@ Tables:
 ```
 
 #### Store/State Management
+
 ```
 Zustand Stores:
 - authStore (user, session, error)
@@ -115,6 +122,7 @@ Zustand Stores:
 ```
 
 #### Authentication
+
 ```
 - Supabase Auth (Email/Password + OAuth ready)
 - Auth Context (AuthProvider wrapper)
@@ -128,6 +136,7 @@ Zustand Stores:
 ### ❌ WHAT'S MISSING / NEEDS CREATION
 
 #### Architecture Gaps
+
 - ❌ No unified AppLayout system (ShellLayout is minimal)
 - ❌ No centralized navigation configuration
 - ❌ No feature folder structure
@@ -139,6 +148,7 @@ Zustand Stores:
 - ❌ No reusable UI component library
 
 #### KnockOnce Hospitality Missing
+
 - ❌ Guest platform
 - ❌ Hotel dashboard
 - ❌ Multi-tenant architecture
@@ -149,6 +159,7 @@ Zustand Stores:
 - ❌ QR hotel integration
 
 #### AI & Intelligence Missing
+
 - ❌ AI concierge system
 - ❌ Recommendation engine
 - ❌ Hidden gems scoring/discovery
@@ -157,6 +168,7 @@ Zustand Stores:
 - ❌ Context-awareness system
 
 #### Geographic/Dataset Missing
+
 - ❌ Nigerian states/LGAs/towns dataset
 - ❌ Geolocation system
 - ❌ Location-based discovery
@@ -164,6 +176,7 @@ Zustand Stores:
 - ❌ Offline support
 
 #### Mobile Architecture Missing
+
 - ❌ Mobile-specific layouts
 - ❌ Bottom navigation
 - ❌ Touch-first components
@@ -171,6 +184,7 @@ Zustand Stores:
 - ❌ Offline sync
 
 #### Performance Missing
+
 - ❌ Code splitting optimization
 - ❌ Lazy loading strategy
 - ❌ Caching layer
@@ -178,6 +192,7 @@ Zustand Stores:
 - ❌ Performance monitoring
 
 #### Testing Missing
+
 - ❌ Unit tests
 - ❌ Integration tests
 - ❌ E2E tests
@@ -185,6 +200,7 @@ Zustand Stores:
 - ❌ Accessibility tests
 
 #### DevOps Missing
+
 - ❌ CI/CD configuration (beyond Cloudflare)
 - ❌ Environment management
 - ❌ Monitoring/logging
@@ -196,6 +212,7 @@ Zustand Stores:
 ## 🏗 PROPOSED UNIFIED ARCHITECTURE
 
 ### Target Directory Structure
+
 ```
 src/
 ├── app/                           # Root app wrapper
@@ -329,6 +346,7 @@ src/
 ## 🎯 IMPLEMENTATION ROADMAP
 
 ### Phase 1: Foundation (Week 1-2)
+
 - [ ] Create TypeScript configuration
 - [ ] Set up unified AppLayout system
 - [ ] Create centralized navigation config
@@ -339,6 +357,7 @@ src/
 - [ ] Set up hooks library
 
 ### Phase 2: Architecture (Week 2-3)
+
 - [ ] Create API client abstraction layer
 - [ ] Refactor all services into features
 - [ ] Consolidate state management
@@ -347,6 +366,7 @@ src/
 - [ ] Standardize styles/tokens
 
 ### Phase 3: Hospitality Systems (Week 3-4)
+
 - [ ] Implement multi-tenant architecture
 - [ ] Create hotel management system
 - [ ] Create guest platform
@@ -355,6 +375,7 @@ src/
 - [ ] Integrate hotel context awareness
 
 ### Phase 4: AI & Intelligence (Week 4-5)
+
 - [ ] Implement recommendation engine
 - [ ] Create hidden gems scoring system
 - [ ] Build AI concierge layer
@@ -362,6 +383,7 @@ src/
 - [ ] Implement location intelligence
 
 ### Phase 5: Geography & Mobile (Week 5-6)
+
 - [ ] Integrate Nigerian dataset (36 states, 774 LGAs, towns)
 - [ ] Build geolocation system
 - [ ] Implement map integration
@@ -370,6 +392,7 @@ src/
 - [ ] Implement offline sync
 
 ### Phase 6: Performance & Optimization (Week 6-7)
+
 - [ ] Code splitting optimization
 - [ ] Lazy loading strategy
 - [ ] Caching layer implementation
@@ -378,6 +401,7 @@ src/
 - [ ] Performance monitoring
 
 ### Phase 7: Testing & DevOps (Week 7-8)
+
 - [ ] Unit test setup
 - [ ] Integration tests
 - [ ] E2E tests
@@ -390,7 +414,9 @@ src/
 ## 📋 IMMEDIATE ACTION ITEMS (Start Today)
 
 ### 1. Create Unified AppLayout System
+
 **Location:** `src/app/AppLayout.jsx`
+
 - Consolidate `ShellLayout` + responsive variants
 - Support desktop sidebar + mobile bottom nav
 - Integrate global navigation config
@@ -398,7 +424,9 @@ src/
 - Context awareness (hotel, role, etc.)
 
 ### 2. Centralize Navigation Configuration
+
 **Location:** `src/config/navigation.config.js`
+
 - Define ALL routes in ONE place
 - Role-based visibility
 - Mobile-specific variants
@@ -406,19 +434,23 @@ src/
 - Active route tracking
 
 ### 3. Create UI Component Library
+
 **Location:** `src/components/ui/`
+
 - Button, Card, Modal, Drawer, Input, etc.
 - Responsive variants
 - Accessible by default
 - Consistent theming
 
 ### 4. Refactor Services into Features
+
 - Group by domain (auth, hotels, guests, etc.)
 - Consolidate duplicated API calls
 - Standardize error handling
 - Create feature-specific hooks
 
 ### 5. Set Up TypeScript
+
 - Convert `.js` to `.ts`
 - Create comprehensive type system
 - Add type validation
@@ -428,6 +460,7 @@ src/
 ## 🎨 Design System Tokens
 
 ### Colors
+
 ```
 Primary: #0f172a (slate)
 Accent: #22d3ee (cyan)
@@ -438,6 +471,7 @@ Neutral: #6b7280 (gray)
 ```
 
 ### Spacing
+
 ```
 xs: 0.25rem
 sm: 0.5rem
@@ -448,6 +482,7 @@ xl: 2rem
 ```
 
 ### Breakpoints
+
 ```
 sm: 640px
 md: 768px
@@ -457,6 +492,7 @@ xl: 1280px
 ```
 
 ### Typography
+
 ```
 Headings: Inter 600+ weight
 Body: Inter 400-500 weight

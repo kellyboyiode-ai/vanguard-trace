@@ -12,10 +12,19 @@ import {
   Radar,
   Search,
   ShieldAlert,
-  Ship,
   Truck,
 } from 'lucide-react';
 import { VanguardHeroScene } from '../components/index.js';
+import {
+  HOME_LOCATION_LOOKUP_BASE_URL,
+  HOME_LOCATION_QUICK_LINK,
+  HOME_MANAGE_SHIPMENT_LINKS,
+  HOME_PROMO_IFRAME_URL,
+  HOME_QUICK_TRACK_BASE_URL,
+  HOME_SAILING_SCHEDULE_BASE_URL,
+  HOME_TOOLBOX_TABS,
+  HOME_TOP_TOOLS,
+} from '../constants/externalLinks.js';
 import { countryOptions } from '../constants/countryOptions.js';
 import { vanguardTraceHero } from '../data/index.js';
 import { ShellLayout } from '../layouts/index.js';
@@ -74,183 +83,10 @@ const panelReveal = {
   },
 };
 
-const topTools = [
-  {
-    title: 'LCL',
-    description: 'Vanguard ADESSO LCL quoting and booking.',
-    url: 'https://portal.vanguardlogistics.com/apps/ui/#/adesso',
-  },
-  {
-    title: 'FCL',
-    description: 'Avanti full-container quoting tool.',
-    url: 'https://avanti.vanguardlogistics.com/',
-  },
-  {
-    title: 'LTL',
-    description: 'Shiprite LTL quoting workflow.',
-    url: 'http://shiprite.nacalogistics.com/index.cfm',
-  },
-];
-
-const manageShipmentLinks = [
-  {
-    title: 'Track & Trace',
-    description: 'Detailed shipment visibility dashboard.',
-    url: 'https://portal.vanguardlogistics.com/apps/track-shipment/',
-  },
-  {
-    title: 'Statusmate',
-    description: 'Schedule shipment status reports.',
-    url: 'https://portal.vanguardlogistics.com/apps/shipment-status/',
-  },
-];
-
-const locationQuickLink = {
-  title: 'See Our Locations',
-  description: 'Browse all global offices and regional contacts.',
-  url: 'https://www.vanguardlogistics.com/locations',
-};
-
-const toolboxTabs = [
-  {
-    id: 'quotation',
-    label: 'Quotation Tools',
-    Icon: Package,
-    tools: [
-      {
-        name: 'Vanguard ADESSO',
-        desc: 'Quote, book, and manage LCL online with door-to-door visibility.',
-        url: 'https://portal.vanguardlogistics.com/apps/ui/#/adesso',
-      },
-      {
-        name: 'FCL Rate Search',
-        desc: 'Full-container search and booking planning.',
-        url: 'https://avanti.vanguardlogistics.com/',
-      },
-      {
-        name: 'IMO 2020 Rate Search',
-        desc: 'Compare rate structures with fuel and compliance context.',
-        url: 'https://portal.vanguardlogistics.com/apps/ui/#/imo',
-      },
-      {
-        name: 'vRate Calculator',
-        desc: 'LCL quoting and routing calculator.',
-        url: 'https://portal.vanguardlogistics.com/apps/dashboard/?login=Y&mod=1DA358DF153386C0A920220E2670594622ED6024',
-      },
-      {
-        name: 'Shiprite on Demand',
-        desc: 'On-demand LTL rating and shipment setup.',
-        url: 'https://portal.vanguardlogistics.com/apps/shiprite-on-demand/',
-      },
-      {
-        name: 'Shiprite',
-        desc: 'LTL quoting tool for contract and spot rates.',
-        url: 'https://portal.vanguardlogistics.com/apps/dashboard/?login=Y&mod=FC714E7FC4F7AD193AABB32D588769C2FAE5D448',
-      },
-      {
-        name: 'eFulfillment Connect',
-        desc: 'LCL shipping to eCommerce distribution networks.',
-        url: 'https://portal.vanguardlogistics.com/apps/ui/#/adesso',
-      },
-    ],
-  },
-  {
-    id: 'shipping',
-    label: 'Shipping Tools',
-    Icon: Ship,
-    tools: [
-      {
-        name: 'Ocean Booking',
-        desc: 'Place bookings and monitor booking readiness.',
-        url: 'https://portal.vanguardlogistics.com/apps/ocean-booking/',
-      },
-      {
-        name: 'Sailing Schedule',
-        desc: 'Interactive origin-to-destination schedule lookup.',
-        url: 'https://portal.vanguardlogistics.com/apps/sailing-schedule/',
-      },
-      {
-        name: 'Solas VGM',
-        desc: 'Submit VGM details with audit-ready confirmations.',
-        url: 'https://portal.vanguardlogistics.com/apps/verified-gross-mass/',
-      },
-      {
-        name: 'Freight Release',
-        desc: 'Approve invoices and release import freight.',
-        url: 'https://portal.vanguardlogistics.com/apps/freight-release/',
-      },
-    ],
-  },
-  {
-    id: 'tracking',
-    label: 'Tracking Tools',
-    Icon: Radar,
-    tools: [
-      {
-        name: 'Freight Availability',
-        desc: 'Visibility of import shipment release readiness.',
-        url: 'https://portal.vanguardlogistics.com/apps/dashboard/?show-fa-list=Y',
-      },
-      {
-        name: 'Track & Trace',
-        desc: 'Deep shipment visibility across checkpoints and handoffs.',
-        url: 'https://portal.vanguardlogistics.com/apps/track-shipment/',
-      },
-      {
-        name: 'Quick Track',
-        desc: 'Immediate status checks by booking reference.',
-        url: 'https://www.vanguardlogistics.com/tracking-results?tracking=',
-      },
-      {
-        name: 'Statusmate',
-        desc: 'Schedule recurring shipment status reports.',
-        url: 'https://portal.vanguardlogistics.com/apps/shipment-status/',
-      },
-    ],
-  },
-  {
-    id: 'documentation',
-    label: 'Documentation Tools',
-    Icon: ShieldAlert,
-    tools: [
-      {
-        name: 'Documentation Portal',
-        desc: 'Review, upload, and download shipment documents.',
-        url: 'https://portal.vanguardlogistics.com/apps/documentation/',
-      },
-      {
-        name: 'Create SLI',
-        desc: 'Submit shipping instructions with structured fields.',
-        url: 'https://portal.vanguardlogistics.com/apps/create-sli/',
-      },
-      {
-        name: 'Cargo Release Order',
-        desc: 'Manage import release documentation workflows.',
-        url: 'https://portal.vanguardlogistics.com/apps/cargo-release-order/',
-      },
-      {
-        name: 'Print Shipping Labels',
-        desc: 'Generate shipping labels for operational handoff.',
-        url: 'https://portal.vanguardlogistics.com/apps/print-labels/',
-      },
-      {
-        name: 'Customer/Agent Advisory',
-        desc: 'Review customer and agent advisory updates.',
-        url: 'https://portal.vanguardlogistics.com/apps/customer-advisory/',
-      },
-      {
-        name: 'Useful Information',
-        desc: 'Extranet resources, forms, and references.',
-        url: 'https://portal.vanguardlogistics.com/apps/extranet/',
-      },
-      {
-        name: 'Cargo Insurance',
-        desc: 'Arrange cargo insurance through partner platform.',
-        url: 'http://www.onlinecargoinsurance.com/oci/index.jsp',
-      },
-    ],
-  },
-];
+const topTools = HOME_TOP_TOOLS;
+const manageShipmentLinks = HOME_MANAGE_SHIPMENT_LINKS;
+const locationQuickLink = HOME_LOCATION_QUICK_LINK;
+const toolboxTabs = HOME_TOOLBOX_TABS;
 
 const serviceModules = [
   {
@@ -297,9 +133,7 @@ const locationSuggestions = [
   'Hong Kong, HK',
 ];
 
-const promoIframeUrl =
-  import.meta.env.VITE_PROMO_IFRAME_URL ||
-  'https://www.vanguardlogistics.com/email-signup';
+const promoIframeUrl = import.meta.env.VITE_PROMO_IFRAME_URL || HOME_PROMO_IFRAME_URL;
 
 const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '';
 
@@ -501,9 +335,7 @@ export default function Home() {
       return;
     }
 
-    const target = new URL(
-      'https://portal.vanguardlogistics.com/apps/sailing-schedule/',
-    );
+    const target = new URL(HOME_SAILING_SCHEDULE_BASE_URL);
     target.searchParams.set('origin', originCode);
     target.searchParams.set('destination', destinationCode);
     target.searchParams.set('departureDate', departureDate);
@@ -521,7 +353,7 @@ export default function Home() {
       return;
     }
 
-    const target = `https://www.vanguardlogistics.com/tracking-results?tracking=${encodeURIComponent(
+    const target = `${HOME_QUICK_TRACK_BASE_URL}${encodeURIComponent(
       quickTrack.trim(),
     )}`;
 
@@ -530,7 +362,7 @@ export default function Home() {
 
   function handleRegionLookup(event) {
     event.preventDefault();
-    const target = `https://www.vanguardlogistics.com/contact/locations?region=${encodeURIComponent(
+    const target = `${HOME_LOCATION_LOOKUP_BASE_URL}${encodeURIComponent(
       region,
     )}`;
     window.open(target, '_blank', 'noopener,noreferrer');

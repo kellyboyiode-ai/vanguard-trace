@@ -110,7 +110,7 @@ export default function SignupPage() {
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
               className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
-              placeholder="Vanguard Logistics"
+              placeholder="Vanguard Trace Partner"
             />
           </div>
           <div>

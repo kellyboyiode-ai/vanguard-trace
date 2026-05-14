@@ -11,7 +11,7 @@ export const vanguardTraceHero = {
 
 export const heroImage = {
   src: 'https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1400&q=80',
-  alt: 'Warehouse shelves and freight aisle in a commercial logistics facility',
+  alt: 'Warehouse shelves and freight aisle in a global trade operations facility',
 };
 
 export const terminalEvents = [

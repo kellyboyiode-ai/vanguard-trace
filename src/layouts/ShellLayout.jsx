@@ -38,7 +38,7 @@ export default function ShellLayout({ title, eyebrow, description, children }) {
       <div className="shell-frame">
         <header className="shell-header" aria-label="Site header">
           <div className="shell-brand">
-            <p className="shell-brand-kicker">Vanguard Logistics</p>
+            <p className="shell-brand-kicker">Vanguard Trace Platform</p>
             <strong className="shell-brand-title">Vanguard Trace</strong>
           </div>
           <Navbar />

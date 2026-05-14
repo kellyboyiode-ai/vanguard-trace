@@ -59,7 +59,12 @@ function main() {
       'VITE_RECAPTCHA_SITE_KEY=',
       'VITE_GTM_ID=',
       'VITE_PROMO_IFRAME_URL=',
-      'VITE_LEGACY_API_BASE=https://www.vanguardlogistics.com',
+      'VITE_PORTAL_BASE_URL=https://portal.your-provider.example',
+      'VITE_MARKETING_BASE_URL=https://www.your-company.example',
+      'VITE_AVANTI_BASE_URL=https://rates.your-company.example',
+      'VITE_SHIPRITE_LTL_URL=https://ltl.your-company.example',
+      'VITE_CARGO_INSURANCE_URL=https://insurance.your-company.example',
+      'VITE_SAILINGS_API_BASE=https://api.your-company.example',
       '',
     ].join('\n');
 

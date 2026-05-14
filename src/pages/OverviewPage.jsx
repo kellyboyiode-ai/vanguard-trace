@@ -54,7 +54,6 @@ export default function OverviewPage() {
 
   useEffect(() => {
     let step = 0;
-    setRadarTelemetry(buildRadarTelemetry(step));
 
     const telemetryTimer = setInterval(() => {
       step += 1;
@@ -89,8 +88,8 @@ export default function OverviewPage() {
   return (
     <ShellLayout
       eyebrow="VANGUARD_TRACE::SESSION_ACTIVE"
-      title="Global Shipment Monitoring with Advanced Logistics Infrastructure"
-      description="A modern logistics intelligence platform delivering secure shipment visibility, route analytics, and reliable global operations support."
+      title="Global Shipment Monitoring with Advanced Trace Infrastructure"
+      description="A modern trace intelligence platform delivering secure shipment visibility, route analytics, and reliable global operations support."
     >
       {/* Section 1: Hero + Animated Telemetry */}
       <motion.section
@@ -271,7 +270,7 @@ export default function OverviewPage() {
       >
         <SectionHeader
           title="Operational Services"
-          subtitle="Advanced shipment security, route insights, and proactive monitoring for global logistics."
+          subtitle="Advanced shipment security, route insights, and proactive monitoring for global trade corridors."
         />
         <div className="agency-services-grid">
           <motion.div

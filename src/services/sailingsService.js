@@ -1,4 +1,6 @@
-const LEGACY_API_BASE = 'https://www.vanguardlogistics.com';
+const DEFAULT_SAILINGS_API_BASE = String(
+  import.meta.env.VITE_SAILINGS_API_BASE || '',
+).trim();
 
 function normalizeLocationItem(item) {
   if (!item) {
@@ -33,9 +35,10 @@ function normalizeLocationItem(item) {
 }
 
 async function fetchSailingEndpoint(endpoint, params) {
-  const baseUrl =
-    String(import.meta.env.VITE_LEGACY_API_BASE || '').trim() ||
-    LEGACY_API_BASE;
+  const baseUrl = DEFAULT_SAILINGS_API_BASE;
+  if (!baseUrl) {
+    throw new Error('Sailing API base URL is not configured.');
+  }
   const url = new URL(endpoint, baseUrl);
 
   Object.entries(params).forEach(([key, value]) => {

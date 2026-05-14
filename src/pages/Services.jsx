@@ -41,8 +41,8 @@ export default function Services() {
   return (
     <ShellLayout
       eyebrow="Services"
-      title="Logistics service modules"
-      description="Compose shipment intelligence, compliance checks, and monitoring services based on operational needs."
+      title="Trace service modules"
+      description="Compose shipment intelligence, compliance checks, and monitoring services based on mission needs."
     >
       <div className="panel-grid single-column">
         <section className="panel">

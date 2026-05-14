@@ -14,7 +14,7 @@ export default function About() {
           </div>
           <p>
             Vanguard Trace provides real-time visibility and intelligence for
-            global logistics networks. We combine encrypted shipment telemetry,
+            global trade networks. We combine encrypted shipment telemetry,
             geopolitical risk assessment, and predictive routing to protect
             supply chains from disruption and loss.
           </p>
@@ -55,7 +55,7 @@ export default function About() {
           <p>
             Vanguard Trace integrates with customs authorities, port operators,
             carrier networks, and regulatory bodies. Our API-first architecture
-            enables seamless integration with existing logistics management
+            enables seamless integration with existing operations management
             systems and enterprise workflows.
           </p>
         </section>
@@ -66,7 +66,7 @@ export default function About() {
           </div>
           <p>
             Our leadership team brings decades of experience across global
-            logistics, supply chain security, and enterprise technology.
+            trade operations, supply chain security, and enterprise technology.
           </p>
         </section>
 
@@ -107,7 +107,8 @@ export default function About() {
           </div>
           <p>
             We are building the future of freight intelligence. If you are
-            passionate about logistics, security, or data engineering, we want
+            passionate about trace operations, security, or data engineering, we
+            want
             to hear from you.
           </p>
         </section>
