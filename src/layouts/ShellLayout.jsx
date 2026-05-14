@@ -1,17 +1,23 @@
-import { useEffect } from 'react';
-import {
-  CinematicBackdrop,
-  CommandPalette,
-  FloatingAIAssistant,
-  Footer,
-  LiveStatusStrip,
-  MobileOpsDock,
-  Navbar,
-} from '../components/index.js';
+import { lazy, Suspense, useEffect } from 'react';
+import { Footer, Navbar } from '../components/index.js';
 import { useLiveOpsEngine } from '../hooks/useLiveOpsEngine.js';
 import { useOperationsStore } from '../store/index.js';
 import '../styles/footer.css';
 import '../styles/navbar.css';
+
+const CinematicBackdrop = lazy(
+  () => import('../components/CinematicBackdrop.jsx'),
+);
+const CommandPalette = lazy(() => import('../components/CommandPalette.jsx'));
+const FloatingAIAssistant = lazy(
+  () => import('../components/FloatingAIAssistant.jsx'),
+);
+const LiveStatusStrip = lazy(() => import('../components/LiveStatusStrip.jsx'));
+const MobileOpsDock = lazy(() => import('../components/MobileOpsDock.jsx'));
+
+function ShellAsyncFallback({ className = '' }) {
+  return <div className={className} aria-hidden="true" />;
+}
 
 export default function ShellLayout({ title, eyebrow, description, children }) {
   const gtmId = String(import.meta.env.VITE_GTM_ID || '').trim();
@@ -40,10 +46,18 @@ export default function ShellLayout({ title, eyebrow, description, children }) {
 
   return (
     <div className="app-shell vt-command-center">
-      <CinematicBackdrop />
-      <CommandPalette />
-      <FloatingAIAssistant />
-      <LiveStatusStrip />
+      <Suspense fallback={<ShellAsyncFallback className="vt-shell-fallback" />}>
+        <CinematicBackdrop />
+      </Suspense>
+      <Suspense fallback={<ShellAsyncFallback className="vt-shell-fallback" />}>
+        <CommandPalette />
+      </Suspense>
+      <Suspense fallback={<ShellAsyncFallback className="vt-shell-fallback" />}>
+        <FloatingAIAssistant />
+      </Suspense>
+      <Suspense fallback={<ShellAsyncFallback className="vt-shell-fallback" />}>
+        <LiveStatusStrip />
+      </Suspense>
       {gtmId && (
         <noscript>
           <iframe
@@ -83,7 +97,9 @@ export default function ShellLayout({ title, eyebrow, description, children }) {
           </section>
         </main>
       </div>
-      <MobileOpsDock />
+      <Suspense fallback={<ShellAsyncFallback className="vt-shell-fallback" />}>
+        <MobileOpsDock />
+      </Suspense>
       <Footer />
     </div>
   );

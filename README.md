@@ -165,17 +165,31 @@ Create production build:
 npm run build
 ```
 
-Deploy to Cloudflare Pages:
+Deploy to Cloudflare Pages (safe mode, blocks dirty working tree):
 
 ```bash
 npm run deploy
 ```
 
-Deploy a preview branch build:
+Deploy a preview branch build (safe mode):
 
 ```bash
 npm run deploy:preview
 ```
+
+If you intentionally need to deploy with uncommitted changes:
+
+```bash
+npm run deploy:dirty
+npm run deploy:preview:dirty
+```
+
+Every build now embeds deployment metadata shown in the footer banner:
+
+- UTC deployment timestamp
+- Git commit
+- Git branch
+- clean/dirty working tree state
 
 Auto-commit local changes:
 

@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
+import { useAdaptiveMotion } from './hooks/useAdaptiveMotion.js';
 
 const AdminApprovalsPage = lazy(() => import('./pages/AdminApprovalsPage.jsx'));
 const About = lazy(() => import('./pages/About.jsx'));
@@ -39,14 +40,24 @@ function RouteLoadingFallback() {
   );
 }
 
-function RouteMotion({ children }) {
+function RouteMotion({ children, reducedMotion }) {
   return (
     <motion.div
       className="vt-route-motion-shell"
-      initial={{ opacity: 0, y: 12, filter: 'blur(10px)', scale: 0.99 }}
+      initial={{
+        opacity: 0,
+        y: reducedMotion ? 4 : 12,
+        filter: reducedMotion ? 'blur(3px)' : 'blur(10px)',
+        scale: reducedMotion ? 1 : 0.99,
+      }}
       animate={{ opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }}
-      exit={{ opacity: 0, y: -8, filter: 'blur(8px)', scale: 1.01 }}
-      transition={{ duration: 0.38, ease: 'easeOut' }}
+      exit={{
+        opacity: 0,
+        y: reducedMotion ? -3 : -8,
+        filter: reducedMotion ? 'blur(3px)' : 'blur(8px)',
+        scale: reducedMotion ? 1 : 1.01,
+      }}
+      transition={{ duration: reducedMotion ? 0.2 : 0.38, ease: 'easeOut' }}
     >
       {children}
     </motion.div>
@@ -55,6 +66,7 @@ function RouteMotion({ children }) {
 
 function App() {
   const location = useLocation();
+  const { reducedMotion } = useAdaptiveMotion({ applyRootClass: true });
 
   return (
     <AuthProvider>
@@ -64,7 +76,7 @@ function App() {
             <Route
               path="/login"
               element={
-                <RouteMotion>
+                <RouteMotion reducedMotion={reducedMotion}>
                   <LoginPage />
                 </RouteMotion>
               }
@@ -72,7 +84,7 @@ function App() {
             <Route
               path="/signup"
               element={
-                <RouteMotion>
+                <RouteMotion reducedMotion={reducedMotion}>
                   <SignupPage />
                 </RouteMotion>
               }
@@ -80,7 +92,7 @@ function App() {
             <Route
               path="/pending-approval"
               element={
-                <RouteMotion>
+                <RouteMotion reducedMotion={reducedMotion}>
                   <PendingApprovalPage />
                 </RouteMotion>
               }
@@ -89,7 +101,7 @@ function App() {
               path="/admin/approvals"
               element={
                 <ProtectedRoute requireAdmin>
-                  <RouteMotion>
+                  <RouteMotion reducedMotion={reducedMotion}>
                     <AdminApprovalsPage />
                   </RouteMotion>
                 </ProtectedRoute>
@@ -99,7 +111,7 @@ function App() {
               path="/"
               element={
                 <ProtectedRoute>
-                  <RouteMotion>
+                  <RouteMotion reducedMotion={reducedMotion}>
                     <OverviewPage />
                   </RouteMotion>
                 </ProtectedRoute>
@@ -109,7 +121,7 @@ function App() {
               path="/home"
               element={
                 <ProtectedRoute>
-                  <RouteMotion>
+                  <RouteMotion reducedMotion={reducedMotion}>
                     <Home />
                   </RouteMotion>
                 </ProtectedRoute>
@@ -119,7 +131,7 @@ function App() {
               path="/tracking"
               element={
                 <ProtectedRoute>
-                  <RouteMotion>
+                  <RouteMotion reducedMotion={reducedMotion}>
                     <Tracking />
                   </RouteMotion>
                 </ProtectedRoute>
@@ -129,7 +141,7 @@ function App() {
               path="/operations"
               element={
                 <ProtectedRoute>
-                  <RouteMotion>
+                  <RouteMotion reducedMotion={reducedMotion}>
                     <Operations />
                   </RouteMotion>
                 </ProtectedRoute>
@@ -139,7 +151,7 @@ function App() {
               path="/services"
               element={
                 <ProtectedRoute>
-                  <RouteMotion>
+                  <RouteMotion reducedMotion={reducedMotion}>
                     <Services />
                   </RouteMotion>
                 </ProtectedRoute>
@@ -149,7 +161,7 @@ function App() {
               path="/intel"
               element={
                 <ProtectedRoute>
-                  <RouteMotion>
+                  <RouteMotion reducedMotion={reducedMotion}>
                     <Intel />
                   </RouteMotion>
                 </ProtectedRoute>
@@ -159,7 +171,7 @@ function App() {
               path="/contact"
               element={
                 <ProtectedRoute>
-                  <RouteMotion>
+                  <RouteMotion reducedMotion={reducedMotion}>
                     <Contact />
                   </RouteMotion>
                 </ProtectedRoute>
@@ -169,7 +181,7 @@ function App() {
               path="/about"
               element={
                 <ProtectedRoute>
-                  <RouteMotion>
+                  <RouteMotion reducedMotion={reducedMotion}>
                     <About />
                   </RouteMotion>
                 </ProtectedRoute>
@@ -179,7 +191,7 @@ function App() {
               path="/traces"
               element={
                 <ProtectedRoute>
-                  <RouteMotion>
+                  <RouteMotion reducedMotion={reducedMotion}>
                     <TracesPage />
                   </RouteMotion>
                 </ProtectedRoute>
@@ -189,7 +201,7 @@ function App() {
               path="/settings"
               element={
                 <ProtectedRoute>
-                  <RouteMotion>
+                  <RouteMotion reducedMotion={reducedMotion}>
                     <SettingsPage />
                   </RouteMotion>
                 </ProtectedRoute>
@@ -198,7 +210,7 @@ function App() {
             <Route
               path="*"
               element={
-                <RouteMotion>
+                <RouteMotion reducedMotion={reducedMotion}>
                   <NotFoundPage />
                 </RouteMotion>
               }

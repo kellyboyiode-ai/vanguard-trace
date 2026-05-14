@@ -19,8 +19,36 @@ function FooterLink({ to, label, external = false }) {
   return <NavLink to={to}>{label}</NavLink>;
 }
 
+function formatBuildTimestamp(value) {
+  if (!value) {
+    return 'unknown';
+  }
+
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) {
+    return 'unknown';
+  }
+
+  return new Intl.DateTimeFormat('en-GB', {
+    dateStyle: 'medium',
+    timeStyle: 'medium',
+    timeZone: 'UTC',
+  }).format(parsed);
+}
+
 export default function Footer() {
   const year = new Date().getFullYear();
+  const buildTimestamp = import.meta.env.VITE_BUILD_TIMESTAMP;
+  const buildCommit = import.meta.env.VITE_BUILD_COMMIT || 'unknown';
+  const buildBranch = import.meta.env.VITE_BUILD_BRANCH || 'unknown';
+  const buildDirty = import.meta.env.VITE_BUILD_DIRTY === 'true';
+
+  const deploymentLabel = [
+    `Deployed: ${formatBuildTimestamp(buildTimestamp)} UTC`,
+    `Commit: ${buildCommit}`,
+    `Branch: ${buildBranch}`,
+    buildDirty ? 'Dirty tree build' : 'Clean tree build',
+  ].join(' | ');
 
   return (
     <footer className="footer">
@@ -119,6 +147,9 @@ export default function Footer() {
         </p>
         <p className="footer-tagline">
           Global intelligence. Real-time tracking. Enterprise security.
+        </p>
+        <p className="footer-deploy-banner" title={deploymentLabel}>
+          {deploymentLabel}
         </p>
       </div>
     </footer>

@@ -5,9 +5,11 @@ import {
   cinematicFallbackMedia,
   cinematicRouteMedia,
 } from '../data/cinematicMedia.js';
+import { useAdaptiveMotion } from '../hooks/useAdaptiveMotion.js';
 
 export default function CinematicBackdrop() {
   const location = useLocation();
+  const { reducedMotion } = useAdaptiveMotion();
   const mediaSet = useMemo(
     () => cinematicRouteMedia[location.pathname] || cinematicFallbackMedia,
     [location.pathname],
@@ -15,12 +17,16 @@ export default function CinematicBackdrop() {
   const [sceneIndex, setSceneIndex] = useState(0);
 
   useEffect(() => {
+    if (reducedMotion) {
+      return undefined;
+    }
+
     const timer = setInterval(() => {
       setSceneIndex((current) => (current + 1) % mediaSet.length);
     }, 6800);
 
     return () => clearInterval(timer);
-  }, [mediaSet.length]);
+  }, [mediaSet.length, reducedMotion]);
 
   useEffect(() => {
     const preload = mediaSet.map((entry) => {
@@ -45,10 +51,21 @@ export default function CinematicBackdrop() {
           key={`${location.pathname}-${activeScene.id}`}
           className={`vt-scene ${activeScene.tone}`}
           style={{ backgroundImage: `url(${activeScene.asset})` }}
-          initial={{ opacity: 0, filter: 'blur(18px)', scale: 1.08 }}
+          initial={{
+            opacity: 0,
+            filter: reducedMotion ? 'blur(5px)' : 'blur(18px)',
+            scale: reducedMotion ? 1.01 : 1.08,
+          }}
           animate={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
-          exit={{ opacity: 0, filter: 'blur(16px)', scale: 1.04 }}
-          transition={{ duration: 0.9, ease: 'easeInOut' }}
+          exit={{
+            opacity: 0,
+            filter: reducedMotion ? 'blur(5px)' : 'blur(16px)',
+            scale: reducedMotion ? 1 : 1.04,
+          }}
+          transition={{
+            duration: reducedMotion ? 0.42 : 0.9,
+            ease: 'easeInOut',
+          }}
         >
           <div className="vt-scene-overlay vt-scene-overlay-a" />
           <div className="vt-scene-overlay vt-scene-overlay-b" />
