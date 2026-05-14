@@ -13,21 +13,21 @@ import { ShellLayout } from '../layouts/index.js';
 const telemetryWidgets = [
   {
     id: 'lane-encryption',
-    label: 'Encrypted lane telemetry',
-    value: 'AES-256 ACTIVE',
-    detail: '11 secured corridors with continuous key rotation.',
+    label: 'Lane telemetry',
+    value: 'Live coverage active',
+    detail: '11 major corridors with continuous status refresh.',
   },
   {
     id: 'risk-detection',
-    label: 'Risk detection',
-    value: 'ELEVATED / NORTH ATLANTIC',
-    detail: 'Anomaly score crossed threshold 0.82 in the last 40 seconds.',
+    label: 'Transit watch',
+    value: 'Advisory / North Atlantic',
+    detail: 'Weather and delay advisory updated in the last 40 seconds.',
   },
   {
     id: 'ops-integrity',
-    label: 'Integrity channel',
-    value: '98.4% VERIFIED',
-    detail: 'Tamper checks synced across customs and handoff nodes.',
+    label: 'Delivery integrity',
+    value: '98.4% confirmed',
+    detail: 'Milestone checks synced across customs and handoff points.',
   },
 ];
 
@@ -64,7 +64,7 @@ export default function OverviewPage() {
     <ShellLayout
       eyebrow="VANGUARD_TRACE::SESSION_ACTIVE"
       title="Global Shipment Monitoring with Advanced Logistics Infrastructure"
-      description="The highest-grade, agency-level logistics intelligence platform. Undercover cyberopt agency for worldwide crime syndicate disruption—disguised as a logistics web interface."
+      description="A modern logistics operations console for real-time shipment tracking, route visibility, and delivery assurance."
     >
       {/* Section 1: Hero + Animated Telemetry */}
       <motion.section
@@ -91,7 +91,7 @@ export default function OverviewPage() {
               variants={radarSpin}
               animate="animate"
             />
-            <span className="agency-radar-label">RADAR</span>
+            <span className="agency-radar-label">NETWORK</span>
           </motion.div>
 
           {/* Animated Shield */}
@@ -139,7 +139,10 @@ export default function OverviewPage() {
           ))}
         </motion.ul>
 
-        <motion.div className="agency-telemetry-grid" variants={staggerContainer}>
+        <motion.div
+          className="agency-telemetry-grid"
+          variants={staggerContainer}
+        >
           {telemetryWidgets.map((item) => (
             <motion.article
               key={item.id}
@@ -223,8 +226,8 @@ export default function OverviewPage() {
         animate="animate"
       >
         <SectionHeader
-          title="Agency-Grade Services"
-          subtitle="Advanced security, intelligence, and risk monitoring for global logistics."
+          title="Logistics Services"
+          subtitle="Visibility, reliability, and route performance for global shipments."
         />
         <div className="agency-services-grid">
           <motion.div
@@ -264,7 +267,7 @@ export default function OverviewPage() {
             <div className="agency-service-icon agency-service-risk" />
             <h3>Risk Monitoring</h3>
             <p>
-              Radar-based threat scans for incident detection and escalation.
+              Delay and exception monitoring for proactive route management.
             </p>
           </motion.div>
         </div>
