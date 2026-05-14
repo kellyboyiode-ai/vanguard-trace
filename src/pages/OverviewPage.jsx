@@ -3,11 +3,7 @@ import { motion } from 'framer-motion';
 import { SectionHeader, VanguardHeroScene } from '../components/index.js';
 import { terminalEvents } from '../data/vanguardTraceContent.js';
 import { fadeInUp, staggerContainer } from '../animations/motionPresets.js';
-import {
-  radarSpin,
-  nodeFloat,
-  panelReveal,
-} from '../animations/vanguardTraceMotion.js';
+import { nodeFloat, panelReveal } from '../animations/vanguardTraceMotion.js';
 import { ShellLayout } from '../layouts/index.js';
 
 const telemetryWidgets = [
@@ -62,8 +58,8 @@ export default function OverviewPage() {
 
   return (
     <ShellLayout
-      eyebrow="VANGUARD_TRACE::SESSION_ACTIVE"
-      title="Global Shipment Monitoring with Advanced Logistics Infrastructure"
+      eyebrow="Vanguard Operations"
+      title="Global Shipment Monitoring"
       description="A modern logistics operations console for real-time shipment tracking, route visibility, and delivery assurance."
     >
       {/* Section 1: Hero + Animated Telemetry */}
@@ -86,12 +82,8 @@ export default function OverviewPage() {
             animate="animate"
             initial="initial"
           >
-            <motion.div
-              className="agency-radar-sweep"
-              variants={radarSpin}
-              animate="animate"
-            />
-            <span className="agency-radar-label">NETWORK</span>
+            <div className="agency-radar-sweep" />
+            <span className="agency-radar-label">LIVE MAP</span>
           </motion.div>
 
           {/* Animated Shield */}

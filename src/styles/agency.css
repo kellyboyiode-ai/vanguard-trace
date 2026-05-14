@@ -1,5 +1,60 @@
 @import './tokens.css';
 
+@keyframes agencySoftPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 2px #0ff2,
+      0 0 18px 1px #22d3ee33;
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px #0ff3,
+      0 0 28px 4px #22d3ee55;
+  }
+}
+
+@keyframes agencyRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes agencyFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes agencySweep {
+  0% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes agencyLineGlow {
+  0%,
+  100% {
+    background: transparent;
+  }
+  50% {
+    background: rgba(34, 211, 238, 0.06);
+  }
+}
+
 .agency-hero {
   background: linear-gradient(120deg, #0a0a0f 80%, #1a1a2a 100%);
   border-radius: 1.5rem;
@@ -21,6 +76,7 @@
   overflow: hidden;
   border: 1px solid rgba(34, 211, 238, 0.18);
   margin-bottom: 1.4rem;
+  animation: agencyFloat 8s ease-in-out infinite;
 }
 
 .agency-hero-scene-overlay {
@@ -56,6 +112,7 @@
   box-shadow:
     0 0 0 2px #0ff2,
     0 0 24px 2px #22d3ee44;
+  animation: agencySoftPulse 3.4s ease-in-out infinite;
 }
 .agency-radar-sweep {
   position: absolute;
@@ -64,6 +121,7 @@
   border-radius: 50%;
   border: 2px dashed #22d3ee99;
   box-shadow: 0 0 0 2px #22d3ee33;
+  animation: agencyRotate 12s linear infinite;
 }
 .agency-radar-label {
   position: absolute;
@@ -89,6 +147,23 @@
   margin: 0 0.5rem;
   box-shadow: 0 0 0 2px #22d3ee22;
   position: relative;
+  animation: agencyFloat 4.8s ease-in-out infinite;
+}
+
+.agency-truck {
+  animation-delay: 0.3s;
+}
+
+.agency-package {
+  animation-delay: 0.55s;
+}
+
+.agency-globe {
+  animation-delay: 0.85s;
+}
+
+.agency-terminal {
+  animation-delay: 1.1s;
 }
 .agency-shield::before {
   content: '\1F6E1'; /* 🛡️ */
@@ -161,9 +236,22 @@
   border-bottom: 1px solid #22d3ee11;
   letter-spacing: 0.01em;
   background: transparent;
+  animation: agencyLineGlow 3.4s ease-in-out infinite;
 }
 .agency-terminal-line:last-child {
   border-bottom: none;
+}
+
+.agency-terminal-line:nth-child(2) {
+  animation-delay: 0.35s;
+}
+
+.agency-terminal-line:nth-child(3) {
+  animation-delay: 0.75s;
+}
+
+.agency-terminal-line:nth-child(4) {
+  animation-delay: 1.1s;
 }
 
 .agency-telemetry-grid {
@@ -178,6 +266,15 @@
   background: linear-gradient(140deg, #111827cc, #0b1226cc);
   padding: 0.85rem 0.95rem;
   box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.08) inset;
+  animation: agencyFloat 6s ease-in-out infinite;
+}
+
+.agency-telemetry-card:nth-child(2) {
+  animation-delay: 0.45s;
+}
+
+.agency-telemetry-card:nth-child(3) {
+  animation-delay: 0.9s;
 }
 
 .agency-telemetry-label {
@@ -302,6 +399,7 @@
   align-items: flex-start;
   gap: 0.7rem;
   position: relative;
+  animation: agencySweep 4.4s ease-in-out infinite;
 }
 .agency-service-icon {
   width: 2.2rem;
