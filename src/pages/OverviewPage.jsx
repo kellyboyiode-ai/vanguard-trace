@@ -1,44 +1,41 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import {
-  SectionHeader,
-  StatCard,
-  TraceFeedItem,
-  VanguardHeroScene,
-} from '../components/index.js';
-import { dashboardStats, traceFeed } from '../data/index.js';
+import { SectionHeader, VanguardHeroScene } from '../components/index.js';
 import { terminalEvents } from '../data/vanguardTraceContent.js';
+import { fadeInUp, staggerContainer } from '../animations/motionPresets.js';
+import {
+  radarSpin,
+  nodeFloat,
+  panelReveal,
+} from '../animations/vanguardTraceMotion.js';
 import { ShellLayout } from '../layouts/index.js';
-import { fadeInUp, staggerContainer, radarSpin } from '../animations/index.js';
 
 export default function OverviewPage() {
-  // Tracking input state
+  // Section 2: Tracking input state
   const [trackingCode, setTrackingCode] = useState('VX-2047-INTL');
   const [trackingResult, setTrackingResult] = useState(null);
-  const [trackingLoading, setTrackingLoading] = useState(false);
-  const [trackingError, setTrackingError] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  const [trackingMessage, setTrackingMessage] = useState('');
 
-  // Fake tracking handler for demo
+  // Demo tracking handler (replace with real API if needed)
   function handleTrackSubmit(e) {
     e.preventDefault();
-    setTrackingLoading(true);
-    setTrackingError('');
+    setIsSearching(true);
+    setTrackingMessage('');
     setTimeout(() => {
       if (trackingCode.trim().toUpperCase() === 'VX-2047-INTL') {
         setTrackingResult({
           id: 'VX-2047-INTL',
-          status: 'In Transit',
-          location: 'PACIFIC-CORRIDOR',
-          eta: 'ETA -00:18',
-          seal: 'Intact',
-          temp: 'Controlled',
+          status: 'STABLE',
+          location: 'PACIFIC CORRIDOR',
+          eta: '12h 42m',
         });
-        setTrackingError('');
+        setTrackingMessage('');
       } else {
         setTrackingResult(null);
-        setTrackingError('Shipment not found.');
+        setTrackingMessage('Shipment not found. Try VX-2047-INTL.');
       }
-      setTrackingLoading(false);
+      setIsSearching(false);
     }, 900);
   }
 
@@ -46,110 +43,173 @@ export default function OverviewPage() {
     <ShellLayout
       eyebrow="VANGUARD_TRACE::SESSION_ACTIVE"
       title="Global Shipment Monitoring with Advanced Logistics Infrastructure"
-      description="The highest-grade, cyber-intelligence logistics platform for worldwide crime syndicate disruption and secure supply chain operations."
+      description="The highest-grade, agency-level logistics intelligence platform. Undercover cyberopt agency for worldwide crime syndicate disruption—disguised as a logistics web interface."
     >
-      {/* Section 1: Hero Animation + Terminal */}
-      <motion.div
-        className="cyber-hero-section"
+      {/* Section 1: Hero + Animated Telemetry */}
+      <motion.section
+        className="agency-hero dark"
+        initial="initial"
+        animate="animate"
         variants={staggerContainer}
+      >
+        <div className="agency-hero-row">
+          {/* Animated Radar */}
+          <motion.div
+            className="agency-radar"
+            variants={panelReveal}
+            animate="animate"
+            initial="initial"
+          >
+            <motion.div
+              className="agency-radar-sweep"
+              variants={radarSpin}
+              animate="animate"
+            />
+            <span className="agency-radar-label">RADAR</span>
+          </motion.div>
+
+          {/* Animated Shield */}
+          <motion.div
+            className="agency-shield"
+            variants={nodeFloat}
+            animate="animate"
+          />
+          {/* Animated Truck */}
+          <motion.div
+            className="agency-truck"
+            variants={nodeFloat}
+            animate="animate"
+          />
+          {/* Animated Package */}
+          <motion.div
+            className="agency-package"
+            variants={nodeFloat}
+            animate="animate"
+          />
+          {/* Animated Globe */}
+          <motion.div
+            className="agency-globe"
+            variants={nodeFloat}
+            animate="animate"
+          />
+          {/* Animated Terminal */}
+          <motion.div
+            className="agency-terminal"
+            variants={panelReveal}
+            animate="animate"
+          />
+        </div>
+
+        {/* Animated Telemetry Feed */}
+        <motion.ul className="agency-terminal-feed" variants={staggerContainer}>
+          {terminalEvents.map((evt, i) => (
+            <motion.li
+              key={evt}
+              className="agency-terminal-line"
+              variants={fadeInUp}
+            >
+              {evt}
+            </motion.li>
+          ))}
+        </motion.ul>
+      </motion.section>
+
+      {/* Section 2: Tracking Input */}
+      <motion.section
+        className="agency-track-panel panel"
+        variants={panelReveal}
         initial="initial"
         animate="animate"
       >
-        <VanguardHeroScene />
-        <motion.div className="cyber-terminal" variants={fadeInUp}>
-          <div className="cyber-terminal-bg">
-            <div className="cyber-terminal-radar">
-              <motion.div
-                className="cyber-radar-sweep"
-                variants={radarSpin}
-                animate="animate"
-              />
-              <span className="cyber-terminal-icon">🛡️</span>
-              <span className="cyber-terminal-icon">🚚</span>
-              <span className="cyber-terminal-icon">📦</span>
-              <span className="cyber-terminal-icon">🌐</span>
-            </div>
-            <div className="cyber-terminal-lines">
-              {terminalEvents.map((line, i) => (
-                <span key={i} className="cyber-terminal-line">
-                  {line}
-                </span>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </motion.div>
-
-      {/* Section 2: Tracking Input */}
-      <motion.section className="cyber-track-section panel" variants={fadeInUp}>
         <SectionHeader
           title="Track a Shipment"
-          subtitle="Track by shipment ID, airway bill, or container number"
+          subtitle="Track by shipment ID, airway bill, or container number. Example: VX-2047-INTL"
         />
         <form
-          className="cyber-track-form"
+          className="agency-track-form"
           onSubmit={handleTrackSubmit}
           autoComplete="off"
         >
           <input
-            className="cyber-track-input"
+            className="agency-track-input"
             type="text"
             value={trackingCode}
             onChange={(e) => setTrackingCode(e.target.value)}
-            placeholder="e.g. VX-2047-INTL"
-            aria-label="Tracking code"
-            disabled={trackingLoading}
+            placeholder="Enter shipment ID..."
+            aria-label="Shipment ID"
+            disabled={isSearching}
           />
           <button
-            className="cyber-track-btn"
+            className="agency-track-btn"
             type="submit"
-            disabled={trackingLoading || !trackingCode.trim()}
+            disabled={isSearching}
           >
-            {trackingLoading ? 'Tracking...' : 'Track shipment'}
+            {isSearching ? 'Tracking...' : 'Track shipment'}
           </button>
         </form>
-        {trackingResult && (
-          <div className="cyber-track-result">
-            <strong>{trackingResult.id}</strong> — {trackingResult.status} @{' '}
-            {trackingResult.location} | {trackingResult.eta} | Seal:{' '}
-            {trackingResult.seal} | Temp: {trackingResult.temp}
-          </div>
+        {trackingMessage && (
+          <div className="agency-track-error">{trackingMessage}</div>
         )}
-        {trackingError && (
-          <div className="cyber-track-error">{trackingError}</div>
+        {trackingResult && (
+          <div className="agency-track-result">
+            <dl>
+              <div>
+                <dt>ID</dt>
+                <dd>{trackingResult.id}</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd>{trackingResult.status}</dd>
+              </div>
+              <div>
+                <dt>Location</dt>
+                <dd>{trackingResult.location}</dd>
+              </div>
+              <div>
+                <dt>ETA</dt>
+                <dd>{trackingResult.eta}</dd>
+              </div>
+            </dl>
+          </div>
         )}
       </motion.section>
 
       {/* Section 3: Services Grid */}
       <motion.section
-        className="cyber-services-section panel"
-        variants={fadeInUp}
+        className="agency-services panel"
+        variants={panelReveal}
+        initial="initial"
+        animate="animate"
       >
         <SectionHeader
-          title="Agency Services"
-          subtitle="Secure Tracking, Cargo Integrity, Route Intelligence, Risk Monitoring"
+          title="Agency-Grade Services"
+          subtitle="Advanced security, intelligence, and risk monitoring for global logistics."
         />
-        <div className="cyber-services-grid">
-          <div className="cyber-service-card">
+        <div className="agency-services-grid">
+          <motion.div className="agency-service-card" variants={fadeInUp}>
+            <div className="agency-service-icon agency-service-secure" />
             <h3>Secure Tracking</h3>
             <p>Tamper-aware visibility from origin through final delivery.</p>
-          </div>
-          <div className="cyber-service-card">
+          </motion.div>
+          <motion.div className="agency-service-card" variants={fadeInUp}>
+            <div className="agency-service-icon agency-service-integrity" />
             <h3>Cargo Integrity</h3>
             <p>
               Package state intelligence with anomaly alerts and chain logs.
             </p>
-          </div>
-          <div className="cyber-service-card">
+          </motion.div>
+          <motion.div className="agency-service-card" variants={fadeInUp}>
+            <div className="agency-service-icon agency-service-route" />
             <h3>Route Intelligence</h3>
             <p>Corridor scoring with geopolitical and weather overlays.</p>
-          </div>
-          <div className="cyber-service-card">
+          </motion.div>
+          <motion.div className="agency-service-card" variants={fadeInUp}>
+            <div className="agency-service-icon agency-service-risk" />
             <h3>Risk Monitoring</h3>
             <p>
               Radar-based threat scans for incident detection and escalation.
             </p>
-          </div>
+          </motion.div>
         </div>
       </motion.section>
     </ShellLayout>
