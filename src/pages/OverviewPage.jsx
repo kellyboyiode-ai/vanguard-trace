@@ -16,6 +16,8 @@ const overviewStatusFeed = [
   'Checkpoint updates: Proof-of-delivery events syncing continuously.',
 ];
 
+
+
 export default function OverviewPage() {
   // Section 2: Tracking input state
   const [trackingCode, setTrackingCode] = useState('VX-2047-INTL');
@@ -202,7 +204,22 @@ export default function OverviewPage() {
             variants={fadeInUp}
             whileHover={{ y: -4 }}
           >
-            <div className="agency-service-icon agency-service-secure" />
+            <motion.div
+              className="agency-service-icon agency-service-secure"
+              animate={{
+                boxShadow: [
+                  '0 0 0 0px rgba(34, 211, 238, 0.4)',
+                  '0 0 0 12px rgba(34, 211, 238, 0)',
+                ],
+              }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                ease: 'easeOut',
+              }}
+            >
+              🔒
+            </motion.div>
             <h3>Secure Tracking</h3>
             <p>Tamper-aware visibility from origin through final delivery.</p>
           </motion.div>
