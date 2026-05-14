@@ -190,6 +190,9 @@ alter table public.quote_requests enable row level security;
 alter table public.account_admins enable row level security;
 alter table public.account_onboarding enable row level security;
 
+grant select on table public.account_admins to authenticated, service_role;
+grant select, insert, update on table public.account_onboarding to authenticated, service_role;
+
 create or replace function public.touch_updated_at()
 returns trigger
 language plpgsql
