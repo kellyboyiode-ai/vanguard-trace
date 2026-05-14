@@ -26,9 +26,8 @@ import {
 } from '../services/sailingsService.js';
 import '../styles/homeLayout.css';
 import '../styles/vanguardTraceHero.css';
-import '../styles/agency.css';
 // Minimal, vanishing, agency-grade Section 4/5 metrics
-const agencyIntelMetrics = [
+const sectionIntelMetrics = [
   { label: 'Active shipments', value: '1,284' },
   { label: 'At-risk lanes', value: '07' },
   { label: 'Integrity score', value: '98.4%' },
@@ -274,13 +273,6 @@ const serviceModules = [
     description: 'Simple status checks for exceptions and delivery changes.',
     Icon: Radar,
   },
-];
-
-const intelMetrics = [
-  { label: 'Active shipments', value: '1,284' },
-  { label: 'At-risk lanes', value: '07' },
-  { label: 'Integrity score', value: '98.4%' },
-  { label: 'Live alerts', value: '12' },
 ];
 
 const regions = [
@@ -711,118 +703,6 @@ export default function Home() {
       </a>
 
       <div id="home-main-content" className="home-layout">
-        {/* --- Section 4/5: Minimal, vanishing, agency-grade overlays --- */}
-        <motion.section
-          className="agency-hero agency-hero-vanish"
-          initial="initial"
-          animate="animate"
-          variants={panelReveal}
-          style={{
-            position: 'absolute',
-            top: '2.2rem',
-            right: '2.2rem',
-            zIndex: 2,
-            pointerEvents: 'none',
-            width: 'min(340px, 28vw)',
-            opacity: 0.82,
-            background:
-              'linear-gradient(120deg, #0a0a0fEE 80%, #1a1a2aCC 100%)',
-            boxShadow: '0 2px 18px 0 #0008',
-            border: '1.5px solid rgba(34,211,238,0.09)',
-            backdropFilter: 'blur(2.5px)',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1.2rem',
-              marginBottom: '0.7rem',
-            }}
-          >
-            {/* Animated radar */}
-            <motion.div
-              className="agency-radar"
-              variants={panelReveal}
-              animate="animate"
-              initial="initial"
-              style={{ width: 54, height: 54, minWidth: 54, minHeight: 54 }}
-            >
-              <motion.div
-                className="agency-radar-sweep"
-                variants={radarSpin}
-                animate="animate"
-                style={{ borderWidth: 1.5, borderColor: '#22d3ee99' }}
-              />
-            </motion.div>
-            {/* Minimal metrics */}
-            <div style={{ display: 'flex', gap: '1.1rem' }}>
-              {agencyIntelMetrics.map((metric) => (
-                <motion.div
-                  key={metric.label}
-                  className="agency-intel-metric"
-                  variants={nodeFloat}
-                  animate="animate"
-                  initial="initial"
-                  style={{ minWidth: 54, textAlign: 'center', opacity: 0.88 }}
-                >
-                  <span
-                    style={{
-                      fontSize: '0.72rem',
-                      color: 'var(--vt-accent-cyan)',
-                      letterSpacing: '0.04em',
-                      opacity: 0.7,
-                    }}
-                  >
-                    {metric.label}
-                  </span>
-                  <div
-                    style={{
-                      fontWeight: 700,
-                      fontSize: '1.13rem',
-                      color: '#e0faff',
-                      letterSpacing: '0.03em',
-                    }}
-                  >
-                    {metric.value}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-          {/* Alert message, vanishing style */}
-          <motion.div
-            className="agency-intel-alert"
-            variants={panelReveal}
-            animate="animate"
-            initial="initial"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.7rem',
-              fontSize: '0.82rem',
-              color: '#fbbf24',
-              opacity: 0.74,
-            }}
-          >
-            <span
-              style={{ fontSize: '1.1rem', color: '#22d3ee', opacity: 0.7 }}
-            >
-              ⚠️
-            </span>
-            <span>{agencyIntelAlert.message}</span>
-            <span
-              style={{
-                color: '#a3e635',
-                marginLeft: '0.5rem',
-                fontSize: '0.77rem',
-                opacity: 0.7,
-              }}
-            >
-              {agencyIntelAlert.update}
-            </span>
-          </motion.div>
-        </motion.section>
         <section className="home-hero" aria-label="Vanguard hero">
           <div className="home-hero-media" data-paused={!heroPlaying}>
             <VanguardHeroScene />
@@ -1230,7 +1110,75 @@ export default function Home() {
           </div>
         </section>
 
-        {/* The above overlays replace the old Section 4/5, blending in as a digital agency-grade HUD. */}
+        <motion.section
+          className="home-section home-section-blend"
+          aria-label="Live operations map"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.25 }}
+          variants={panelReveal}
+        >
+          <p className="home-section-kicker">Section 4</p>
+          <h2>Live operations map</h2>
+          <div
+            className="home-ops-map"
+            role="img"
+            aria-label="Live global operations map"
+          >
+            <div className="home-ops-grid" />
+            <motion.div className="home-ops-sweep" variants={radarSpin} />
+            <motion.div
+              className="home-ops-point home-ops-point-primary"
+              style={{ top: '36%', left: '22%' }}
+              variants={nodeFloat}
+            />
+            <motion.div
+              className="home-ops-point"
+              style={{ top: '42%', left: '47%' }}
+              variants={nodeFloat}
+            />
+            <motion.div
+              className="home-ops-point"
+              style={{ top: '58%', left: '64%' }}
+              variants={nodeFloat}
+            />
+            <motion.div
+              className="home-ops-point home-ops-point-alert"
+              style={{ top: '30%', left: '78%' }}
+              variants={nodeFloat}
+            />
+          </div>
+        </motion.section>
+
+        <motion.section
+          className="home-section home-section-blend"
+          aria-label="Intelligence metrics"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={panelReveal}
+        >
+          <p className="home-section-kicker">Section 5</p>
+          <h2>Intelligence metrics</h2>
+          <div className="home-intel-grid">
+            {sectionIntelMetrics.map((metric) => (
+              <motion.article
+                key={metric.label}
+                className="home-intel-card"
+                variants={nodeFloat}
+              >
+                <span>{metric.label}</span>
+                <strong>{metric.value}</strong>
+              </motion.article>
+            ))}
+          </div>
+          <div className="home-intel-alert">
+            <ShieldAlert size={18} strokeWidth={2} aria-hidden="true" />
+            <p>
+              {agencyIntelAlert.message} {agencyIntelAlert.update}
+            </p>
+          </div>
+        </motion.section>
 
         <section
           className="home-ease-strip"
