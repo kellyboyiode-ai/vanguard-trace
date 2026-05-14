@@ -34,7 +34,9 @@ function latLngToVector([lat, lng], radius) {
 }
 
 function buildArc(start, end, arcHeight = 0.55) {
-  const midpoint = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
+  const midpoint = new THREE.Vector3()
+    .addVectors(start, end)
+    .multiplyScalar(0.5);
   midpoint.normalize().multiplyScalar(midpoint.length() + arcHeight);
   return new THREE.QuadraticBezierCurve3(start.clone(), midpoint, end.clone());
 }
@@ -102,7 +104,11 @@ export default function GlobeView({ routes = defaultRoutes }) {
 
     const stars = new THREE.Points(
       new THREE.BufferGeometry(),
-      new THREE.PointsMaterial({ color: 0xb3f5ff, size: 0.012, transparent: true }),
+      new THREE.PointsMaterial({
+        color: 0xb3f5ff,
+        size: 0.012,
+        transparent: true,
+      }),
     );
     const starPositions = new Float32Array(900);
     for (let i = 0; i < starPositions.length; i += 3) {
@@ -110,7 +116,10 @@ export default function GlobeView({ routes = defaultRoutes }) {
       starPositions[i + 1] = (Math.random() - 0.5) * 24;
       starPositions[i + 2] = (Math.random() - 0.5) * 24;
     }
-    stars.geometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    stars.geometry.setAttribute(
+      'position',
+      new THREE.BufferAttribute(starPositions, 3),
+    );
     scene.add(stars);
 
     const markers = [];
@@ -157,7 +166,12 @@ export default function GlobeView({ routes = defaultRoutes }) {
         new THREE.MeshBasicMaterial({ color: new THREE.Color('#e0fbff') }),
       );
       globeGroup.add(mover);
-      arcMovers.push({ mover, curve, speed: 0.0018 + Math.random() * 0.0012, progress: Math.random() });
+      arcMovers.push({
+        mover,
+        curve,
+        speed: 0.0018 + Math.random() * 0.0012,
+        progress: Math.random(),
+      });
     });
 
     const clock = new THREE.Clock();
@@ -227,7 +241,10 @@ export default function GlobeView({ routes = defaultRoutes }) {
   }, [routes]);
 
   return (
-    <section className="vt-globe-view" aria-label="Global 3D logistics tracking">
+    <section
+      className="vt-globe-view"
+      aria-label="Global 3D logistics tracking"
+    >
       <div className="vt-globe-canvas-wrap" ref={canvasRef} />
 
       <ul className="vt-globe-routes">

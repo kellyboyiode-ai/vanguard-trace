@@ -54,16 +54,21 @@ export const useOperationsStore = create((set, get) => ({
   toggleAiPanel: () => set((state) => ({ aiPanelOpen: !state.aiPanelOpen })),
   setRealtimeConnected: (connected) =>
     set({ realtimeConnected: Boolean(connected) }),
-  setTelemetrySource: (source) => set({ telemetrySource: source || 'simulation' }),
+  setTelemetrySource: (source) =>
+    set({ telemetrySource: source || 'simulation' }),
   setInsights: (lines) =>
     set({
-      insights: Array.isArray(lines) && lines.length
-        ? lines.slice(0, 6)
-        : ['No AI insights available at the moment.'],
+      insights:
+        Array.isArray(lines) && lines.length
+          ? lines.slice(0, 6)
+          : ['No AI insights available at the moment.'],
     }),
   pushInsight: (line) =>
     set((state) => ({
-      insights: [line, ...state.insights.filter((item) => item !== line)].slice(0, 6),
+      insights: [line, ...state.insights.filter((item) => item !== line)].slice(
+        0,
+        6,
+      ),
     })),
   pushEvent: (event) =>
     set((state) => ({

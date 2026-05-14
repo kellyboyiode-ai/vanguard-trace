@@ -13,7 +13,9 @@ export default function FloatingAIAssistant() {
   const insights = useOperationsStore((state) => state.insights);
   const kpis = useOperationsStore((state) => state.kpis);
   const telemetrySource = useOperationsStore((state) => state.telemetrySource);
-  const realtimeConnected = useOperationsStore((state) => state.realtimeConnected);
+  const realtimeConnected = useOperationsStore(
+    (state) => state.realtimeConnected,
+  );
 
   const summary = useMemo(
     () => buildAssistantSummary(kpis, telemetrySource, realtimeConnected),

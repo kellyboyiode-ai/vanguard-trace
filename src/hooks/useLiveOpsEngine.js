@@ -78,7 +78,9 @@ export function useLiveOpsEngine() {
 
       if (result.rows?.length) {
         setInsights(
-          result.rows.map((row) => row.headline || row.advisory || 'Signal detected.'),
+          result.rows.map(
+            (row) => row.headline || row.advisory || 'Signal detected.',
+          ),
         );
       }
     }

@@ -22,7 +22,9 @@ function formatEventTime(iso) {
 export default function LiveStatusStrip() {
   const kpis = useOperationsStore((state) => state.kpis);
   const events = useOperationsStore((state) => state.events);
-  const realtimeConnected = useOperationsStore((state) => state.realtimeConnected);
+  const realtimeConnected = useOperationsStore(
+    (state) => state.realtimeConnected,
+  );
   const telemetrySource = useOperationsStore((state) => state.telemetrySource);
 
   const latestEvent = useMemo(() => events[0], [events]);
@@ -62,7 +64,9 @@ export default function LiveStatusStrip() {
             </span>
             <span
               className={
-                realtimeConnected ? 'vt-severity-chip vt-severity-low' : 'vt-severity-chip vt-severity-medium'
+                realtimeConnected
+                  ? 'vt-severity-chip vt-severity-low'
+                  : 'vt-severity-chip vt-severity-medium'
               }
             >
               {realtimeConnected ? 'LIVE' : telemetrySource.toUpperCase()}

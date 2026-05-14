@@ -30,11 +30,19 @@
 }
 
 .vt-scene-overlay-a {
-  background: radial-gradient(circle at 20% 30%, rgba(34, 211, 238, 0.2), transparent 46%);
+  background: radial-gradient(
+    circle at 20% 30%,
+    rgba(34, 211, 238, 0.2),
+    transparent 46%
+  );
 }
 
 .vt-scene-overlay-b {
-  background: linear-gradient(145deg, rgba(2, 6, 23, 0.72), rgba(2, 6, 23, 0.35));
+  background: linear-gradient(
+    145deg,
+    rgba(2, 6, 23, 0.72),
+    rgba(2, 6, 23, 0.35)
+  );
 }
 
 .vt-cinematic-grid {
@@ -639,7 +647,11 @@
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid rgba(56, 189, 248, 0.2);
-  background: radial-gradient(circle at 50% 50%, rgba(5, 22, 37, 0.92), rgba(2, 6, 23, 0.94));
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(5, 22, 37, 0.92),
+    rgba(2, 6, 23, 0.94)
+  );
 }
 
 .vt-globe-canvas-wrap canvas {
@@ -786,7 +798,12 @@
   width: min(260px, 70vw);
   height: 4px;
   border-radius: 999px;
-  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.8), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(34, 211, 238, 0.8),
+    transparent
+  );
   transform: translateX(-22%);
   animation: vt-flow-run 1.5s linear infinite;
 }
