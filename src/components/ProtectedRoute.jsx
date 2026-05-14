@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth.jsx';
+import { supabaseState } from '../lib/supabase.js';
 
 export default function ProtectedRoute({ children, requireAdmin = false }) {
   const { session, loading, isAdmin, isApproved } = useAuth();
@@ -12,7 +13,8 @@ export default function ProtectedRoute({ children, requireAdmin = false }) {
     );
   }
 
-  if (!session) {
+  // Allow demo mode when Supabase is disabled
+  if (!session && supabaseState.ready) {
     return <Navigate to="/login" replace />;
   }
 
