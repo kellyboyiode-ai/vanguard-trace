@@ -69,6 +69,14 @@ export default function OverviewPage() {
         animate="animate"
         variants={staggerContainer}
       >
+        <div className="agency-live-sync" aria-label="Live synchronization">
+          <span className="agency-live-dot" />
+          <span>Live network synchronization</span>
+          <div className="agency-live-strip" aria-hidden="true">
+            <span className="agency-live-strip-bar" />
+          </div>
+        </div>
+
         <motion.div className="agency-hero-scene" variants={panelReveal}>
           <VanguardHeroScene />
           <div className="agency-hero-scene-overlay" />
