@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Port operations">
+  <defs>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#041426"/>
+      <stop offset="100%" stop-color="#08243a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sea)"/>
+  <rect y="520" width="1600" height="380" fill="#031a2d"/>
+  <g fill="none" stroke="#0ea5e9" stroke-opacity="0.35" stroke-width="2">
+    <path d="M0 560h1600M0 610h1600M0 660h1600M0 710h1600"/>
+  </g>
+  <g fill="#1f2937">
+    <rect x="180" y="390" width="230" height="130" rx="10"/>
+    <rect x="520" y="370" width="300" height="150" rx="10"/>
+    <rect x="980" y="410" width="360" height="110" rx="10"/>
+  </g>
+  <g fill="#22d3ee" fill-opacity="0.78">
+    <rect x="210" y="425" width="40" height="24"/>
+    <rect x="260" y="425" width="40" height="24"/>
+    <rect x="310" y="425" width="40" height="24"/>
+    <rect x="560" y="410" width="52" height="24"/>
+    <rect x="620" y="410" width="52" height="24"/>
+    <rect x="680" y="410" width="52" height="24"/>
+  </g>
+  <g stroke="#67e8f9" stroke-width="3" stroke-linecap="round">
+    <path d="M160 340h1240" opacity="0.22"/>
+    <path d="M260 340v170M740 340v170M1160 340v170" opacity="0.3"/>
+  </g>
+</svg>

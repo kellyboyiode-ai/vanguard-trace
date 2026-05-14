@@ -38,6 +38,8 @@ function clamp(value, min, max) {
 export const useOperationsStore = create((set, get) => ({
   commandPaletteOpen: false,
   aiPanelOpen: false,
+  realtimeConnected: false,
+  telemetrySource: 'simulation',
   kpis: defaultKpis,
   events: initialEvents,
   insights: [
@@ -50,6 +52,19 @@ export const useOperationsStore = create((set, get) => ({
     set((state) => ({ commandPaletteOpen: !state.commandPaletteOpen })),
   setAiPanelOpen: (open) => set({ aiPanelOpen: Boolean(open) }),
   toggleAiPanel: () => set((state) => ({ aiPanelOpen: !state.aiPanelOpen })),
+  setRealtimeConnected: (connected) =>
+    set({ realtimeConnected: Boolean(connected) }),
+  setTelemetrySource: (source) => set({ telemetrySource: source || 'simulation' }),
+  setInsights: (lines) =>
+    set({
+      insights: Array.isArray(lines) && lines.length
+        ? lines.slice(0, 6)
+        : ['No AI insights available at the moment.'],
+    }),
+  pushInsight: (line) =>
+    set((state) => ({
+      insights: [line, ...state.insights.filter((item) => item !== line)].slice(0, 6),
+    })),
   pushEvent: (event) =>
     set((state) => ({
       events: [

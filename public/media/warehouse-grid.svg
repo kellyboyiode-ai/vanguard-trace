@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Warehouse grid">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#041122"/>
+      <stop offset="100%" stop-color="#0f2f46"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g stroke="#67e8f9" stroke-opacity="0.2" stroke-width="1" fill="none">
+    <path d="M0 100h1600M0 180h1600M0 260h1600M0 340h1600M0 420h1600M0 500h1600M0 580h1600M0 660h1600M0 740h1600"/>
+    <path d="M160 0v900M320 0v900M480 0v900M640 0v900M800 0v900M960 0v900M1120 0v900M1280 0v900M1440 0v900"/>
+  </g>
+  <g fill="#22d3ee" fill-opacity="0.75">
+    <rect x="260" y="260" width="110" height="70" rx="8"/>
+    <rect x="740" y="420" width="110" height="70" rx="8"/>
+    <rect x="1160" y="300" width="110" height="70" rx="8"/>
+  </g>
+</svg>

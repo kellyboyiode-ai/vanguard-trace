@@ -2,8 +2,9 @@ import { Bot, Sparkles, X } from 'lucide-react';
 import { useMemo } from 'react';
 import { useOperationsStore } from '../store/index.js';
 
-function buildAssistantSummary(kpis) {
-  return `Monitoring ${kpis.activeShipments} active shipments, ${kpis.delayedShipments} delayed, risk index ${kpis.riskIndex}.`;
+function buildAssistantSummary(kpis, telemetrySource, realtimeConnected) {
+  const transport = realtimeConnected ? 'live stream' : telemetrySource;
+  return `Monitoring ${kpis.activeShipments} active shipments, ${kpis.delayedShipments} delayed, risk index ${kpis.riskIndex} via ${transport}.`;
 }
 
 export default function FloatingAIAssistant() {
@@ -11,8 +12,13 @@ export default function FloatingAIAssistant() {
   const toggle = useOperationsStore((state) => state.toggleAiPanel);
   const insights = useOperationsStore((state) => state.insights);
   const kpis = useOperationsStore((state) => state.kpis);
+  const telemetrySource = useOperationsStore((state) => state.telemetrySource);
+  const realtimeConnected = useOperationsStore((state) => state.realtimeConnected);
 
-  const summary = useMemo(() => buildAssistantSummary(kpis), [kpis]);
+  const summary = useMemo(
+    () => buildAssistantSummary(kpis, telemetrySource, realtimeConnected),
+    [kpis, telemetrySource, realtimeConnected],
+  );
 
   return (
     <aside className={isOpen ? 'vt-ai-panel is-open' : 'vt-ai-panel'}>

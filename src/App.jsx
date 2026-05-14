@@ -28,6 +28,11 @@ function RouteLoadingFallback() {
     <div className="vt-loading-screen" role="status" aria-live="polite">
       <div>
         <div className="vt-loading-radar" aria-hidden="true" />
+        <div className="vt-loading-flow" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
         <p>Synchronizing global operations...</p>
       </div>
     </div>
