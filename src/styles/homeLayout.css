@@ -774,3 +774,38 @@
     align-items: center;
   }
 }
+
+/* Section 4: Live Operations Map */
+.home-live-operations {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.live-operations-map {
+  background: rgba(0, 24, 113, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.9rem;
+  padding: 1.5rem;
+}
+
+/* Section 5: Intelligence Metrics */
+.home-intelligence-metrics {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.intelligence-metrics {
+  background: rgba(0, 24, 113, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.9rem;
+  padding: 1.5rem;
+}
+
+.intelligence-metrics ul {
+  list-style: none;
+  padding: 0;
+}
+
+.intelligence-metrics li {
+  margin: 0.5rem 0;
+}
