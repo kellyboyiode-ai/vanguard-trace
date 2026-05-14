@@ -90,37 +90,6 @@
   box-shadow: 0 0 0 2px #22d3ee22;
   position: relative;
 }
-
-.agency-globe {
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 30% 28%, rgba(226, 248, 255, 0.34), rgba(226, 248, 255, 0) 34%),
-    radial-gradient(circle at 62% 68%, rgba(8, 30, 52, 0.16), rgba(8, 30, 52, 0) 48%),
-    radial-gradient(circle at 35% 35%, #16425f 0%, #0f2f49 52%, #0a1f33 100%);
-  border: 1.6px solid rgba(34, 211, 238, 0.62);
-  box-shadow:
-    inset -4px -5px 10px rgba(3, 8, 16, 0.42),
-    inset 3px 3px 7px rgba(125, 211, 252, 0.15),
-    0 0 0 2px rgba(34, 211, 238, 0.24),
-    0 0 14px rgba(34, 211, 238, 0.28);
-  overflow: hidden;
-}
-
-.agency-globe::after {
-  content: '';
-  position: absolute;
-  left: 8px;
-  top: 7px;
-  width: 14px;
-  height: 10px;
-  border-radius: 50%;
-  background: linear-gradient(
-    140deg,
-    rgba(226, 248, 255, 0.35),
-    rgba(226, 248, 255, 0.06)
-  );
-  pointer-events: none;
-}
 .agency-shield::before {
   content: '\1F6E1\FE0E'; /* 🛡 text presentation */
   position: absolute;
@@ -157,40 +126,65 @@
   color: #22d3ee;
   opacity: 0.95;
 }
+.agency-globe {
+  border-radius: 50%;
+  overflow: hidden;
+  perspective: 500px;
+  background:
+    radial-gradient(circle at 32% 30%, rgba(125, 211, 252, 0.32), rgba(34, 211, 238, 0.08) 46%, rgba(10, 10, 15, 0.92) 100%),
+    linear-gradient(145deg, #1a2235 0%, #0a0a0f 85%);
+  box-shadow:
+    inset -8px -10px 14px rgba(8, 15, 33, 0.7),
+    inset 8px 10px 12px rgba(56, 189, 248, 0.09),
+    0 0 0 2px #22d3ee22;
+}
 .agency-globe::before {
   content: '\1F310\FE0E'; /* 🌐 text presentation */
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2.1rem;
+  font-size: 2rem;
   font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
   font-variant-emoji: text;
   color: #22d3ee;
-  opacity: 0.98;
+  opacity: 0.97;
   text-shadow:
-    0 0 1px rgba(34, 211, 238, 0.95),
-    0 0 8px rgba(34, 211, 238, 0.3);
+    0 0 6px rgba(34, 211, 238, 0.45),
+    1px 1px 0 rgba(8, 47, 73, 0.45),
+    -1px -1px 0 rgba(186, 230, 253, 0.2);
   transform-origin: 50% 50%;
   transform-style: preserve-3d;
-  animation: agency-globe-orbit 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation: agency-globe-orbit 8s linear infinite;
+}
+
+.agency-globe::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 28% 24%, rgba(186, 230, 253, 0.24), rgba(186, 230, 253, 0.02) 38%, rgba(0, 0, 0, 0) 48%),
+    radial-gradient(circle at 68% 75%, rgba(2, 6, 23, 0.35), rgba(2, 6, 23, 0) 54%);
+  border: 1px solid rgba(125, 211, 252, 0.25);
 }
 
 @keyframes agency-globe-orbit {
   0% {
-    transform: translate(-50%, -50%) rotate(-12deg) rotateY(0deg);
+    transform: translate(-50%, -50%) rotate(-14deg) rotateY(0deg);
   }
   25% {
-    transform: translate(-50%, -50%) rotate(-12deg) rotateY(90deg);
+    transform: translate(-50%, -50%) rotate(-14deg) rotateY(90deg);
   }
   50% {
-    transform: translate(-50%, -50%) rotate(-12deg) rotateY(180deg);
+    transform: translate(-50%, -50%) rotate(-14deg) rotateY(180deg);
   }
   75% {
-    transform: translate(-50%, -50%) rotate(-12deg) rotateY(270deg);
+    transform: translate(-50%, -50%) rotate(-14deg) rotateY(270deg);
   }
   100% {
-    transform: translate(-50%, -50%) rotate(-12deg) rotateY(360deg);
+    transform: translate(-50%, -50%) rotate(-14deg) rotateY(360deg);
   }
 }
 .agency-terminal::before {
