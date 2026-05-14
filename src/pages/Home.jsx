@@ -1131,8 +1131,8 @@ export default function Home() {
           <a href="/about">Learn More</a>
         </section>
 
-        <section className="home-promo" aria-label="Promotions">
-          <h2>Get Updates and Promotions</h2>
+        <section className="home-promo" aria-label="Updates and alerts">
+          <h2>Get Updates and Alerts</h2>
           <p>
             Receive important lane updates, advisories, and service releases.
           </p>
@@ -1157,17 +1157,17 @@ export default function Home() {
           <article
             className="home-modal"
             role="dialog"
-            aria-label="Get Updates and Promotions"
+            aria-label="Get Updates and Alerts"
             onClick={(event) => event.stopPropagation()}
           >
             <header>
-              <h3>Get Updates and Promotions</h3>
+              <h3>Get Updates and Alerts</h3>
               <button type="button" onClick={() => setOpenModal(null)}>
                 X
               </button>
             </header>
             <iframe
-              title="Promotions signup"
+              title="Updates signup"
               src={`${promoIframeUrl}?email=${encodeURIComponent(promoEmail)}`}
               loading="lazy"
               className="home-promo-iframe"
