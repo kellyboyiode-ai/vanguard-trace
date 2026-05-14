@@ -91,42 +91,50 @@
   position: relative;
 }
 .agency-shield::before {
-  content: '\1F6E1'; /* 🛡️ */
+  content: '\1F6E1\FE0E'; /* 🛡 text presentation */
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   font-size: 2.1rem;
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
+  font-variant-emoji: text;
   color: #22d3ee;
   opacity: 0.95;
 }
 .agency-truck::before {
-  content: '\1F69A'; /* 🚚 */
+  content: '\1F69A\FE0E'; /* 🚚 text presentation */
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   font-size: 2.1rem;
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
+  font-variant-emoji: text;
   color: #22d3ee;
   opacity: 0.95;
 }
 .agency-package::before {
-  content: '\1F4E6'; /* 📦 */
+  content: '\1F4E6\FE0E'; /* 📦 text presentation */
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   font-size: 2.1rem;
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
+  font-variant-emoji: text;
   color: #22d3ee;
   opacity: 0.95;
 }
 .agency-globe::before {
-  content: '\1F310'; /* 🌐 */
+  content: '\1F310\FE0E'; /* 🌐 text presentation */
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   font-size: 2.1rem;
+  font-family: 'Segoe UI Symbol', 'Noto Sans Symbols', sans-serif;
+  font-variant-emoji: text;
   color: #22d3ee;
   opacity: 0.95;
 }
