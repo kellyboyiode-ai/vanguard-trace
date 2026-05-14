@@ -220,23 +220,30 @@ export default function OverviewPage() {
                 r="28"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
-                opacity="0.3"
+                strokeWidth="1.5"
+                opacity="0.25"
               />
               <path
-                d="M 20 32 C 20 26 24 22 28 20 L 36 20 C 40 22 44 26 44 32 L 44 40 Q 44 44 40 44 L 24 44 Q 20 44 20 40 Z"
+                d="M 24 30 V 26 C 24 21.6 27.6 18 32 18 C 36.4 18 40 21.6 40 26 V 30"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="3"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-              <circle cx="32" cy="36" r="3" fill="currentColor" />
               <path
-                d="M 45 28 L 52 28 L 52 30 L 48 30"
+                d="M 20 30 H 44 C 45.7 30 47 31.3 47 33 V 45 C 47 46.7 45.7 48 44 48 H 20 C 18.3 48 17 46.7 17 45 V 33 C 17 31.3 18.3 30 20 30 Z"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle cx="32" cy="39" r="2.5" fill="currentColor" />
+              <path
+                d="M 32 41.5 V 44"
+                stroke="currentColor"
+                strokeWidth="2.5"
                 strokeLinecap="round"
               />
             </motion.svg>
@@ -256,9 +263,29 @@ export default function OverviewPage() {
               animate={{ y: [-2, 2, -2] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             >
-              <circle cx="28" cy="28" r="14" fill="none" stroke="currentColor" strokeWidth="2.5" />
-              <path d="M 40 40 L 50 50" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-              <circle cx="28" cy="28" r="20" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
+              <circle
+                cx="28"
+                cy="28"
+                r="14"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              />
+              <path
+                d="M 40 40 L 50 50"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+              />
+              <circle
+                cx="28"
+                cy="28"
+                r="20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                opacity="0.3"
+              />
             </motion.svg>
             <h3>Cargo Integrity</h3>
             <p>
