@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;800&display=swap');
 @import 'tailwindcss';
+@import './styles/index.css';
 
 :root {
   --font-display:

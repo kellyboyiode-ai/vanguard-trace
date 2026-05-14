@@ -1,30 +1,19 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SectionHeader, VanguardHeroScene } from '../components/index.js';
-import { terminalEvents } from '../data/vanguardTraceContent.js';
 import { fadeInUp, staggerContainer } from '../animations/motionPresets.js';
-import { nodeFloat, panelReveal } from '../animations/vanguardTraceMotion.js';
+import {
+  radarSpin,
+  nodeFloat,
+  panelReveal,
+} from '../animations/vanguardTraceMotion.js';
 import { ShellLayout } from '../layouts/index.js';
 
-const telemetryWidgets = [
-  {
-    id: 'lane-encryption',
-    label: 'Lane telemetry',
-    value: 'Live coverage active',
-    detail: '11 major corridors with continuous status refresh.',
-  },
-  {
-    id: 'risk-detection',
-    label: 'Transit watch',
-    value: 'Advisory / North Atlantic',
-    detail: 'Weather and delay advisory updated in the last 40 seconds.',
-  },
-  {
-    id: 'ops-integrity',
-    label: 'Delivery integrity',
-    value: '98.4% confirmed',
-    detail: 'Milestone checks synced across customs and handoff points.',
-  },
+const overviewStatusFeed = [
+  'Status stream active: Global route updates synchronized.',
+  'Service reliability: On-time trend remains within target window.',
+  'Operational alerts: Exception queue monitored in real time.',
+  'Checkpoint updates: Proof-of-delivery events syncing continuously.',
 ];
 
 export default function OverviewPage() {
@@ -58,9 +47,9 @@ export default function OverviewPage() {
 
   return (
     <ShellLayout
-      eyebrow="Vanguard Operations"
-      title="Global Shipment Monitoring"
-      description="A modern logistics operations console for real-time shipment tracking, route visibility, and delivery assurance."
+      eyebrow="VANGUARD_TRACE::SESSION_ACTIVE"
+      title="Global Shipment Monitoring with Advanced Logistics Infrastructure"
+      description="A modern logistics intelligence platform delivering secure shipment visibility, route analytics, and reliable global operations support."
     >
       {/* Section 1: Hero + Animated Telemetry */}
       <motion.section
@@ -69,14 +58,6 @@ export default function OverviewPage() {
         animate="animate"
         variants={staggerContainer}
       >
-        <div className="agency-live-sync" aria-label="Live synchronization">
-          <span className="agency-live-dot" />
-          <span>Live network synchronization</span>
-          <div className="agency-live-strip" aria-hidden="true">
-            <span className="agency-live-strip-bar" />
-          </div>
-        </div>
-
         <motion.div className="agency-hero-scene" variants={panelReveal}>
           <VanguardHeroScene />
           <div className="agency-hero-scene-overlay" />
@@ -90,8 +71,12 @@ export default function OverviewPage() {
             animate="animate"
             initial="initial"
           >
-            <div className="agency-radar-sweep" />
-            <span className="agency-radar-label">LIVE MAP</span>
+            <motion.div
+              className="agency-radar-sweep"
+              variants={radarSpin}
+              animate="animate"
+            />
+            <span className="agency-radar-label">RADAR</span>
           </motion.div>
 
           {/* Animated Shield */}
@@ -128,7 +113,7 @@ export default function OverviewPage() {
 
         {/* Animated Telemetry Feed */}
         <motion.ul className="agency-terminal-feed" variants={staggerContainer}>
-          {terminalEvents.map((evt, i) => (
+          {overviewStatusFeed.map((evt) => (
             <motion.li
               key={evt}
               className="agency-terminal-line"
@@ -138,24 +123,6 @@ export default function OverviewPage() {
             </motion.li>
           ))}
         </motion.ul>
-
-        <motion.div
-          className="agency-telemetry-grid"
-          variants={staggerContainer}
-        >
-          {telemetryWidgets.map((item) => (
-            <motion.article
-              key={item.id}
-              className="agency-telemetry-card"
-              variants={fadeInUp}
-              whileHover={{ y: -3 }}
-            >
-              <p className="agency-telemetry-label">{item.label}</p>
-              <h3>{item.value}</h3>
-              <p className="agency-telemetry-detail">{item.detail}</p>
-            </motion.article>
-          ))}
-        </motion.div>
       </motion.section>
 
       {/* Section 2: Tracking Input */}
@@ -226,8 +193,8 @@ export default function OverviewPage() {
         animate="animate"
       >
         <SectionHeader
-          title="Logistics Services"
-          subtitle="Visibility, reliability, and route performance for global shipments."
+          title="Operational Services"
+          subtitle="Advanced shipment security, route insights, and proactive monitoring for global logistics."
         />
         <div className="agency-services-grid">
           <motion.div
@@ -267,7 +234,7 @@ export default function OverviewPage() {
             <div className="agency-service-icon agency-service-risk" />
             <h3>Risk Monitoring</h3>
             <p>
-              Delay and exception monitoring for proactive route management.
+              Radar-based threat scans for incident detection and escalation.
             </p>
           </motion.div>
         </div>
