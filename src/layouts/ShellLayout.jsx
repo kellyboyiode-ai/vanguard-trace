@@ -1,10 +1,20 @@
 import { useEffect } from 'react';
-import { Footer, Navbar } from '../components/index.js';
+import {
+  CinematicBackdrop,
+  CommandPalette,
+  FloatingAIAssistant,
+  Footer,
+  LiveStatusStrip,
+  MobileOpsDock,
+  Navbar,
+} from '../components/index.js';
+import { useLiveOpsEngine } from '../hooks/useLiveOpsEngine.js';
 import '../styles/footer.css';
 import '../styles/navbar.css';
 
 export default function ShellLayout({ title, eyebrow, description, children }) {
   const gtmId = String(import.meta.env.VITE_GTM_ID || '').trim();
+  useLiveOpsEngine();
 
   useEffect(() => {
     if (!gtmId || document.getElementById('vt-gtm-script')) {
@@ -25,7 +35,11 @@ export default function ShellLayout({ title, eyebrow, description, children }) {
   }, [gtmId]);
 
   return (
-    <div className="app-shell">
+    <div className="app-shell vt-command-center">
+      <CinematicBackdrop />
+      <CommandPalette />
+      <FloatingAIAssistant />
+      <LiveStatusStrip />
       {gtmId && (
         <noscript>
           <iframe
@@ -58,6 +72,7 @@ export default function ShellLayout({ title, eyebrow, description, children }) {
           </section>
         </main>
       </div>
+      <MobileOpsDock />
       <Footer />
     </div>
   );
