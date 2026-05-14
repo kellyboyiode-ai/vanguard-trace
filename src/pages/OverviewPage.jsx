@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SectionHeader, VanguardHeroScene } from '../components/index.js';
 import { fadeInUp, staggerContainer } from '../animations/motionPresets.js';
@@ -16,12 +16,53 @@ const overviewStatusFeed = [
   'Checkpoint updates: Proof-of-delivery events syncing continuously.',
 ];
 
+const radarStatuses = ['LOCKED', 'TRACKING', 'SWEEPING', 'CONFIRMED'];
+
+function formatUtcTime(date) {
+  const hh = String(date.getUTCHours()).padStart(2, '0');
+  const mm = String(date.getUTCMinutes()).padStart(2, '0');
+  const ss = String(date.getUTCSeconds()).padStart(2, '0');
+  return `${hh}:${mm}:${ss}Z`;
+}
+
+function buildRadarTelemetry(step) {
+  const now = new Date();
+  const status = radarStatuses[step % radarStatuses.length];
+  const signal = (95.4 + ((step * 0.37) % 4.3)).toFixed(1);
+  const contacts = 8 + (step % 7);
+  const bearing = String((44 + step * 11) % 360).padStart(3, '0');
+  const sweepDelta = (0.14 + ((step * 0.03) % 0.48)).toFixed(2);
+
+  return {
+    station: `STN-07 // ${status}`,
+    signal: `SIGNAL ${signal}% // UTC ${formatUtcTime(now)}`,
+    contacts: `CONTACTS ${contacts}`,
+    bearing: `BEARING ${bearing} DEG`,
+    delta: `SCAN DELTA ${sweepDelta}s`,
+  };
+}
+
 export default function OverviewPage() {
   // Section 2: Tracking input state
   const [trackingCode, setTrackingCode] = useState('VX-2047-INTL');
   const [trackingResult, setTrackingResult] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
   const [trackingMessage, setTrackingMessage] = useState('');
+  const [radarTelemetry, setRadarTelemetry] = useState(() =>
+    buildRadarTelemetry(0),
+  );
+
+  useEffect(() => {
+    let step = 0;
+    setRadarTelemetry(buildRadarTelemetry(step));
+
+    const telemetryTimer = setInterval(() => {
+      step += 1;
+      setRadarTelemetry(buildRadarTelemetry(step));
+    }, 1000);
+
+    return () => clearInterval(telemetryTimer);
+  }, []);
 
   // Demo tracking handler (replace with real API if needed)
   function handleTrackSubmit(e) {
@@ -71,12 +112,48 @@ export default function OverviewPage() {
             animate="animate"
             initial="initial"
           >
+            <div className="agency-radar-grid" />
             <motion.div
               className="agency-radar-sweep"
               variants={radarSpin}
               animate="animate"
             />
+            <span className="agency-radar-ring agency-radar-ring-a" />
+            <span className="agency-radar-ring agency-radar-ring-b" />
+            <motion.span
+              className="agency-radar-blip agency-radar-blip-a"
+              animate={{ opacity: [0.15, 1, 0.15], scale: [0.85, 1.2, 0.85] }}
+              transition={{
+                duration: 1.9,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+            />
+            <motion.span
+              className="agency-radar-blip agency-radar-blip-b"
+              animate={{ opacity: [0.2, 0.95, 0.2], scale: [0.9, 1.15, 0.9] }}
+              transition={{
+                duration: 2.4,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+            />
+            <div className="agency-radar-starfield" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
+            <span className="agency-radar-core" />
             <span className="agency-radar-label">RADAR</span>
+            <div className="agency-radar-readout" aria-label="Station reading">
+              <span>{radarTelemetry.station}</span>
+              <span>{radarTelemetry.signal}</span>
+              <span>{radarTelemetry.contacts}</span>
+              <span>{radarTelemetry.bearing}</span>
+              <span>{radarTelemetry.delta}</span>
+            </div>
           </motion.div>
 
           {/* Animated Shield */}
