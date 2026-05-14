@@ -28,10 +28,6 @@ export default function CinematicBackdrop() {
   const [sceneIndex, setSceneIndex] = useState(0);
 
   useEffect(() => {
-    setSceneIndex(0);
-  }, [location.pathname]);
-
-  useEffect(() => {
     const timer = setInterval(() => {
       setSceneIndex((current) => (current + 1) % scenes.length);
     }, 6400);
@@ -44,7 +40,7 @@ export default function CinematicBackdrop() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${location.pathname}-${sceneIndex}`}
-          className={`vt-scene ${scenes[sceneIndex]}`}
+          className={`vt-scene ${scenes[sceneIndex % scenes.length]}`}
           initial={{ opacity: 0, filter: 'blur(18px)', scale: 1.08 }}
           animate={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
           exit={{ opacity: 0, filter: 'blur(16px)', scale: 1.04 }}

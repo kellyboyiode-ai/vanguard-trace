@@ -28,12 +28,6 @@ export default function CommandPalette() {
     return () => window.removeEventListener('keydown', onKeydown);
   }, [isOpen, setOpen]);
 
-  useEffect(() => {
-    if (!isOpen) {
-      setQuery('');
-    }
-  }, [isOpen]);
-
   const results = useMemo(() => {
     const term = query.trim().toLowerCase();
     if (!term) {
@@ -55,7 +49,10 @@ export default function CommandPalette() {
         type="button"
         className="vt-command-backdrop"
         aria-label="Close command palette"
-        onClick={() => setOpen(false)}
+        onClick={() => {
+          setOpen(false);
+          setQuery('');
+        }}
       />
 
       <div className="vt-command-panel">
@@ -82,6 +79,7 @@ export default function CommandPalette() {
                   onClick={() => {
                     navigate(item.to);
                     setOpen(false);
+                    setQuery('');
                   }}
                 >
                   <span>{item.label}</span>
