@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/useAuth.jsx';
 import { navigationLinks } from '../data/navigation.js';
 import { signOut } from '../services/authService.js';
 
@@ -275,9 +276,11 @@ export default function Navbar() {
   const toggleRef = useRef(null);
   const desktopNavRef = useRef(null);
   const navigate = useNavigate();
+  const { isAdmin } = useAuth();
 
   const primaryLinks = navigationLinks.slice(0, 4);
   const utilityLinks = navigationLinks.slice(6);
+  const adminUtilityLink = { to: '/admin/approvals', label: 'Admin (Private)' };
 
   async function handleSignOut() {
     if (isSigningOut) {
@@ -564,6 +567,17 @@ export default function Navbar() {
             </NavLink>
           ))}
 
+          {isAdmin && (
+            <NavLink
+              to={adminUtilityLink.to}
+              className={({ isActive }) =>
+                isActive ? 'navbar-link navbar-link-active' : 'navbar-link'
+              }
+            >
+              {adminUtilityLink.label}
+            </NavLink>
+          )}
+
           <button
             type="button"
             className="navbar-logout"
@@ -675,6 +689,18 @@ export default function Navbar() {
                   {item.label}
                 </NavLink>
               ))}
+
+              {isAdmin && (
+                <NavLink
+                  to={adminUtilityLink.to}
+                  className={({ isActive }) =>
+                    isActive ? 'navbar-link navbar-link-active' : 'navbar-link'
+                  }
+                  onClick={handleMobileNavigate}
+                >
+                  {adminUtilityLink.label}
+                </NavLink>
+              )}
               <button
                 type="button"
                 className="navbar-logout"

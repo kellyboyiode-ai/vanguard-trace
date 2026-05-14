@@ -30,9 +30,6 @@ export default function AdminApprovalsPage() {
   );
 
   const loadRequests = useCallback(async () => {
-    setLoading(true);
-    setError('');
-
     const { data, error } = await listAccountApprovalRequests();
 
     if (error) {
@@ -41,13 +38,38 @@ export default function AdminApprovalsPage() {
       return;
     }
 
+    setError('');
     setRequests(data || []);
     setLoading(false);
   }, []);
 
   useEffect(() => {
-    loadRequests();
-  }, [loadRequests]);
+    let active = true;
+
+    async function initializeRequests() {
+      const { data, error } = await listAccountApprovalRequests();
+
+      if (!active) {
+        return;
+      }
+
+      if (error) {
+        setError(error.message || 'Could not load account approval requests.');
+        setLoading(false);
+        return;
+      }
+
+      setError('');
+      setRequests(data || []);
+      setLoading(false);
+    }
+
+    initializeRequests();
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   async function handleApprove(userId) {
     setBusyUserId(userId);
@@ -60,6 +82,10 @@ export default function AdminApprovalsPage() {
     }
 
     await loadRequests();
+  }
+
+  function canApprove(request) {
+    return Boolean(request.kyc_verified && request.contact_confirmed);
   }
 
   async function handleReject(userId) {
@@ -82,7 +108,12 @@ export default function AdminApprovalsPage() {
     <div className="min-h-screen bg-black text-zinc-100 px-4 py-8">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold">Admin Account Approvals</h1>
+          <div className="flex items-center gap-3 flex-wrap">
+            <h1 className="text-3xl font-bold">Admin Account Approvals</h1>
+            <span className="inline-flex items-center rounded-full border border-amber-500/40 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-300">
+              Admin Eyes Only
+            </span>
+          </div>
           <p className="text-zinc-400 mt-2">
             Review KYC and confirmation status before granting platform access.
           </p>
@@ -153,9 +184,17 @@ export default function AdminApprovalsPage() {
                             <div className="flex gap-2">
                               <button
                                 type="button"
-                                disabled={busyUserId === request.user_id}
+                                disabled={
+                                  busyUserId === request.user_id ||
+                                  !canApprove(request)
+                                }
                                 onClick={() => handleApprove(request.user_id)}
                                 className="bg-emerald-700 hover:bg-emerald-600 disabled:opacity-50 text-white px-3 py-1.5 rounded"
+                                title={
+                                  canApprove(request)
+                                    ? 'Approve account'
+                                    : 'Cannot approve until both KYC and contact confirmation are complete'
+                                }
                               >
                                 Approve
                               </button>
@@ -175,6 +214,11 @@ export default function AdminApprovalsPage() {
                   </table>
                 </div>
               )}
+
+              <p className="text-xs text-zinc-500 mt-3">
+                Approval is only enabled when KYC is verified and contact is
+                confirmed.
+              </p>
             </section>
 
             <section className="rounded-lg border border-zinc-800 bg-zinc-900 p-4">

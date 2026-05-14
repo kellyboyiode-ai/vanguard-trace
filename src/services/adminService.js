@@ -1,18 +1,6 @@
-import { supabase, supabaseState } from '../lib/supabase.js';
+import { supabase } from '../lib/supabase';
 
 export async function getAdminDashboardSnapshot() {
-  if (!supabaseState.ready || !supabase) {
-    return {
-      source: 'local',
-      error: null,
-      data: {
-        activeShipments: 0,
-        pendingReports: 0,
-        unreadMessages: 0,
-      },
-    };
-  }
-
   const [shipments, reports, messages] = await Promise.all([
     supabase.from('shipments').select('id', { head: true, count: 'exact' }),
     supabase

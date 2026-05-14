@@ -123,10 +123,34 @@ create table if not exists public.account_onboarding (
   kyc_verified boolean not null default false,
   contact_confirmed boolean not null default false,
   admin_approved boolean not null default false,
-  admin_note text,
-  status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
+  status text not null default 'pending',
+  admin_note TEXT,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
+);
+
+alter table public.account_onboarding
+  add column if not exists full_name text,
+  add column if not exists company_name text,
+  add column if not exists phone text,
+  add column if not exists kyc_reference text,
+  add column if not exists created_at timestamptz not null default now();
+
+alter table public.account_onboarding
+  alter column kyc_verified set default false,
+  alter column contact_confirmed set default false,
+  alter column admin_approved set default false,
+  alter column status set default 'pending';
+
+alter table public.account_onboarding
+drop constraint if exists account_onboarding_approval_integrity;
+
+alter table public.account_onboarding
+add constraint account_onboarding_approval_integrity
+check (
+  (status = 'approved' and admin_approved = true and kyc_verified = true and contact_confirmed = true)
+  or (status = 'pending' and admin_approved = false)
+  or (status = 'rejected' and admin_approved = false)
 );
 
 create table if not exists public.quote_requests (
@@ -456,6 +480,11 @@ create policy "admin can update onboarding"
       from public.account_admins admins
       where admins.user_id = auth.uid()
     )
+    and (
+      (status = 'approved' and admin_approved = true and kyc_verified = true and contact_confirmed = true)
+      or (status = 'pending' and admin_approved = false)
+      or (status = 'rejected' and admin_approved = false)
+    )
   );
 
 create index if not exists shipments_tracking_code_idx
@@ -491,11 +520,22 @@ create index if not exists account_onboarding_status_idx
 create index if not exists account_onboarding_admin_approved_idx
   on public.account_onboarding(admin_approved);
 
+-- Enforce one-admin-only mode ("my eyes only"): this unique index allows only one row in account_admins.
+create unique index if not exists account_admins_singleton_idx
+  on public.account_admins ((true));
+
 -- Add exactly one row with your own auth user ID to make yourself the only admin approver.
 -- Example:
 -- insert into public.account_admins (user_id)
 -- values ('00000000-0000-0000-0000-000000000000')
 -- on conflict (user_id) do nothing;
+--
+-- To rotate admin to a new account later:
+-- begin;
+-- delete from public.account_admins;
+-- insert into public.account_admins (user_id)
+-- values ('NEW-ADMIN-USER-ID');
+-- commit;
 
 insert into public.shipments (tracking_code, status, location, eta)
 values
@@ -508,3 +548,7 @@ set
   location = excluded.location,
   eta = excluded.eta,
   updated_at = now();
+
+SELECT table_schema, table_name
+FROM information_schema.tables
+WHERE table_name = 'account_onboarding';

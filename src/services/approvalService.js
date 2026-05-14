@@ -228,8 +228,21 @@ export async function approveAccountRequest(userId, adminNote) {
       admin_note: adminNote || null,
     })
     .eq('user_id', userId)
+    .eq('status', 'pending')
+    .eq('kyc_verified', true)
+    .eq('contact_confirmed', true)
     .select()
-    .single();
+    .maybeSingle();
+
+  if (!error && !data) {
+    return {
+      source: 'supabase',
+      data: null,
+      error: new Error(
+        'User cannot be approved yet. KYC and contact confirmation must both be completed.',
+      ),
+    };
+  }
 
   return {
     source: 'supabase',
@@ -255,8 +268,19 @@ export async function rejectAccountRequest(userId, adminNote) {
       admin_note: adminNote || null,
     })
     .eq('user_id', userId)
+    .neq('status', 'approved')
     .select()
-    .single();
+    .maybeSingle();
+
+  if (!error && !data) {
+    return {
+      source: 'supabase',
+      data: null,
+      error: new Error(
+        'Approved users cannot be rejected directly. Move them back to pending first if needed.',
+      ),
+    };
+  }
 
   return {
     source: 'supabase',

@@ -19,7 +19,6 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (!supabaseState.ready) {
-      setLoading(false);
       return;
     }
 
