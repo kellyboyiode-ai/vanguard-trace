@@ -248,44 +248,11 @@ export default function OverviewPage() {
             variants={fadeInUp}
             whileHover={{ y: -4 }}
           >
-            <motion.svg
+            <motion.div
               className="agency-service-icon agency-service-integrity"
-              viewBox="0 0 64 64"
-              width="54"
-              height="54"
-              animate={{ rotate: [0, 15, -15, 0] }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-            >
-              <circle
-                cx="32"
-                cy="32"
-                r="28"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                opacity="0.3"
-              />
-              <path
-                d="M 20 32 C 20 26 24 22 28 20 L 36 20 C 40 22 44 26 44 32 L 44 40 Q 44 44 40 44 L 24 44 Q 20 44 20 40 Z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle cx="32" cy="36" r="3" fill="currentColor" />
-              <path
-                d="M 45 28 L 52 28 L 52 30 L 48 30"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </motion.svg>
+              animate={{ y: [-2, 2, -2] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            />
             <h3>Cargo Integrity</h3>
             <p>
               Package state intelligence with anomaly alerts and chain logs.
@@ -296,44 +263,11 @@ export default function OverviewPage() {
             variants={fadeInUp}
             whileHover={{ y: -4 }}
           >
-            <motion.svg
+            <motion.div
               className="agency-service-icon agency-service-route"
-              viewBox="0 0 64 64"
-              width="54"
-              height="54"
-              animate={{ rotate: [0, 15, -15, 0] }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-            >
-              <circle
-                cx="32"
-                cy="32"
-                r="28"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                opacity="0.3"
-              />
-              <path
-                d="M 20 32 C 20 26 24 22 28 20 L 36 20 C 40 22 44 26 44 32 L 44 40 Q 44 44 40 44 L 24 44 Q 20 44 20 40 Z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle cx="32" cy="36" r="3" fill="currentColor" />
-              <path
-                d="M 45 28 L 52 28 L 52 30 L 48 30"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </motion.svg>
+              animate={{ y: [-2, 2, -2] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            />
             <h3>Route Intelligence</h3>
             <p>Corridor scoring with geopolitical and weather overlays.</p>
           </motion.div>
@@ -342,44 +276,11 @@ export default function OverviewPage() {
             variants={fadeInUp}
             whileHover={{ y: -4 }}
           >
-            <motion.svg
+            <motion.div
               className="agency-service-icon agency-service-risk"
-              viewBox="0 0 64 64"
-              width="54"
-              height="54"
-              animate={{ rotate: [0, 15, -15, 0] }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-            >
-              <circle
-                cx="32"
-                cy="32"
-                r="28"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                opacity="0.3"
-              />
-              <path
-                d="M 20 32 C 20 26 24 22 28 20 L 36 20 C 40 22 44 26 44 32 L 44 40 Q 44 44 40 44 L 24 44 Q 20 44 20 40 Z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle cx="32" cy="36" r="3" fill="currentColor" />
-              <path
-                d="M 45 28 L 52 28 L 52 30 L 48 30"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </motion.svg>
+              animate={{ y: [-2, 2, -2] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            />
             <h3>Risk Monitoring</h3>
             <p>
               Radar-based threat scans for incident detection and escalation.
