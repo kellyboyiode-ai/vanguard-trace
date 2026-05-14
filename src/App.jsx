@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
@@ -24,110 +25,181 @@ const Tracking = lazy(() => import('./pages/Tracking.jsx'));
 
 function RouteLoadingFallback() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-zinc-300 px-4">
-      Loading page...
+    <div className="vt-loading-screen" role="status" aria-live="polite">
+      <div>
+        <div className="vt-loading-radar" aria-hidden="true" />
+        <p>Synchronizing global operations...</p>
+      </div>
     </div>
   );
 }
 
+function RouteMotion({ children }) {
+  return (
+    <motion.div
+      className="vt-route-motion-shell"
+      initial={{ opacity: 0, y: 12, filter: 'blur(10px)', scale: 0.99 }}
+      animate={{ opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }}
+      exit={{ opacity: 0, y: -8, filter: 'blur(8px)', scale: 1.01 }}
+      transition={{ duration: 0.38, ease: 'easeOut' }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 function App() {
+  const location = useLocation();
+
   return (
     <AuthProvider>
       <Suspense fallback={<RouteLoadingFallback />}>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/pending-approval" element={<PendingApprovalPage />} />
-          <Route
-            path="/admin/approvals"
-            element={
-              <ProtectedRoute requireAdmin>
-                <AdminApprovalsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <OverviewPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/home"
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/tracking"
-            element={
-              <ProtectedRoute>
-                <Tracking />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/operations"
-            element={
-              <ProtectedRoute>
-                <Operations />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/services"
-            element={
-              <ProtectedRoute>
-                <Services />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/intel"
-            element={
-              <ProtectedRoute>
-                <Intel />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              <ProtectedRoute>
-                <Contact />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <ProtectedRoute>
-                <About />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/traces"
-            element={
-              <ProtectedRoute>
-                <TracesPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <SettingsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <AnimatePresence mode="wait" initial={false}>
+          <Routes location={location} key={location.pathname}>
+            <Route
+              path="/login"
+              element={
+                <RouteMotion>
+                  <LoginPage />
+                </RouteMotion>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <RouteMotion>
+                  <SignupPage />
+                </RouteMotion>
+              }
+            />
+            <Route
+              path="/pending-approval"
+              element={
+                <RouteMotion>
+                  <PendingApprovalPage />
+                </RouteMotion>
+              }
+            />
+            <Route
+              path="/admin/approvals"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <RouteMotion>
+                    <AdminApprovalsPage />
+                  </RouteMotion>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <RouteMotion>
+                    <OverviewPage />
+                  </RouteMotion>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/home"
+              element={
+                <ProtectedRoute>
+                  <RouteMotion>
+                    <Home />
+                  </RouteMotion>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tracking"
+              element={
+                <ProtectedRoute>
+                  <RouteMotion>
+                    <Tracking />
+                  </RouteMotion>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/operations"
+              element={
+                <ProtectedRoute>
+                  <RouteMotion>
+                    <Operations />
+                  </RouteMotion>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/services"
+              element={
+                <ProtectedRoute>
+                  <RouteMotion>
+                    <Services />
+                  </RouteMotion>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/intel"
+              element={
+                <ProtectedRoute>
+                  <RouteMotion>
+                    <Intel />
+                  </RouteMotion>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <ProtectedRoute>
+                  <RouteMotion>
+                    <Contact />
+                  </RouteMotion>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <ProtectedRoute>
+                  <RouteMotion>
+                    <About />
+                  </RouteMotion>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/traces"
+              element={
+                <ProtectedRoute>
+                  <RouteMotion>
+                    <TracesPage />
+                  </RouteMotion>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <RouteMotion>
+                    <SettingsPage />
+                  </RouteMotion>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <RouteMotion>
+                  <NotFoundPage />
+                </RouteMotion>
+              }
+            />
+          </Routes>
+        </AnimatePresence>
       </Suspense>
     </AuthProvider>
   );

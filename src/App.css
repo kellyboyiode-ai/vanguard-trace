@@ -31,10 +31,30 @@
 .shell-header {
   border: 1px solid var(--border-soft);
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.68);
+  background: rgba(4, 13, 24, 0.76);
+  backdrop-filter: blur(14px);
   padding: 0.85rem;
   display: grid;
   gap: 0.65rem;
+}
+
+.shell-command-button {
+  justify-self: end;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 999px;
+  background: rgba(8, 18, 34, 0.88);
+  color: #e2e8f0;
+  min-height: 36px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.shell-command-button:hover,
+.shell-command-button:focus-visible {
+  background: rgba(8, 31, 50, 0.92);
+  border-color: rgba(56, 189, 248, 0.55);
 }
 
 .shell-brand {
@@ -136,15 +156,16 @@ h3 {
   background:
     radial-gradient(
       circle at top right,
-      rgba(247, 115, 83, 0.16),
+      rgba(34, 211, 238, 0.2),
       transparent 30%
     ),
     radial-gradient(
       circle at bottom left,
-      rgba(0, 166, 142, 0.14),
+      rgba(16, 185, 129, 0.2),
       transparent 26%
     ),
     var(--panel-bg);
+  backdrop-filter: blur(14px);
   box-shadow: var(--shadow-lg);
 }
 
@@ -171,7 +192,7 @@ h3 {
 .panel {
   border-radius: 22px;
   border: 1px solid var(--border-soft);
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(4, 13, 24, 0.75);
 }
 
 .stat-card {
@@ -202,14 +223,14 @@ h3 {
 }
 
 .panel-nested {
-  background: rgba(255, 255, 255, 0.84);
+  background: rgba(6, 18, 32, 0.82);
 }
 
 .chart-shell {
   margin-top: 0.8rem;
   border: 1px solid var(--border-soft);
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.86);
+  background: rgba(7, 19, 34, 0.86);
   padding: 0.75rem;
 }
 

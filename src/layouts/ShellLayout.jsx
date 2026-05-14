@@ -9,11 +9,15 @@ import {
   Navbar,
 } from '../components/index.js';
 import { useLiveOpsEngine } from '../hooks/useLiveOpsEngine.js';
+import { useOperationsStore } from '../store/index.js';
 import '../styles/footer.css';
 import '../styles/navbar.css';
 
 export default function ShellLayout({ title, eyebrow, description, children }) {
   const gtmId = String(import.meta.env.VITE_GTM_ID || '').trim();
+  const setCommandPaletteOpen = useOperationsStore(
+    (state) => state.setCommandPaletteOpen,
+  );
   useLiveOpsEngine();
 
   useEffect(() => {
@@ -55,6 +59,13 @@ export default function ShellLayout({ title, eyebrow, description, children }) {
             <p className="shell-brand-kicker">Vanguard Trace Platform</p>
             <strong className="shell-brand-title">Vanguard Trace</strong>
           </div>
+          <button
+            type="button"
+            className="shell-command-button"
+            onClick={() => setCommandPaletteOpen(true)}
+          >
+            Command (Ctrl + K)
+          </button>
           <Navbar />
         </header>
 

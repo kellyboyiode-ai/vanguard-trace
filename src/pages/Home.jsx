@@ -14,7 +14,13 @@ import {
   ShieldAlert,
   Truck,
 } from 'lucide-react';
-import { VanguardHeroScene } from '../components/index.js';
+import {
+  AIInsightBox,
+  BentoWidget,
+  GlobeView,
+  TrackingTimeline,
+  VanguardHeroScene,
+} from '../components/index.js';
 import {
   HOME_LOCATION_LOOKUP_BASE_URL,
   HOME_LOCATION_QUICK_LINK,
@@ -33,6 +39,7 @@ import {
   fetchSailingDestinations,
   fetchSailingOrigins,
 } from '../services/sailingsService.js';
+import { useOperationsStore } from '../store/index.js';
 import '../styles/homeLayout.css';
 import '../styles/vanguardTraceHero.css';
 // Minimal, vanishing, agency-grade Section 4/5 metrics
@@ -122,6 +129,13 @@ const regions = [
   'USA & Canada',
 ];
 
+const commandTimeline = [
+  { label: 'Customs Cleared', meta: 'VT-203 scanned at Rotterdam lane gate' },
+  { label: 'Route Integrity Check', meta: 'North Atlantic corridor deviation risk: low' },
+  { label: 'Warehouse Inbound', meta: 'Lagos distribution bay sync complete' },
+  { label: 'Last-mile Prediction', meta: 'ETA confidence: 92% within service window' },
+];
+
 const locationSuggestions = [
   'Los Angeles, US',
   'Long Beach, US',
@@ -162,6 +176,7 @@ function findSailingOption(rawValue, options) {
 }
 
 export default function Home() {
+  const liveKpis = useOperationsStore((state) => state.kpis);
   const [cookieAccepted, setCookieAccepted] = useState(() => {
     const stored = localStorage.getItem('vt-cookie-ok');
     return stored === 'true';
@@ -548,6 +563,56 @@ export default function Home() {
               {heroPlaying ? <Pause size={18} /> : <Play size={18} />}
             </button>
           </div>
+        </section>
+
+        <section className="vt-bento-grid" aria-label="Command center live modules">
+          <BentoWidget
+            size="large"
+            pulse
+            eyebrow="Global Tracking"
+            title="3D Logistics Globe"
+            note="Interactive route orbit with live corridors"
+          >
+            <GlobeView />
+          </BentoWidget>
+
+          <BentoWidget
+            size="medium"
+            eyebrow="Shipment Flow"
+            title="Active Shipments"
+            value={String(liveKpis.activeShipments)}
+            note="AI-monitored network throughput"
+          >
+            <AIInsightBox
+              line="Predicted delay pressure rising in Gulf of Guinea lane."
+              severity="warning"
+            />
+          </BentoWidget>
+
+          <BentoWidget
+            size="small"
+            eyebrow="Risk"
+            title="Live Risk Index"
+            value={String(liveKpis.riskIndex)}
+            note="Higher values indicate congestion or weather stress"
+          />
+
+          <BentoWidget
+            size="small"
+            eyebrow="Fleet"
+            title="Fleet Online"
+            value={`${liveKpis.fleetOnline}%`}
+            note="Vehicle telemetry channel integrity"
+          />
+
+          <BentoWidget
+            size="medium"
+            eyebrow="Operational Timeline"
+            title="Live Logistics Stream"
+            note="Event progression from customs to delivery"
+          >
+            <TrackingTimeline steps={commandTimeline} />
+          </BentoWidget>
         </section>
 
         <section className="home-toolbar" aria-label="Shipping tools">

@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react';
+import { AIInsightBox, TrackingTimeline } from '../components/index.js';
 import { ShellLayout } from '../layouts/index.js';
 import { getTrackingByCode, getTrackingSummary } from '../services/index.js';
 import '../styles/trackingLayout.css';
+
+const trackingTimeline = [
+  { label: 'Dock Scan', meta: 'Container verified at outbound dock gate' },
+  { label: 'Transit Link', meta: 'Carrier handoff complete with seal check' },
+  { label: 'Risk Monitor', meta: 'No route deviation detected in last 45 minutes' },
+  { label: 'Arrival Window', meta: 'ETA confidence above 90% threshold' },
+];
 
 export default function Tracking() {
   const [trackingCode, setTrackingCode] = useState('VGX-44591');
@@ -144,6 +152,17 @@ export default function Tracking() {
               </div>
             </dl>
           </article>
+
+          <div className="panel-nested" style={{ marginTop: '0.9rem' }}>
+            <AIInsightBox
+              title="AI Shipment Prediction"
+              line="Shipment VT-203 may delay by 34 minutes due to berth sequencing at Lagos port."
+              severity="warning"
+            />
+            <div style={{ marginTop: '0.75rem' }}>
+              <TrackingTimeline steps={trackingTimeline} />
+            </div>
+          </div>
         </section>
       </div>
     </ShellLayout>

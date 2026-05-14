@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { SectionHeader, VanguardHeroScene } from '../components/index.js';
+import {
+  AIInsightBox,
+  BentoWidget,
+  GlobeView,
+  SectionHeader,
+  TrackingTimeline,
+  VanguardHeroScene,
+} from '../components/index.js';
 import { fadeInUp, staggerContainer } from '../animations/motionPresets.js';
 import {
   radarSpin,
@@ -8,6 +15,7 @@ import {
   panelReveal,
 } from '../animations/vanguardTraceMotion.js';
 import { ShellLayout } from '../layouts/index.js';
+import { useOperationsStore } from '../store/index.js';
 
 const overviewStatusFeed = [
   'Status stream active: Global route updates synchronized.',
@@ -17,6 +25,12 @@ const overviewStatusFeed = [
 ];
 
 const radarStatuses = ['LOCKED', 'TRACKING', 'SWEEPING', 'CONFIRMED'];
+
+const overviewTimeline = [
+  { label: 'Port Arrival', meta: 'Freight manifest validated at terminal gate' },
+  { label: 'Risk Scan', meta: 'Anomaly engine reports low-severity variance' },
+  { label: 'Hub Transfer', meta: 'Air-to-ground handoff queued for dispatch' },
+];
 
 function formatUtcTime(date) {
   const hh = String(date.getUTCHours()).padStart(2, '0');
@@ -43,6 +57,7 @@ function buildRadarTelemetry(step) {
 }
 
 export default function OverviewPage() {
+  const liveKpis = useOperationsStore((state) => state.kpis);
   // Section 2: Tracking input state
   const [trackingCode, setTrackingCode] = useState('VX-2047-INTL');
   const [trackingResult, setTrackingResult] = useState(null);
@@ -200,6 +215,48 @@ export default function OverviewPage() {
           ))}
         </motion.ul>
       </motion.section>
+
+      <section className="vt-bento-grid" aria-label="Overview command widgets">
+        <BentoWidget
+          size="large"
+          pulse
+          eyebrow="Global Corridors"
+          title="Realtime Earth Tracking"
+          note="Live route projection with congestion intelligence"
+        >
+          <GlobeView />
+        </BentoWidget>
+
+        <BentoWidget
+          size="medium"
+          eyebrow="Operations"
+          title="Active Shipments"
+          value={String(liveKpis.activeShipments)}
+          note="Continuous updates from logistics event stream"
+        >
+          <AIInsightBox
+            title="AI Forecast"
+            line="West Africa lane likely to recover by next dispatch window."
+          />
+        </BentoWidget>
+
+        <BentoWidget
+          size="small"
+          eyebrow="Delay Pressure"
+          title="Delayed"
+          value={String(liveKpis.delayedShipments)}
+          note="Includes weather and customs-triggered exceptions"
+        />
+
+        <BentoWidget
+          size="medium"
+          eyebrow="Mission Timeline"
+          title="Live Event Progression"
+          note="Freight transitions and route-state confirmations"
+        >
+          <TrackingTimeline steps={overviewTimeline} />
+        </BentoWidget>
+      </section>
 
       {/* Section 2: Tracking Input */}
       <motion.section

@@ -538,6 +538,45 @@ create unique index if not exists account_admins_singleton_idx
 -- delete from public.account_admins;
 -- insert into public.account_admins (user_id)
 -- values ('NEW-ADMIN-USER-ID');
+
+create table if not exists public.intel_signals (
+  id uuid primary key default gen_random_uuid(),
+  customer_id uuid references public.customers(id) on delete cascade,
+  signal_type text not null,
+  severity text not null default 'info',
+  headline text not null,
+  advisory text,
+  source text not null default 'ai_core',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.intel_signals enable row level security;
+
+drop trigger if exists touch_intel_signals_updated_at on public.intel_signals;
+create trigger touch_intel_signals_updated_at
+before update on public.intel_signals
+for each row
+execute function public.touch_updated_at();
+
+drop policy if exists "authenticated can read intel signals" on public.intel_signals;
+create policy "authenticated can read intel signals"
+  on public.intel_signals for select
+  using (auth.role() = 'authenticated' and customer_id = auth.uid());
+
+drop policy if exists "authenticated can create intel signals" on public.intel_signals;
+create policy "authenticated can create intel signals"
+  on public.intel_signals for insert
+  with check (auth.role() = 'authenticated' and customer_id = auth.uid());
+
+drop policy if exists "authenticated can update intel signals" on public.intel_signals;
+create policy "authenticated can update intel signals"
+  on public.intel_signals for update
+  using (auth.role() = 'authenticated' and customer_id = auth.uid())
+  with check (auth.role() = 'authenticated' and customer_id = auth.uid());
+
+create index if not exists intel_signals_customer_created_idx
+  on public.intel_signals(customer_id, created_at desc);
 -- commit;
 
 insert into public.shipments (tracking_code, status, location, eta)

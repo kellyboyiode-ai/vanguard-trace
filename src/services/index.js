@@ -32,3 +32,8 @@ export {
   fetchSailingDestinations,
   fetchSailingOrigins,
 } from './sailingsService.js';
+export {
+  fetchRecentIntelligence,
+  predictDelayRisk,
+  summarizeOperations,
+} from './intelligenceService.js';
