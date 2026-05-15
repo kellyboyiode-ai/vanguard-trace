@@ -75,11 +75,11 @@ VITE_ENABLE_SUPABASE=true
 VITE_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
 VITE_SUPABASE_ANON_KEY=YOUR_ANON_KEY
 VITE_SUPABASE_STORAGE_BUCKET=documents
-VITE_PORTAL_BASE_URL=https://portal.your-provider.example
-VITE_MARKETING_BASE_URL=https://www.your-company.example
-VITE_AVANTI_BASE_URL=https://rates.your-company.example
-VITE_SHIPRITE_LTL_URL=https://ltl.your-company.example
-VITE_CARGO_INSURANCE_URL=https://insurance.your-company.example
+VITE_VT_PORTAL_BASE_URL=https://portal.your-provider.example
+VITE_VT_MARKETING_BASE_URL=https://www.your-company.example
+VITE_VT_FCL_RATE_BASE_URL=https://rates.your-company.example
+VITE_VT_LTL_RATE_URL=https://ltl.your-company.example
+VITE_VT_CARGO_INSURANCE_URL=https://insurance.your-company.example
 VITE_SAILINGS_API_BASE=https://api.your-company.example
 ```
 
