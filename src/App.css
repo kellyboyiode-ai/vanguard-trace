@@ -321,6 +321,186 @@ h3 {
   background: transparent;
 }
 
+.vt-transmission {
+  margin-bottom: 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-soft);
+  background: rgba(7, 19, 34, 0.8);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.vt-transmission-stage {
+  position: relative;
+  min-height: clamp(220px, 34vw, 360px);
+}
+
+.vt-transmission-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: vt-transmission-fade 420ms ease-out;
+}
+
+.vt-transmission-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(2, 6, 23, 0.04), rgba(2, 6, 23, 0.62)),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(34, 211, 238, 0.28),
+      transparent 40%
+    );
+  pointer-events: none;
+}
+
+.vt-transmission-meta {
+  padding: 0.9rem 1rem 1rem;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.vt-transmission-meta h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+
+.vt-transmission-meta p {
+  color: var(--muted);
+}
+
+.vt-transmission-dots {
+  margin-top: 0.45rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.vt-transmission-dots button {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 211, 252, 0.45);
+  background: rgba(14, 116, 144, 0.25);
+}
+
+.vt-transmission-dots button.is-active {
+  background: rgba(34, 211, 238, 0.94);
+  border-color: rgba(125, 211, 252, 0.92);
+}
+
+.vt-media-gallery {
+  margin-top: 1rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 20px;
+  background: rgba(6, 18, 32, 0.82);
+  padding: 0.9rem;
+}
+
+.vt-media-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.vt-media-tile {
+  margin: 0;
+  border-radius: 14px;
+  border: 1px solid var(--border-soft);
+  background: rgba(8, 24, 43, 0.76);
+  overflow: hidden;
+}
+
+.vt-media-tile img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.vt-media-tile figcaption {
+  padding: 0.45rem 0.55rem 0.6rem;
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+}
+
+.vt-media-gallery-compact .vt-media-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.vt-media-debug {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 70;
+}
+
+.vt-media-debug-toggle {
+  border: 1px solid rgba(103, 232, 249, 0.45);
+  background: rgba(8, 47, 73, 0.82);
+  color: rgba(207, 250, 254, 0.95);
+  border-radius: 999px;
+  font-size: 0.73rem;
+  letter-spacing: 0.03em;
+  padding: 0.4rem 0.75rem;
+}
+
+.vt-media-debug-panel {
+  margin-top: 0.5rem;
+  width: min(320px, calc(100vw - 28px));
+  border: 1px solid rgba(125, 211, 252, 0.35);
+  border-radius: 14px;
+  background: rgba(2, 18, 33, 0.95);
+  box-shadow: 0 12px 30px rgba(2, 8, 23, 0.42);
+  padding: 0.65rem 0.7rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.vt-media-debug-panel p {
+  margin: 0;
+  color: rgba(191, 219, 254, 0.92);
+  font-size: 0.7rem;
+}
+
+.vt-media-debug-panel ul {
+  list-style: none;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.18rem;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.vt-media-debug-panel li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  color: rgba(191, 219, 254, 0.92);
+  font-size: 0.68rem;
+}
+
+.vt-media-debug-panel li strong {
+  color: rgba(165, 243, 252, 0.98);
+  font-weight: 600;
+}
+
+@keyframes vt-transmission-fade {
+  from {
+    opacity: 0.35;
+    transform: scale(1.01);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @media (max-width: 900px) {
   .app-shell {
     padding: 12px;
@@ -337,6 +517,11 @@ h3 {
 
   .topbar {
     align-items: start;
+  }
+
+  .vt-media-grid,
+  .vt-media-gallery-compact .vt-media-grid {
+    grid-template-columns: 1fr;
   }
 
   h1 {

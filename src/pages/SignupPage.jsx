@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PageMediaGallery from '../components/PageMediaGallery.jsx';
 import { createPendingApprovalRequest } from '../services/approvalService.js';
 import { signUpWithEmail } from '../services/authService';
 
@@ -224,6 +225,12 @@ export default function SignupPage() {
             Sign in
           </Link>
         </p>
+
+        <PageMediaGallery
+          pageKey="signup"
+          compact
+          title="Registration Visual Set"
+        />
       </div>
     </div>
   );

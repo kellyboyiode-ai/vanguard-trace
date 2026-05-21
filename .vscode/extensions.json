@@ -2,6 +2,15 @@
   "recommendations": [
     "supabase.vscode-supabase-extension",
     "ms-edgedevtools.vscode-edge-devtools",
-    "mtxr.sqltools"
+    "mtxr.sqltools",
+    "tomoki1207.pdf",
+    "illixion.vscode-vibrancy-continued",
+    "figma.figma-vscode-extension",
+    "donjayamanne.githistory",
+    "github.vscode-github-actions",
+    "github.vscode-pull-request-github",
+    "eamodio.gitlens",
+    "vscjava.vscode-gradle",
+    "ms-vscode.cmake-tools"
   ]
 }

@@ -18,6 +18,7 @@ import {
   AIInsightBox,
   BentoWidget,
   GlobeView,
+  HomeTransmissionGallery,
   TrackingTimeline,
   VanguardHeroScene,
 } from '../components/index.js';
@@ -571,6 +572,8 @@ export default function Home() {
             </button>
           </div>
         </section>
+
+        <HomeTransmissionGallery />
 
         <section
           className="vt-bento-grid"

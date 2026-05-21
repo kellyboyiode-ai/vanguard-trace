@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import PageMediaGallery from '../components/PageMediaGallery.jsx';
 import { useAuth } from '../context/useAuth.jsx';
 import { signOut } from '../services/authService.js';
 
@@ -119,6 +120,12 @@ export default function PendingApprovalPage() {
             Re-check after verification
           </Link>
         </div>
+
+        <PageMediaGallery
+          pageKey="pending-approval"
+          compact
+          title="Approval Queue Visual Set"
+        />
       </div>
     </div>
   );

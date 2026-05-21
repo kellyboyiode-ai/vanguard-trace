@@ -1,5 +1,8 @@
 import { lazy, Suspense, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Footer, Navbar } from '../components/index.js';
+import MediaCoverageDebug from '../components/MediaCoverageDebug.jsx';
+import PageMediaGallery from '../components/PageMediaGallery.jsx';
 import { useLiveOpsEngine } from '../hooks/useLiveOpsEngine.js';
 import { useOperationsStore } from '../store/index.js';
 import '../styles/footer.css';
@@ -19,8 +22,37 @@ function ShellAsyncFallback({ className = '' }) {
   return <div className={className} aria-hidden="true" />;
 }
 
+function resolvePageKey(pathname) {
+  switch (pathname) {
+    case '/':
+      return 'overview';
+    case '/home':
+      return 'home';
+    case '/about':
+      return 'about';
+    case '/contact':
+      return 'contact';
+    case '/intel':
+      return 'intel';
+    case '/operations':
+      return 'operations';
+    case '/services':
+      return 'services';
+    case '/tracking':
+      return 'tracking';
+    case '/traces':
+      return 'traces';
+    case '/settings':
+      return 'settings';
+    default:
+      return 'not-found';
+  }
+}
+
 export default function ShellLayout({ title, eyebrow, description, children }) {
+  const location = useLocation();
   const gtmId = String(import.meta.env.VITE_GTM_ID || '').trim();
+  const pageKey = resolvePageKey(location.pathname);
   const setCommandPaletteOpen = useOperationsStore(
     (state) => state.setCommandPaletteOpen,
   );
@@ -94,12 +126,14 @@ export default function ShellLayout({ title, eyebrow, description, children }) {
           <section className="hero-panel">
             <p className="lead">{description}</p>
             {children}
+            <PageMediaGallery pageKey={pageKey} />
           </section>
         </main>
       </div>
       <Suspense fallback={<ShellAsyncFallback className="vt-shell-fallback" />}>
         <MobileOpsDock />
       </Suspense>
+      <MediaCoverageDebug />
       <Footer />
     </div>
   );

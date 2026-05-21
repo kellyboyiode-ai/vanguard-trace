@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import PageMediaGallery from '../components/PageMediaGallery.jsx';
 import { syncMyApprovalState } from '../services/approvalService.js';
 import { getSession, signInWithEmail } from '../services/authService';
 
@@ -102,6 +103,12 @@ export default function LoginPage() {
             Sign up
           </Link>
         </p>
+
+        <PageMediaGallery
+          pageKey="login"
+          compact
+          title="Secure Access Visual Set"
+        />
       </div>
     </div>
   );

@@ -15,3 +15,5 @@ export { default as AIInsightBox } from './AIInsightBox.jsx';
 export { default as TrackingTimeline } from './TrackingTimeline.jsx';
 export { default as GlobeView } from './GlobeView.jsx';
 export { FileUpload } from './FileUpload.jsx';
+export { default as HomeTransmissionGallery } from './HomeTransmissionGallery.jsx';
+export { default as PageMediaGallery } from './PageMediaGallery.jsx';

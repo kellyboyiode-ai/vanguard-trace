@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import PageMediaGallery from '../components/PageMediaGallery.jsx';
 import {
   approveAccountRequest,
   listAccountApprovalRequests,
@@ -235,6 +236,11 @@ export default function AdminApprovalsPage() {
                   ))}
               </ul>
             </section>
+
+              <PageMediaGallery
+                pageKey="admin-approvals"
+                title="Administrative Review Visual Set"
+              />
           </div>
         )}
       </div>
