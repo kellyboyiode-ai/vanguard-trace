@@ -133,7 +133,7 @@ export default function PageMediaGallery({
                   dur="3.8s"
                   repeatCount="indefinite"
                   rotate="auto"
-                  path="M58 112 L186 152 L332 74"
+                  path="M58 112 L186 152 L332 74 L186 152 L58 112"
                 />
               </circle>
               <circle
@@ -146,7 +146,7 @@ export default function PageMediaGallery({
                   dur="3.8s"
                   repeatCount="indefinite"
                   rotate="auto"
-                  path="M58 112 L186 152 L332 74"
+                  path="M58 112 L186 152 L332 74 L186 152 L58 112"
                 />
               </circle>
 
@@ -161,7 +161,7 @@ export default function PageMediaGallery({
                   begin="0.75s"
                   repeatCount="indefinite"
                   rotate="auto"
-                  path="M86 228 L186 152 L286 236"
+                  path="M86 228 L186 152 L286 236 L186 152 L86 228"
                 />
               </circle>
               <circle
@@ -175,7 +175,7 @@ export default function PageMediaGallery({
                   begin="0.75s"
                   repeatCount="indefinite"
                   rotate="auto"
-                  path="M86 228 L186 152 L286 236"
+                  path="M86 228 L186 152 L286 236 L186 152 L86 228"
                 />
               </circle>
             </svg>
