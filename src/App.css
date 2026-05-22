@@ -601,6 +601,38 @@ h3 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.vt-auth-visual-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.vt-auth-visual-backdrop {
+  position: absolute;
+  inset: 0;
+  background-image: url('/media/cyber-grid.svg');
+  background-size: cover;
+  background-position: center 58%;
+  opacity: 0.52;
+  filter: saturate(1.08) contrast(1.06) brightness(0.62);
+  transform: scale(1.04);
+  animation: vt-auth-bg-drift 18s ease-in-out infinite;
+}
+
+.vt-auth-visual-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(2, 10, 22, 0.2), rgba(2, 10, 22, 0.78)),
+    radial-gradient(circle at 50% 65%, rgba(56, 189, 248, 0.18), transparent 50%);
+  z-index: 1;
+}
+
+.vt-auth-visual-content {
+  position: relative;
+  z-index: 2;
+}
+
 .vt-media-debug {
   position: fixed;
   right: 14px;
@@ -719,6 +751,18 @@ h3 {
   100% {
     transform: scale(0.86);
     opacity: 0.16;
+  }
+}
+
+@keyframes vt-auth-bg-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1.04);
+  }
+  50% {
+    transform: translate3d(-10px, -8px, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.04);
   }
 }
 

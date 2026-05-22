@@ -178,22 +178,27 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <section className="rounded-[28px] border border-cyan-950/70 bg-[linear-gradient(180deg,rgba(5,15,28,0.94),rgba(3,10,21,0.98))] p-4 shadow-[0_24px_80px_rgba(2,8,23,0.4)]">
-          <div className="mb-4 rounded-2xl border border-cyan-900/40 bg-cyan-950/20 p-5">
-            <p className="mb-2 text-xs uppercase tracking-[0.28em] text-cyan-300/70">
-              Secure Access Layer
-            </p>
-            <h2 className="text-xl font-semibold text-cyan-50">
-              Identity, approval, and monitoring in one control surface.
-            </h2>
-            <p className="mt-2 max-w-2xl text-sm text-slate-300/80">
-              Every account request moves through a verified Vanguard Trace
-              workflow with security telemetry, approval gating, and operator
-              visibility.
-            </p>
-          </div>
+        <section className="vt-auth-visual-card rounded-[28px] border border-cyan-950/70 bg-[linear-gradient(180deg,rgba(5,15,28,0.94),rgba(3,10,21,0.98))] p-4 shadow-[0_24px_80px_rgba(2,8,23,0.4)]">
+          <div className="vt-auth-visual-backdrop" aria-hidden="true" />
+          <div className="vt-auth-visual-overlay" aria-hidden="true" />
 
-          <PageMediaGallery pageKey="login" title="Secure Access Visual Set" />
+          <div className="vt-auth-visual-content">
+            <div className="mb-4 rounded-2xl border border-cyan-900/40 bg-cyan-950/20 p-5">
+              <p className="mb-2 text-xs uppercase tracking-[0.28em] text-cyan-300/70">
+                Secure Access Layer
+              </p>
+              <h2 className="text-xl font-semibold text-cyan-50">
+                Identity, approval, and monitoring in one control surface.
+              </h2>
+              <p className="mt-2 max-w-2xl text-sm text-slate-300/80">
+                Every account request moves through a verified Vanguard Trace
+                workflow with security telemetry, approval gating, and operator
+                visibility.
+              </p>
+            </div>
+
+            <PageMediaGallery pageKey="login" title="Secure Access Visual Set" />
+          </div>
         </section>
       </div>
     </div>

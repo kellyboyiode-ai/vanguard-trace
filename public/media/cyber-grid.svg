@@ -1,115 +1,114 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="VanguardTrace secure global monitoring network">
   <defs>
     <linearGradient id="vt-bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#01040e" />
-      <stop offset="58%" stop-color="#03132a" />
-      <stop offset="100%" stop-color="#020913" />
+      <stop offset="0%" stop-color="#01040d" />
+      <stop offset="56%" stop-color="#04152f" />
+      <stop offset="100%" stop-color="#020812" />
     </linearGradient>
-
-    <radialGradient id="vt-aura" cx="50%" cy="58%" r="52%">
-      <stop offset="0%" stop-color="#1f86ff" stop-opacity="0.55" />
-      <stop offset="52%" stop-color="#0e3f91" stop-opacity="0.26" />
-      <stop offset="100%" stop-color="#050b1f" stop-opacity="0" />
+    <radialGradient id="vt-aura" cx="50%" cy="50%" r="56%">
+      <stop offset="0%" stop-color="#2a7bff" stop-opacity="0.55" />
+      <stop offset="58%" stop-color="#13408f" stop-opacity="0.26" />
+      <stop offset="100%" stop-color="#050a1d" stop-opacity="0" />
     </radialGradient>
-
-    <radialGradient id="vt-horizon" cx="50%" cy="100%" r="70%">
-      <stop offset="0%" stop-color="#8ef9ff" stop-opacity="0.78" />
-      <stop offset="28%" stop-color="#52d6ff" stop-opacity="0.45" />
-      <stop offset="72%" stop-color="#1b4fa2" stop-opacity="0.18" />
-      <stop offset="100%" stop-color="#0b1734" stop-opacity="0" />
+    <radialGradient id="vt-glow" cx="50%" cy="100%" r="70%">
+      <stop offset="0%" stop-color="#9bf9ff" stop-opacity="0.9" />
+      <stop offset="30%" stop-color="#65dcff" stop-opacity="0.5" />
+      <stop offset="70%" stop-color="#1e57b3" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#102449" stop-opacity="0" />
     </radialGradient>
-
-    <linearGradient id="vt-arc" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#65ecff" stop-opacity="0.05" />
-      <stop offset="48%" stop-color="#9af6ff" stop-opacity="0.55" />
-      <stop offset="100%" stop-color="#65ecff" stop-opacity="0.05" />
+    <linearGradient id="vt-route" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#74e7ff" stop-opacity="0.08" />
+      <stop offset="50%" stop-color="#abf8ff" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#74e7ff" stop-opacity="0.08" />
     </linearGradient>
-
-    <linearGradient id="vt-grid" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#51d7ff" stop-opacity="0.26" />
-      <stop offset="100%" stop-color="#60f1df" stop-opacity="0.12" />
-    </linearGradient>
-
-    <clipPath id="vt-globe-clip">
-      <ellipse cx="800" cy="940" rx="900" ry="490" />
+    <clipPath id="vt-clip-globe">
+      <ellipse cx="800" cy="940" rx="910" ry="510" />
     </clipPath>
   </defs>
 
   <rect width="1600" height="900" fill="url(#vt-bg)" />
   <rect width="1600" height="900" fill="url(#vt-aura)" />
 
-  <g stroke="#63dcff" stroke-opacity="0.1" stroke-width="1" fill="none">
-    <path d="M0 100 H1600" />
-    <path d="M0 180 H1600" />
-    <path d="M0 260 H1600" />
-    <path d="M0 340 H1600" />
-    <path d="M0 420 H1600" />
-    <path d="M0 500 H1600" />
-    <path d="M0 580 H1600" />
-    <path d="M0 660 H1600" />
-    <path d="M110 0 V900" />
-    <path d="M270 0 V900" />
-    <path d="M430 0 V900" />
-    <path d="M590 0 V900" />
-    <path d="M750 0 V900" />
-    <path d="M910 0 V900" />
-    <path d="M1070 0 V900" />
-    <path d="M1230 0 V900" />
-    <path d="M1390 0 V900" />
+  <g fill="none" stroke="#65dfff" stroke-opacity="0.12" stroke-width="1">
+    <path d="M0 90H1600" /><path d="M0 170H1600" /><path d="M0 250H1600" />
+    <path d="M0 330H1600" /><path d="M0 410H1600" /><path d="M0 490H1600" />
+    <path d="M0 570H1600" /><path d="M0 650H1600" />
+    <path d="M110 0V900" /><path d="M250 0V900" /><path d="M390 0V900" />
+    <path d="M530 0V900" /><path d="M670 0V900" /><path d="M810 0V900" />
+    <path d="M950 0V900" /><path d="M1090 0V900" /><path d="M1230 0V900" /><path d="M1370 0V900" />
   </g>
 
-  <ellipse cx="800" cy="940" rx="910" ry="500" fill="#091a3d" opacity="0.7" />
-  <ellipse cx="800" cy="940" rx="860" ry="460" fill="url(#vt-horizon)" />
+  <ellipse cx="800" cy="940" rx="930" ry="520" fill="#091a3a" opacity="0.78" />
+  <ellipse cx="800" cy="940" rx="890" ry="480" fill="url(#vt-glow)" />
 
-  <g clip-path="url(#vt-globe-clip)">
-    <g fill="none" stroke="url(#vt-grid)" stroke-width="1.5" stroke-opacity="0.5">
-      <ellipse cx="800" cy="940" rx="840" ry="420" />
-      <ellipse cx="800" cy="940" rx="720" ry="360" />
-      <ellipse cx="800" cy="940" rx="600" ry="300" />
-      <ellipse cx="800" cy="940" rx="480" ry="240" />
-      <ellipse cx="800" cy="940" rx="360" ry="180" />
-      <ellipse cx="800" cy="940" rx="240" ry="120" />
-      <path d="M220 520 Q800 350 1380 520" />
-      <path d="M180 590 Q800 390 1420 590" />
-      <path d="M150 660 Q800 440 1450 660" />
+  <g clip-path="url(#vt-clip-globe)">
+    <g fill="none" stroke="#5fd9ff" stroke-opacity="0.34" stroke-width="1.2">
+      <ellipse cx="800" cy="940" rx="850" ry="425" />
+      <ellipse cx="800" cy="940" rx="740" ry="370" />
+      <ellipse cx="800" cy="940" rx="630" ry="315" />
+      <ellipse cx="800" cy="940" rx="520" ry="260" />
+      <ellipse cx="800" cy="940" rx="410" ry="205" />
+      <ellipse cx="800" cy="940" rx="300" ry="150" />
+      <path d="M190 540Q800 345 1410 540" />
+      <path d="M150 610Q800 395 1450 610" />
+      <path d="M120 680Q800 450 1480 680" />
     </g>
 
-    <g fill="none" stroke="#66dfff" stroke-width="1.2" stroke-opacity="0.35">
-      <path d="M300 720 Q480 610 620 690 Q760 770 930 680 Q1110 585 1290 700" />
-      <path d="M370 640 Q520 570 640 620 Q770 670 920 620 Q1060 575 1210 640" />
-      <path d="M470 770 Q640 700 780 740 Q930 790 1120 730" />
+    <g fill="none" stroke="#7ee8ff" stroke-opacity="0.32" stroke-width="1.4">
+      <path d="M350 655L420 635L470 665L530 650L600 675L660 655" />
+      <path d="M530 650L560 615L620 595L670 620L640 655" />
+      <path d="M630 700L670 675L700 690L690 730L650 735L620 715Z" />
+      <path d="M750 635L790 605L840 600L870 635L860 685L820 700L780 690L760 655Z" />
+      <path d="M860 685L890 735L920 780" />
+      <path d="M900 600L950 590L980 610L965 645L925 650" />
+      <path d="M950 645L980 690L1010 735L1060 740L1110 710L1130 670L1100 620L1040 605L990 620Z" />
+      <path d="M1130 670L1165 700L1210 705L1250 690L1280 655L1265 620L1230 600L1180 605L1145 630Z" />
+      <path d="M1140 745L1180 770L1230 790L1270 785L1300 760L1280 735L1240 725L1185 725Z" />
     </g>
 
-    <g fill="#8df7ff" fill-opacity="0.92">
-      <circle cx="420" cy="670" r="4" />
-      <circle cx="640" cy="620" r="4" />
-      <circle cx="860" cy="646" r="4" />
-      <circle cx="1080" cy="600" r="4" />
-      <circle cx="1230" cy="678" r="4" />
-      <circle cx="780" cy="740" r="4" />
-      <circle cx="980" cy="715" r="4" />
+    <g fill="none" stroke="#8ff7ff" stroke-opacity="0.44" stroke-width="2">
+      <path id="vt-r1" d="M420 635L620 595L840 600L1040 605L1230 600" />
+      <path id="vt-r2" d="M530 650L670 620L900 600L1100 620L1265 620" />
+      <path id="vt-r3" d="M640 655L780 690L965 645L1130 670L1250 690" />
+      <path id="vt-r4" d="M620 715L760 655L900 600L1040 605L1180 605" />
+      <path id="vt-r5" d="M670 675L820 700L990 620L1180 605L1280 655" />
+      <path id="vt-r6" d="M920 780L1010 735L1140 745L1230 790" />
     </g>
 
-    <g fill="none" stroke="#8df7ff" stroke-opacity="0.45" stroke-width="2.1">
-      <path d="M420 670 L640 620 L860 646 L1080 600 L1230 678" />
-      <path d="M640 620 L780 740 L980 715 L1080 600" />
-    </g>
-
-    <g fill="none" stroke="url(#vt-arc)" stroke-width="2">
-      <path d="M260 680 C430 500 560 500 730 660" />
-      <path d="M560 660 C740 440 900 430 1080 640" />
-      <path d="M800 650 C980 470 1140 470 1320 670" />
-      <path d="M370 700 C580 520 780 510 980 700" />
-      <path d="M630 710 C820 560 980 560 1170 710" />
+    <g fill="none" stroke="url(#vt-route)" stroke-width="2.1">
+      <path d="M300 690C460 500 600 500 760 680" />
+      <path d="M520 670C700 430 900 430 1080 670" />
+      <path d="M760 670C940 490 1140 490 1320 690" />
+      <path d="M430 710C620 550 860 550 1050 710" />
+      <path d="M650 730C830 590 1050 590 1230 730" />
     </g>
   </g>
 
-  <g fill="#c8fbff" fill-opacity="0.9">
-    <circle cx="300" cy="690" r="2.2" />
-    <circle cx="500" cy="610" r="2.2" />
-    <circle cx="700" cy="570" r="2.2" />
-    <circle cx="900" cy="560" r="2.2" />
-    <circle cx="1120" cy="620" r="2.2" />
-    <circle cx="1310" cy="700" r="2.2" />
+  <g fill="#b7fbff" fill-opacity="0.95">
+    <circle cx="420" cy="635" r="4" /><circle cx="530" cy="650" r="4" /><circle cx="620" cy="595" r="4" />
+    <circle cx="670" cy="620" r="4" /><circle cx="780" cy="690" r="4" /><circle cx="840" cy="600" r="4" />
+    <circle cx="900" cy="600" r="4" /><circle cx="965" cy="645" r="4" /><circle cx="1040" cy="605" r="4" />
+    <circle cx="1130" cy="670" r="4" /><circle cx="1230" cy="600" r="4" /><circle cx="1250" cy="690" r="4" />
+  </g>
+
+  <g fill="#8defff" fill-opacity="0.26">
+    <circle r="7">
+      <animateMotion path="M420 635L620 595L840 600L1040 605L1230 600" dur="4.1s" repeatCount="indefinite" rotate="auto" />
+    </circle>
+    <circle r="6" fill="#77ffe8" fill-opacity="0.26">
+      <animateMotion path="M530 650L670 620L900 600L1100 620L1265 620" dur="4.8s" begin="0.8s" repeatCount="indefinite" rotate="auto" />
+    </circle>
+  </g>
+
+  <g fill="#d6fdff" stroke="#56ddff" stroke-width="1.2">
+    <circle r="3.2">
+      <animateMotion path="M420 635L620 595L840 600L1040 605L1230 600" dur="4.1s" repeatCount="indefinite" rotate="auto" />
+    </circle>
+    <circle r="3" fill="#b2fff1" stroke="#41dcc4">
+      <animateMotion path="M530 650L670 620L900 600L1100 620L1265 620" dur="4.8s" begin="0.8s" repeatCount="indefinite" rotate="auto" />
+    </circle>
+    <circle r="2.7" fill="#d6fdff" stroke="#56ddff">
+      <animateMotion path="M640 655L780 690L965 645L1130 670L1250 690" dur="5.2s" begin="1.3s" repeatCount="indefinite" rotate="auto" />
+    </circle>
   </g>
 </svg>
