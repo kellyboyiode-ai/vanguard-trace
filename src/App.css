@@ -333,6 +333,11 @@ h3 {
 .vt-transmission-stage {
   position: relative;
   min-height: clamp(220px, 34vw, 360px);
+  background: linear-gradient(
+    140deg,
+    rgba(4, 13, 24, 0.94),
+    rgba(8, 47, 73, 0.68)
+  );
 }
 
 .vt-transmission-image {
@@ -340,18 +345,34 @@ h3 {
   height: 100%;
   object-fit: cover;
   animation: vt-transmission-fade 420ms ease-out;
+  filter: saturate(0.72) contrast(1.08) brightness(0.8) hue-rotate(-10deg);
+  transform: scale(1.015);
 }
 
 .vt-transmission-overlay {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(2, 6, 23, 0.04), rgba(2, 6, 23, 0.62)),
+    linear-gradient(180deg, rgba(2, 6, 23, 0.08), rgba(2, 6, 23, 0.7)),
+    linear-gradient(
+      120deg,
+      rgba(56, 189, 248, 0.18),
+      transparent 40%,
+      rgba(16, 185, 129, 0.14) 100%
+    ),
     radial-gradient(
       circle at 85% 20%,
-      rgba(34, 211, 238, 0.28),
+      rgba(34, 211, 238, 0.3),
       transparent 40%
-    );
+    ),
+    linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    auto,
+    22px 22px,
+    22px 22px;
   pointer-events: none;
 }
 
@@ -401,10 +422,12 @@ h3 {
 
 .vt-media-tile {
   margin: 0;
+  position: relative;
   border-radius: 14px;
   border: 1px solid var(--border-soft);
   background: rgba(8, 24, 43, 0.76);
   overflow: hidden;
+  isolation: isolate;
 }
 
 .vt-media-tile img {
@@ -412,6 +435,38 @@ h3 {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   display: block;
+  filter: saturate(0.74) contrast(1.06) brightness(0.82) hue-rotate(-10deg);
+  transform: scale(1.02);
+}
+
+.vt-media-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(2, 6, 23, 0.04), rgba(2, 6, 23, 0.54)),
+    linear-gradient(
+      135deg,
+      rgba(56, 189, 248, 0.16),
+      transparent 42%,
+      rgba(16, 185, 129, 0.12) 100%
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.vt-media-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mix-blend-mode: soft-light;
+  opacity: 0.34;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .vt-media-gallery-compact .vt-media-grid {

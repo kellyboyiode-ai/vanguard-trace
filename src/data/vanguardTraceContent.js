@@ -1,3 +1,5 @@
+import heroPortImage from '../assets/timelab-sWOvgOOFk1g-unsplash.jpg';
+
 export const vanguardTraceHero = {
   eyebrow: 'VANGUARD TRACE',
   title: 'Reliable Freight Tracking',
@@ -10,8 +12,8 @@ export const vanguardTraceHero = {
 };
 
 export const heroImage = {
-  src: 'https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1400&q=80',
-  alt: 'Warehouse shelves and freight aisle in a global trade operations facility',
+  src: heroPortImage,
+  alt: 'Nighttime container port operations with stacked freight and active crane lanes',
 };
 
 export const terminalEvents = [
