@@ -123,30 +123,39 @@ export default function PageMediaGallery({
                 </g>
               ))}
 
-              <g>
-                <circle className="vt-media-signal-packet-trail" r="7" cx="58" cy="112" />
-                <circle className="vt-media-signal-packet" r="3.3" cx="58" cy="112" />
+              <circle
+                className="vt-media-signal-packet-trail"
+                r="7"
+                cx="58"
+                cy="112"
+              >
                 <animateMotion
                   dur="3.8s"
                   repeatCount="indefinite"
                   rotate="auto"
                   path="M58 112 L186 152 L332 74"
                 />
-              </g>
+              </circle>
+              <circle
+                className="vt-media-signal-packet"
+                r="3.3"
+                cx="58"
+                cy="112"
+              >
+                <animateMotion
+                  dur="3.8s"
+                  repeatCount="indefinite"
+                  rotate="auto"
+                  path="M58 112 L186 152 L332 74"
+                />
+              </circle>
 
-              <g>
-                <circle
-                  className="vt-media-signal-packet-trail vt-media-signal-packet-trail-secondary"
-                  r="6"
-                  cx="86"
-                  cy="228"
-                />
-                <circle
-                  className="vt-media-signal-packet vt-media-signal-packet-secondary"
-                  r="3"
-                  cx="86"
-                  cy="228"
-                />
+              <circle
+                className="vt-media-signal-packet-trail vt-media-signal-packet-trail-secondary"
+                r="6"
+                cx="86"
+                cy="228"
+              >
                 <animateMotion
                   dur="4.6s"
                   begin="0.75s"
@@ -154,7 +163,21 @@ export default function PageMediaGallery({
                   rotate="auto"
                   path="M86 228 L186 152 L286 236"
                 />
-              </g>
+              </circle>
+              <circle
+                className="vt-media-signal-packet vt-media-signal-packet-secondary"
+                r="3"
+                cx="86"
+                cy="228"
+              >
+                <animateMotion
+                  dur="4.6s"
+                  begin="0.75s"
+                  repeatCount="indefinite"
+                  rotate="auto"
+                  path="M86 228 L186 152 L286 236"
+                />
+              </circle>
             </svg>
           </figure>
         ))}
