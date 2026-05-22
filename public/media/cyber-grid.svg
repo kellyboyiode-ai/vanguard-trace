@@ -64,6 +64,11 @@
       <path d="M950 645L980 690L1010 735L1060 740L1110 710L1130 670L1100 620L1040 605L990 620Z" />
       <path d="M1130 670L1165 700L1210 705L1250 690L1280 655L1265 620L1230 600L1180 605L1145 630Z" />
       <path d="M1140 745L1180 770L1230 790L1270 785L1300 760L1280 735L1240 725L1185 725Z" />
+      <path d="M250 725L280 700L320 695L340 720L330 745L300 760L265 750Z" />
+      <path d="M320 785L360 760L405 760L420 790L398 815L350 820L322 805Z" />
+      <path d="M1310 690L1350 670L1380 680L1390 710L1365 730L1328 722Z" />
+      <path d="M1288 770L1325 760L1350 770L1360 790L1342 808L1310 810L1290 795Z" />
+      <path d="M1085 565L1120 550L1160 555L1178 580L1168 610L1138 620L1100 612L1078 592Z" />
     </g>
 
     <g fill="none" stroke="#8ff7ff" stroke-opacity="0.44" stroke-width="2">
@@ -73,6 +78,10 @@
       <path id="vt-r4" d="M620 715L760 655L900 600L1040 605L1180 605" />
       <path id="vt-r5" d="M670 675L820 700L990 620L1180 605L1280 655" />
       <path id="vt-r6" d="M920 780L1010 735L1140 745L1230 790" />
+      <path id="vt-r7" d="M300 760L420 635L620 595" />
+      <path id="vt-r8" d="M1230 600L1328 722L1342 808" />
+      <path id="vt-r9" d="M900 600L1085 565L1168 610" />
+      <path id="vt-r10" d="M760 655L670 620L560 615L420 635L300 700" />
     </g>
 
     <g fill="none" stroke="url(#vt-route)" stroke-width="2.1">
@@ -89,6 +98,55 @@
     <circle cx="670" cy="620" r="4" /><circle cx="780" cy="690" r="4" /><circle cx="840" cy="600" r="4" />
     <circle cx="900" cy="600" r="4" /><circle cx="965" cy="645" r="4" /><circle cx="1040" cy="605" r="4" />
     <circle cx="1130" cy="670" r="4" /><circle cx="1230" cy="600" r="4" /><circle cx="1250" cy="690" r="4" />
+    <circle cx="300" cy="700" r="4" /><circle cx="300" cy="760" r="4" /><circle cx="1342" cy="808" r="4" />
+    <circle cx="1328" cy="722" r="4" /><circle cx="1085" cy="565" r="4" /><circle cx="1168" cy="610" r="4" />
+  </g>
+
+  <g font-family="'JetBrains Mono', 'IBM Plex Mono', monospace" font-size="16" letter-spacing="1.8" fill="#b9f7ff" fill-opacity="0.28">
+    <text x="250" y="712">SOUTH AMERICA LINK</text>
+    <text x="526" y="552">NORTH ATLANTIC GATE</text>
+    <text x="822" y="540">EUROPE CORE MESH</text>
+    <text x="1008" y="526">MENA TRANSIT NODE</text>
+    <text x="1086" y="820">INDIAN OCEAN STREAM</text>
+    <animate attributeName="opacity" values="0.24;0.34;0.24" dur="7.2s" repeatCount="indefinite" />
+  </g>
+
+  <g fill="none" stroke="#8ceeff" stroke-opacity="0.24" stroke-width="1.2">
+    <path d="M264 718L340 718" />
+    <path d="M542 558L616 558" />
+    <path d="M838 546L914 546" />
+    <path d="M1024 532L1100 532" />
+    <path d="M1102 826L1188 826" />
+  </g>
+
+  <g>
+    <g transform="translate(280 700)">
+      <rect x="0" y="0" width="116" height="42" rx="7" fill="#031227" fill-opacity="0.5" stroke="#5fddff" stroke-opacity="0.2" />
+      <rect x="8" y="9" width="54" height="4" rx="2" fill="#9df8ff" fill-opacity="0.44" />
+      <rect x="8" y="18" width="80" height="3" rx="1.5" fill="#6de5ff" fill-opacity="0.24" />
+      <rect x="8" y="25" width="66" height="3" rx="1.5" fill="#6de5ff" fill-opacity="0.2" />
+      <circle cx="97" cy="20" r="7" fill="#89f0ff" fill-opacity="0.22" />
+      <circle cx="97" cy="20" r="2.4" fill="#d8fdff" />
+      <animateTransform attributeName="transform" type="translate" values="280 700;282 698;280 700" dur="6.2s" repeatCount="indefinite" />
+    </g>
+
+    <g transform="translate(1024 730)">
+      <rect x="0" y="0" width="128" height="46" rx="7" fill="#031227" fill-opacity="0.5" stroke="#5fddff" stroke-opacity="0.2" />
+      <rect x="9" y="10" width="60" height="4" rx="2" fill="#9df8ff" fill-opacity="0.44" />
+      <rect x="9" y="19" width="86" height="3" rx="1.5" fill="#6de5ff" fill-opacity="0.24" />
+      <rect x="9" y="26" width="76" height="3" rx="1.5" fill="#6de5ff" fill-opacity="0.2" />
+      <rect x="9" y="33" width="52" height="3" rx="1.5" fill="#6de5ff" fill-opacity="0.18" />
+      <circle cx="108" cy="22" r="7" fill="#7ff2e6" fill-opacity="0.2" />
+      <circle cx="108" cy="22" r="2.4" fill="#d7fff8" />
+      <animateTransform attributeName="transform" type="translate" values="1024 730;1021 732;1024 730" dur="7s" repeatCount="indefinite" />
+    </g>
+
+    <g transform="translate(784 526)">
+      <rect x="0" y="0" width="136" height="44" rx="7" fill="#031227" fill-opacity="0.5" stroke="#5fddff" stroke-opacity="0.2" />
+      <path d="M10 30L28 22L44 26L62 16L84 20L106 13L124 17" stroke="#9cf8ff" stroke-opacity="0.44" stroke-width="1.6" fill="none" />
+      <rect x="10" y="9" width="66" height="3" rx="1.5" fill="#9df8ff" fill-opacity="0.34" />
+      <animateTransform attributeName="transform" type="translate" values="784 526;786 523;784 526" dur="5.4s" repeatCount="indefinite" />
+    </g>
   </g>
 
   <g fill="#8defff" fill-opacity="0.26">
@@ -109,6 +167,15 @@
     </circle>
     <circle r="2.7" fill="#d6fdff" stroke="#56ddff">
       <animateMotion path="M640 655L780 690L965 645L1130 670L1250 690" dur="5.2s" begin="1.3s" repeatCount="indefinite" rotate="auto" />
+    </circle>
+    <circle r="2.9" fill="#d6fdff" stroke="#56ddff">
+      <animateMotion path="M300 760L420 635L620 595" dur="4.4s" begin="1.9s" repeatCount="indefinite" rotate="auto" />
+    </circle>
+    <circle r="2.7" fill="#b2fff1" stroke="#41dcc4">
+      <animateMotion path="M1230 600L1328 722L1342 808" dur="3.9s" begin="2.2s" repeatCount="indefinite" rotate="auto" />
+    </circle>
+    <circle r="2.6" fill="#d6fdff" stroke="#56ddff">
+      <animateMotion path="M900 600L1085 565L1168 610" dur="3.5s" begin="0.6s" repeatCount="indefinite" rotate="auto" />
     </circle>
   </g>
 </svg>
