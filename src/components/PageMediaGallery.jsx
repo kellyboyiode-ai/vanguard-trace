@@ -5,10 +5,6 @@ export default function PageMediaGallery({
   title = 'Mission Visual Intelligence',
   compact = false,
 }) {
-  const blockMediaActions = (event) => {
-    event.preventDefault();
-  };
-
   const media = getPageMedia(pageKey);
   const signalNodes = [
     { cx: 58, cy: 112 },
@@ -41,21 +37,13 @@ export default function PageMediaGallery({
 
       <div className="vt-media-grid">
         {media.map((asset) => (
-          <figure
-            key={asset.id}
-            className="vt-media-tile vt-media-tile-live"
-            onContextMenu={blockMediaActions}
-            onDragStart={blockMediaActions}
-          >
+          <figure key={asset.id} className="vt-media-tile vt-media-tile-live">
             <img
               className="vt-media-live-image"
               src={asset.src}
               alt={asset.alt}
               loading="lazy"
               decoding="async"
-              draggable={false}
-              onContextMenu={blockMediaActions}
-              onDragStart={blockMediaActions}
             />
             <span className="vt-media-sweep" aria-hidden="true" />
             <span className="vt-media-pulse" aria-hidden="true" />
