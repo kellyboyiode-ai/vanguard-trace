@@ -513,6 +513,7 @@ h3 {
   height: 100%;
   pointer-events: none;
   z-index: 3;
+  overflow: visible;
 }
 
 .vt-media-signal-trace {
@@ -522,13 +523,31 @@ h3 {
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-dasharray: 6 7;
-  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.26));
+  filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.34));
 }
 
 .vt-media-signal-trace-secondary {
   stroke: rgba(45, 212, 191, 0.72);
   stroke-width: 1.5;
   stroke-dasharray: 4 8;
+}
+
+.vt-media-coordinate-link {
+  fill: none;
+  stroke: rgba(94, 234, 212, 0.32);
+  stroke-width: 0.9;
+  stroke-dasharray: 2 9;
+}
+
+.vt-media-coordinate-dot {
+  fill: rgba(153, 246, 228, 0.96);
+  stroke: rgba(15, 118, 110, 0.95);
+  stroke-width: 1.2;
+  filter: drop-shadow(0 0 8px rgba(94, 234, 212, 0.52));
+}
+
+.vt-media-coordinate-ring {
+  fill: rgba(94, 234, 212, 0.12);
 }
 
 .vt-media-signal-node {
@@ -543,24 +562,26 @@ h3 {
 }
 
 .vt-media-signal-packet {
-  fill: rgba(186, 230, 253, 0.98);
-  stroke: rgba(34, 211, 238, 0.9);
-  stroke-width: 1.1;
-  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
+  fill: rgba(244, 252, 255, 1);
+  stroke: rgba(125, 211, 252, 1);
+  stroke-width: 1.2;
+  filter:
+    drop-shadow(0 0 10px rgba(56, 189, 248, 0.78))
+    drop-shadow(0 0 18px rgba(125, 211, 252, 0.44));
 }
 
 .vt-media-signal-packet-secondary {
-  fill: rgba(153, 246, 228, 0.94);
-  stroke: rgba(45, 212, 191, 0.84);
+  fill: rgba(209, 250, 229, 0.96);
+  stroke: rgba(45, 212, 191, 0.92);
 }
 
 .vt-media-signal-packet-trail {
-  fill: rgba(56, 189, 248, 0.3);
-  filter: blur(0.35px);
+  fill: rgba(56, 189, 248, 0.46);
+  filter: blur(1.2px);
 }
 
 .vt-media-signal-packet-trail-secondary {
-  fill: rgba(45, 212, 191, 0.24);
+  fill: rgba(45, 212, 191, 0.38);
 }
 
 .vt-media-tile::before {
