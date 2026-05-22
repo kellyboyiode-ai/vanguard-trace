@@ -22,7 +22,7 @@ export default function PageMediaGallery({
     >
       <div className="panel-header">
         <h2>{title}</h2>
-        <p>{`${media.length} assigned assets`}</p>
+        <p>assigned assets</p>
       </div>
 
       <div className="vt-media-grid">
@@ -79,51 +79,63 @@ export default function PageMediaGallery({
                 />
               </path>
 
-              {[{ cx: 58, cy: 112 }, { cx: 186, cy: 152 }, { cx: 332, cy: 74 }].map(
-                (node, index) => (
-                  <g key={`${asset.id}-node-${index}`}>
-                    <circle
-                      cx={node.cx}
-                      cy={node.cy}
-                      r="4"
-                      className="vt-media-signal-node"
-                    >
-                      <animate
-                        attributeName="opacity"
-                        values="0.45;1;0.45"
-                        dur="2.4s"
-                        begin={`${index * 0.28}s`}
-                        repeatCount="indefinite"
-                      />
-                    </circle>
-                    <circle
-                      cx={node.cx}
-                      cy={node.cy}
-                      r="8"
-                      className="vt-media-signal-node-glow"
-                    >
-                      <animate
-                        attributeName="r"
-                        values="4;12;4"
-                        dur="2.4s"
-                        begin={`${index * 0.28}s`}
-                        repeatCount="indefinite"
-                      />
-                      <animate
-                        attributeName="opacity"
-                        values="0.28;0;0.28"
-                        dur="2.4s"
-                        begin={`${index * 0.28}s`}
-                        repeatCount="indefinite"
-                      />
-                    </circle>
-                  </g>
-                ),
-              )}
+              {[
+                { cx: 58, cy: 112 },
+                { cx: 186, cy: 152 },
+                { cx: 332, cy: 74 },
+              ].map((node, index) => (
+                <g key={`${asset.id}-node-${index}`}>
+                  <circle
+                    cx={node.cx}
+                    cy={node.cy}
+                    r="4"
+                    className="vt-media-signal-node"
+                  >
+                    <animate
+                      attributeName="opacity"
+                      values="0.45;1;0.45"
+                      dur="2.4s"
+                      begin={`${index * 0.28}s`}
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+                  <circle
+                    cx={node.cx}
+                    cy={node.cy}
+                    r="8"
+                    className="vt-media-signal-node-glow"
+                  >
+                    <animate
+                      attributeName="r"
+                      values="4;12;4"
+                      dur="2.4s"
+                      begin={`${index * 0.28}s`}
+                      repeatCount="indefinite"
+                    />
+                    <animate
+                      attributeName="opacity"
+                      values="0.28;0;0.28"
+                      dur="2.4s"
+                      begin={`${index * 0.28}s`}
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+                </g>
+              ))}
 
               <g className="vt-media-packet-group">
-                <circle className="vt-media-signal-packet-trail" r="7" cx="58" cy="112" />
-                <circle className="vt-media-signal-packet" r="3.3" cx="58" cy="112" />
+                <circle
+                  className="vt-media-signal-packet-trail"
+                  r="7"
+                  cx="58"
+                  cy="112"
+                />
+                <circle
+                  className="vt-media-signal-packet"
+                  r="3.3"
+                  cx="58"
+                  cy="112"
+                />
                 <animateMotion
                   dur="3.8s"
                   repeatCount="indefinite"
