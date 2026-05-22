@@ -22,7 +22,7 @@ export default function PageMediaGallery({
     >
       <div className="panel-header">
         <h2>{title}</h2>
-        <p>{`${media.length} assigned assets`}</p>
+        <p>assigned assets</p>
       </div>
 
       <div className="vt-media-grid">
@@ -129,11 +129,19 @@ export default function PageMediaGallery({
                 cx="58"
                 cy="112"
               >
-                <animateMotion
+                <animate
+                  attributeName="cx"
+                  values="58;186;332;186;58"
+                  keyTimes="0;0.224;0.5;0.776;1"
                   dur="3.8s"
                   repeatCount="indefinite"
-                  rotate="auto"
-                  path="M58 112 L186 152 L332 74 L186 152 L58 112"
+                />
+                <animate
+                  attributeName="cy"
+                  values="112;152;74;152;112"
+                  keyTimes="0;0.224;0.5;0.776;1"
+                  dur="3.8s"
+                  repeatCount="indefinite"
                 />
               </circle>
               <circle
@@ -142,11 +150,19 @@ export default function PageMediaGallery({
                 cx="58"
                 cy="112"
               >
-                <animateMotion
+                <animate
+                  attributeName="cx"
+                  values="58;186;332;186;58"
+                  keyTimes="0;0.224;0.5;0.776;1"
                   dur="3.8s"
                   repeatCount="indefinite"
-                  rotate="auto"
-                  path="M58 112 L186 152 L332 74 L186 152 L58 112"
+                />
+                <animate
+                  attributeName="cy"
+                  values="112;152;74;152;112"
+                  keyTimes="0;0.224;0.5;0.776;1"
+                  dur="3.8s"
+                  repeatCount="indefinite"
                 />
               </circle>
 
@@ -156,12 +172,21 @@ export default function PageMediaGallery({
                 cx="86"
                 cy="228"
               >
-                <animateMotion
+                <animate
+                  attributeName="cx"
+                  values="86;186;286;186;86"
+                  keyTimes="0;0.245;0.5;0.755;1"
                   dur="4.6s"
                   begin="0.75s"
                   repeatCount="indefinite"
-                  rotate="auto"
-                  path="M86 228 L186 152 L286 236 L186 152 L86 228"
+                />
+                <animate
+                  attributeName="cy"
+                  values="228;152;236;152;228"
+                  keyTimes="0;0.245;0.5;0.755;1"
+                  dur="4.6s"
+                  begin="0.75s"
+                  repeatCount="indefinite"
                 />
               </circle>
               <circle
@@ -170,12 +195,21 @@ export default function PageMediaGallery({
                 cx="86"
                 cy="228"
               >
-                <animateMotion
+                <animate
+                  attributeName="cx"
+                  values="86;186;286;186;86"
+                  keyTimes="0;0.245;0.5;0.755;1"
                   dur="4.6s"
                   begin="0.75s"
                   repeatCount="indefinite"
-                  rotate="auto"
-                  path="M86 228 L186 152 L286 236 L186 152 L86 228"
+                />
+                <animate
+                  attributeName="cy"
+                  values="228;152;236;152;228"
+                  keyTimes="0;0.245;0.5;0.755;1"
+                  dur="4.6s"
+                  begin="0.75s"
+                  repeatCount="indefinite"
                 />
               </circle>
             </svg>
