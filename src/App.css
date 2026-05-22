@@ -467,6 +467,11 @@ h3 {
 .vt-media-live-image {
   animation: vt-cyber-drift 8.5s ease-in-out infinite;
   will-change: transform, filter;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
 }
 
 .vt-media-tile-live:hover .vt-media-live-image {
