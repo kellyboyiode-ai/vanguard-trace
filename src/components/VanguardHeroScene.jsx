@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { panelReveal } from '../animations/vanguardTraceMotion.js';
+import heroMark from '../assets/hero.png';
 import { heroImage, vanguardTraceHero } from '../data/vanguardTraceContent.js';
 
 const quickStats = [
@@ -17,7 +18,17 @@ export default function VanguardHeroScene() {
       variants={panelReveal}
     >
       <div className="vt-media-wrap">
-        <img className="vt-hero-image" src={heroImage.src} alt={heroImage.alt} />
+        <img
+          className="vt-hero-image"
+          src={heroImage.src}
+          alt={heroImage.alt}
+        />
+        <div className="vt-media-frame" aria-hidden="true">
+          <span className="vt-frame-pill">VT Live Grid</span>
+          <img className="vt-brand-mark" src={heroMark} alt="" />
+          <span className="vt-frame-pill">Signal Locked</span>
+        </div>
+        <div className="vt-hero-scanlines" aria-hidden="true" />
         <div className="vt-media-overlay" aria-hidden="true" />
       </div>
 
@@ -40,7 +51,8 @@ export default function VanguardHeroScene() {
         </div>
 
         <div className="vt-note" role="status" aria-live="polite">
-          Daily route updates and proof-of-delivery events refresh automatically.
+          Daily route updates and proof-of-delivery events refresh
+          automatically.
         </div>
       </div>
     </motion.section>
