@@ -567,26 +567,25 @@ h3 {
 }
 
 .vt-media-signal-packet {
-  fill: rgba(244, 252, 255, 1);
-  stroke: rgba(125, 211, 252, 1);
-  stroke-width: 1.2;
-  filter:
-    drop-shadow(0 0 10px rgba(56, 189, 248, 0.78))
-    drop-shadow(0 0 18px rgba(125, 211, 252, 0.44));
+  fill: rgba(232, 247, 255, 0.9);
+  stroke: rgba(125, 211, 252, 0.78);
+  stroke-width: 0.95;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.34))
+    drop-shadow(0 0 12px rgba(125, 211, 252, 0.2));
 }
 
 .vt-media-signal-packet-secondary {
-  fill: rgba(209, 250, 229, 0.96);
-  stroke: rgba(45, 212, 191, 0.92);
+  fill: rgba(209, 250, 229, 0.82);
+  stroke: rgba(45, 212, 191, 0.72);
 }
 
 .vt-media-signal-packet-trail {
-  fill: rgba(56, 189, 248, 0.46);
-  filter: blur(1.2px);
+  fill: rgba(56, 189, 248, 0.18);
+  filter: blur(1.6px);
 }
 
 .vt-media-signal-packet-trail-secondary {
-  fill: rgba(45, 212, 191, 0.38);
+  fill: rgba(45, 212, 191, 0.16);
 }
 
 .vt-media-tile::before {

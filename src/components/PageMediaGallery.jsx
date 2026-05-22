@@ -200,7 +200,7 @@ export default function PageMediaGallery({
 
               <circle
                 className="vt-media-signal-packet-trail"
-                r="10"
+                r="7"
                 cx="58"
                 cy="112"
               >
@@ -208,26 +208,26 @@ export default function PageMediaGallery({
                   attributeName="cx"
                   values="58;186;332;186;58"
                   keyTimes="0;0.224;0.5;0.776;1"
-                  dur="3.8s"
+                  dur="6.6s"
                   repeatCount="indefinite"
                 />
                 <animate
                   attributeName="cy"
                   values="112;152;74;152;112"
                   keyTimes="0;0.224;0.5;0.776;1"
-                  dur="3.8s"
+                  dur="6.6s"
                   repeatCount="indefinite"
                 />
                 <animate
                   attributeName="opacity"
-                  values="0.28;0.58;0.28"
-                  dur="1.2s"
+                  values="0.14;0.26;0.14"
+                  dur="2.8s"
                   repeatCount="indefinite"
                 />
               </circle>
               <circle
                 className="vt-media-signal-packet"
-                r="4.6"
+                r="3.4"
                 cx="58"
                 cy="112"
               >
@@ -235,27 +235,27 @@ export default function PageMediaGallery({
                   attributeName="cx"
                   values="58;186;332;186;58"
                   keyTimes="0;0.224;0.5;0.776;1"
-                  dur="3.8s"
+                  dur="6.6s"
                   repeatCount="indefinite"
                 />
                 <animate
                   attributeName="cy"
                   values="112;152;74;152;112"
                   keyTimes="0;0.224;0.5;0.776;1"
-                  dur="3.8s"
+                  dur="6.6s"
                   repeatCount="indefinite"
                 />
                 <animate
                   attributeName="r"
-                  values="4;5.2;4"
-                  dur="0.9s"
+                  values="3.2;3.8;3.2"
+                  dur="2.2s"
                   repeatCount="indefinite"
                 />
               </circle>
 
               <circle
                 className="vt-media-signal-packet-trail vt-media-signal-packet-trail-secondary"
-                r="8"
+                r="6"
                 cx="86"
                 cy="228"
               >
@@ -263,29 +263,29 @@ export default function PageMediaGallery({
                   attributeName="cx"
                   values="86;186;286;186;86"
                   keyTimes="0;0.245;0.5;0.755;1"
-                  dur="4.6s"
-                  begin="0.75s"
+                  dur="7.4s"
+                  begin="1.1s"
                   repeatCount="indefinite"
                 />
                 <animate
                   attributeName="cy"
                   values="228;152;236;152;228"
                   keyTimes="0;0.245;0.5;0.755;1"
-                  dur="4.6s"
-                  begin="0.75s"
+                  dur="7.4s"
+                  begin="1.1s"
                   repeatCount="indefinite"
                 />
                 <animate
                   attributeName="opacity"
-                  values="0.2;0.5;0.2"
-                  dur="1.35s"
-                  begin="0.75s"
+                  values="0.12;0.22;0.12"
+                  dur="3.1s"
+                  begin="1.1s"
                   repeatCount="indefinite"
                 />
               </circle>
               <circle
                 className="vt-media-signal-packet vt-media-signal-packet-secondary"
-                r="4"
+                r="3"
                 cx="86"
                 cy="228"
               >
@@ -293,23 +293,23 @@ export default function PageMediaGallery({
                   attributeName="cx"
                   values="86;186;286;186;86"
                   keyTimes="0;0.245;0.5;0.755;1"
-                  dur="4.6s"
-                  begin="0.75s"
+                  dur="7.4s"
+                  begin="1.1s"
                   repeatCount="indefinite"
                 />
                 <animate
                   attributeName="cy"
                   values="228;152;236;152;228"
                   keyTimes="0;0.245;0.5;0.755;1"
-                  dur="4.6s"
-                  begin="0.75s"
+                  dur="7.4s"
+                  begin="1.1s"
                   repeatCount="indefinite"
                 />
                 <animate
                   attributeName="r"
-                  values="3.4;4.6;3.4"
-                  dur="1.05s"
-                  begin="0.75s"
+                  values="2.8;3.3;2.8"
+                  dur="2.4s"
+                  begin="1.1s"
                   repeatCount="indefinite"
                 />
               </circle>
