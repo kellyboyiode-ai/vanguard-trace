@@ -1,21 +1,115 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Cyber grid security">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="VanguardTrace secure global monitoring network">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#040710"/>
-      <stop offset="100%" stop-color="#0b2138"/>
+    <linearGradient id="vt-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#01040e" />
+      <stop offset="58%" stop-color="#03132a" />
+      <stop offset="100%" stop-color="#020913" />
     </linearGradient>
+
+    <radialGradient id="vt-aura" cx="50%" cy="58%" r="52%">
+      <stop offset="0%" stop-color="#1f86ff" stop-opacity="0.55" />
+      <stop offset="52%" stop-color="#0e3f91" stop-opacity="0.26" />
+      <stop offset="100%" stop-color="#050b1f" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="vt-horizon" cx="50%" cy="100%" r="70%">
+      <stop offset="0%" stop-color="#8ef9ff" stop-opacity="0.78" />
+      <stop offset="28%" stop-color="#52d6ff" stop-opacity="0.45" />
+      <stop offset="72%" stop-color="#1b4fa2" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#0b1734" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="vt-arc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#65ecff" stop-opacity="0.05" />
+      <stop offset="48%" stop-color="#9af6ff" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#65ecff" stop-opacity="0.05" />
+    </linearGradient>
+
+    <linearGradient id="vt-grid" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#51d7ff" stop-opacity="0.26" />
+      <stop offset="100%" stop-color="#60f1df" stop-opacity="0.12" />
+    </linearGradient>
+
+    <clipPath id="vt-globe-clip">
+      <ellipse cx="800" cy="940" rx="900" ry="490" />
+    </clipPath>
   </defs>
-  <rect width="1600" height="900" fill="url(#bg)"/>
-  <g stroke="#22d3ee" stroke-opacity="0.2" stroke-width="1" fill="none">
-    <path d="M0 120h1600M0 240h1600M0 360h1600M0 480h1600M0 600h1600M0 720h1600"/>
-    <path d="M200 0v900M400 0v900M600 0v900M800 0v900M1000 0v900M1200 0v900M1400 0v900"/>
+
+  <rect width="1600" height="900" fill="url(#vt-bg)" />
+  <rect width="1600" height="900" fill="url(#vt-aura)" />
+
+  <g stroke="#63dcff" stroke-opacity="0.1" stroke-width="1" fill="none">
+    <path d="M0 100 H1600" />
+    <path d="M0 180 H1600" />
+    <path d="M0 260 H1600" />
+    <path d="M0 340 H1600" />
+    <path d="M0 420 H1600" />
+    <path d="M0 500 H1600" />
+    <path d="M0 580 H1600" />
+    <path d="M0 660 H1600" />
+    <path d="M110 0 V900" />
+    <path d="M270 0 V900" />
+    <path d="M430 0 V900" />
+    <path d="M590 0 V900" />
+    <path d="M750 0 V900" />
+    <path d="M910 0 V900" />
+    <path d="M1070 0 V900" />
+    <path d="M1230 0 V900" />
+    <path d="M1390 0 V900" />
   </g>
-  <g fill="#67e8f9" fill-opacity="0.85">
-    <circle cx="400" cy="360" r="8"/>
-    <circle cx="810" cy="480" r="8"/>
-    <circle cx="1150" cy="260" r="8"/>
+
+  <ellipse cx="800" cy="940" rx="910" ry="500" fill="#091a3d" opacity="0.7" />
+  <ellipse cx="800" cy="940" rx="860" ry="460" fill="url(#vt-horizon)" />
+
+  <g clip-path="url(#vt-globe-clip)">
+    <g fill="none" stroke="url(#vt-grid)" stroke-width="1.5" stroke-opacity="0.5">
+      <ellipse cx="800" cy="940" rx="840" ry="420" />
+      <ellipse cx="800" cy="940" rx="720" ry="360" />
+      <ellipse cx="800" cy="940" rx="600" ry="300" />
+      <ellipse cx="800" cy="940" rx="480" ry="240" />
+      <ellipse cx="800" cy="940" rx="360" ry="180" />
+      <ellipse cx="800" cy="940" rx="240" ry="120" />
+      <path d="M220 520 Q800 350 1380 520" />
+      <path d="M180 590 Q800 390 1420 590" />
+      <path d="M150 660 Q800 440 1450 660" />
+    </g>
+
+    <g fill="none" stroke="#66dfff" stroke-width="1.2" stroke-opacity="0.35">
+      <path d="M300 720 Q480 610 620 690 Q760 770 930 680 Q1110 585 1290 700" />
+      <path d="M370 640 Q520 570 640 620 Q770 670 920 620 Q1060 575 1210 640" />
+      <path d="M470 770 Q640 700 780 740 Q930 790 1120 730" />
+    </g>
+
+    <g fill="#8df7ff" fill-opacity="0.92">
+      <circle cx="420" cy="670" r="4" />
+      <circle cx="640" cy="620" r="4" />
+      <circle cx="860" cy="646" r="4" />
+      <circle cx="1080" cy="600" r="4" />
+      <circle cx="1230" cy="678" r="4" />
+      <circle cx="780" cy="740" r="4" />
+      <circle cx="980" cy="715" r="4" />
+    </g>
+
+    <g fill="none" stroke="#8df7ff" stroke-opacity="0.45" stroke-width="2.1">
+      <path d="M420 670 L640 620 L860 646 L1080 600 L1230 678" />
+      <path d="M640 620 L780 740 L980 715 L1080 600" />
+    </g>
+
+    <g fill="none" stroke="url(#vt-arc)" stroke-width="2">
+      <path d="M260 680 C430 500 560 500 730 660" />
+      <path d="M560 660 C740 440 900 430 1080 640" />
+      <path d="M800 650 C980 470 1140 470 1320 670" />
+      <path d="M370 700 C580 520 780 510 980 700" />
+      <path d="M630 710 C820 560 980 560 1170 710" />
+    </g>
   </g>
-  <g stroke="#67e8f9" stroke-opacity="0.55" stroke-width="3" fill="none">
-    <path d="M400 360L810 480L1150 260"/>
+
+  <g fill="#c8fbff" fill-opacity="0.9">
+    <circle cx="300" cy="690" r="2.2" />
+    <circle cx="500" cy="610" r="2.2" />
+    <circle cx="700" cy="570" r="2.2" />
+    <circle cx="900" cy="560" r="2.2" />
+    <circle cx="1120" cy="620" r="2.2" />
+    <circle cx="1310" cy="700" r="2.2" />
   </g>
 </svg>
