@@ -79,7 +79,9 @@ export default function ResetPasswordPage() {
       return;
     }
 
-    setMessage('Password updated successfully. Redirecting to secure sign-in...');
+    setMessage(
+      'Password updated successfully. Redirecting to secure sign-in...',
+    );
     setTimeout(() => {
       navigate('/login', { replace: true });
     }, 1200);
@@ -92,7 +94,9 @@ export default function ResetPasswordPage() {
           <p className="mb-3 text-xs uppercase tracking-[0.28em] text-cyan-300/70">
             Encrypted Recovery Channel
           </p>
-          <h1 className="mb-2 text-2xl font-bold text-white">Reset Passphrase</h1>
+          <h1 className="mb-2 text-2xl font-bold text-white">
+            Reset Passphrase
+          </h1>
           <p className="mb-4 text-sm text-zinc-400">
             Complete your secure credential rotation.
           </p>
@@ -170,25 +174,22 @@ export default function ResetPasswordPage() {
           </p>
         </div>
 
-        <section className="vt-auth-visual-card rounded-[28px] border border-cyan-950/70 bg-[linear-gradient(180deg,rgba(5,15,28,0.94),rgba(3,10,21,0.98))] p-4 shadow-[0_24px_80px_rgba(2,8,23,0.4)]">
-          <div className="vt-auth-visual-backdrop" aria-hidden="true" />
-          <div className="vt-auth-visual-overlay" aria-hidden="true" />
-
-          <div className="vt-auth-visual-content">
-            <div className="mb-4 rounded-2xl border border-cyan-900/40 bg-cyan-950/20 p-5">
-              <p className="mb-2 text-xs uppercase tracking-[0.28em] text-cyan-300/70">
-                Credential Recovery Layer
-              </p>
-              <h2 className="text-xl font-semibold text-cyan-50">
-                Rotate access credentials through a verified recovery session.
-              </h2>
-              <p className="mt-2 max-w-2xl text-sm text-slate-300/80">
-                This flow requires a valid recovery link generated from your registered email and secures updates through the active token session.
-              </p>
-            </div>
-
-            <PageMediaGallery pageKey="login" title="Secure Access Visual Set" />
+        <section className="rounded-[28px] border border-cyan-950/70 bg-[linear-gradient(180deg,rgba(5,15,28,0.94),rgba(3,10,21,0.98))] p-4 shadow-[0_24px_80px_rgba(2,8,23,0.4)]">
+          <div className="mb-4 rounded-2xl border border-cyan-900/40 bg-cyan-950/20 p-5">
+            <p className="mb-2 text-xs uppercase tracking-[0.28em] text-cyan-300/70">
+              Credential Recovery Layer
+            </p>
+            <h2 className="text-xl font-semibold text-cyan-50">
+              Rotate access credentials through a verified recovery session.
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm text-slate-300/80">
+              This flow requires a valid recovery link generated from your
+              registered email and secures updates through the active token
+              session.
+            </p>
           </div>
+
+          <PageMediaGallery pageKey="login" title="Secure Access Visual Set" />
         </section>
       </div>
     </div>

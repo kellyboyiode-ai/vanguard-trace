@@ -1,181 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="VanguardTrace secure global monitoring network">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Cyber grid security">
   <defs>
-    <linearGradient id="vt-bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#01040d" />
-      <stop offset="56%" stop-color="#04152f" />
-      <stop offset="100%" stop-color="#020812" />
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#040710"/>
+      <stop offset="100%" stop-color="#0b2138"/>
     </linearGradient>
-    <radialGradient id="vt-aura" cx="50%" cy="50%" r="56%">
-      <stop offset="0%" stop-color="#2a7bff" stop-opacity="0.55" />
-      <stop offset="58%" stop-color="#13408f" stop-opacity="0.26" />
-      <stop offset="100%" stop-color="#050a1d" stop-opacity="0" />
-    </radialGradient>
-    <radialGradient id="vt-glow" cx="50%" cy="100%" r="70%">
-      <stop offset="0%" stop-color="#9bf9ff" stop-opacity="0.9" />
-      <stop offset="30%" stop-color="#65dcff" stop-opacity="0.5" />
-      <stop offset="70%" stop-color="#1e57b3" stop-opacity="0.2" />
-      <stop offset="100%" stop-color="#102449" stop-opacity="0" />
-    </radialGradient>
-    <linearGradient id="vt-route" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#74e7ff" stop-opacity="0.08" />
-      <stop offset="50%" stop-color="#abf8ff" stop-opacity="0.6" />
-      <stop offset="100%" stop-color="#74e7ff" stop-opacity="0.08" />
-    </linearGradient>
-    <clipPath id="vt-clip-globe">
-      <ellipse cx="800" cy="940" rx="910" ry="510" />
-    </clipPath>
   </defs>
-
-  <rect width="1600" height="900" fill="url(#vt-bg)" />
-  <rect width="1600" height="900" fill="url(#vt-aura)" />
-
-  <g fill="none" stroke="#65dfff" stroke-opacity="0.12" stroke-width="1">
-    <path d="M0 90H1600" /><path d="M0 170H1600" /><path d="M0 250H1600" />
-    <path d="M0 330H1600" /><path d="M0 410H1600" /><path d="M0 490H1600" />
-    <path d="M0 570H1600" /><path d="M0 650H1600" />
-    <path d="M110 0V900" /><path d="M250 0V900" /><path d="M390 0V900" />
-    <path d="M530 0V900" /><path d="M670 0V900" /><path d="M810 0V900" />
-    <path d="M950 0V900" /><path d="M1090 0V900" /><path d="M1230 0V900" /><path d="M1370 0V900" />
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g stroke="#22d3ee" stroke-opacity="0.2" stroke-width="1" fill="none">
+    <path d="M0 120h1600M0 240h1600M0 360h1600M0 480h1600M0 600h1600M0 720h1600"/>
+    <path d="M200 0v900M400 0v900M600 0v900M800 0v900M1000 0v900M1200 0v900M1400 0v900"/>
   </g>
-
-  <ellipse cx="800" cy="940" rx="930" ry="520" fill="#091a3a" opacity="0.78" />
-  <ellipse cx="800" cy="940" rx="890" ry="480" fill="url(#vt-glow)" />
-
-  <g clip-path="url(#vt-clip-globe)">
-    <g fill="none" stroke="#5fd9ff" stroke-opacity="0.34" stroke-width="1.2">
-      <ellipse cx="800" cy="940" rx="850" ry="425" />
-      <ellipse cx="800" cy="940" rx="740" ry="370" />
-      <ellipse cx="800" cy="940" rx="630" ry="315" />
-      <ellipse cx="800" cy="940" rx="520" ry="260" />
-      <ellipse cx="800" cy="940" rx="410" ry="205" />
-      <ellipse cx="800" cy="940" rx="300" ry="150" />
-      <path d="M190 540Q800 345 1410 540" />
-      <path d="M150 610Q800 395 1450 610" />
-      <path d="M120 680Q800 450 1480 680" />
-    </g>
-
-    <g fill="none" stroke="#7ee8ff" stroke-opacity="0.32" stroke-width="1.4">
-      <path d="M350 655L420 635L470 665L530 650L600 675L660 655" />
-      <path d="M530 650L560 615L620 595L670 620L640 655" />
-      <path d="M630 700L670 675L700 690L690 730L650 735L620 715Z" />
-      <path d="M750 635L790 605L840 600L870 635L860 685L820 700L780 690L760 655Z" />
-      <path d="M860 685L890 735L920 780" />
-      <path d="M900 600L950 590L980 610L965 645L925 650" />
-      <path d="M950 645L980 690L1010 735L1060 740L1110 710L1130 670L1100 620L1040 605L990 620Z" />
-      <path d="M1130 670L1165 700L1210 705L1250 690L1280 655L1265 620L1230 600L1180 605L1145 630Z" />
-      <path d="M1140 745L1180 770L1230 790L1270 785L1300 760L1280 735L1240 725L1185 725Z" />
-      <path d="M250 725L280 700L320 695L340 720L330 745L300 760L265 750Z" />
-      <path d="M320 785L360 760L405 760L420 790L398 815L350 820L322 805Z" />
-      <path d="M1310 690L1350 670L1380 680L1390 710L1365 730L1328 722Z" />
-      <path d="M1288 770L1325 760L1350 770L1360 790L1342 808L1310 810L1290 795Z" />
-      <path d="M1085 565L1120 550L1160 555L1178 580L1168 610L1138 620L1100 612L1078 592Z" />
-    </g>
-
-    <g fill="none" stroke="#8ff7ff" stroke-opacity="0.44" stroke-width="2">
-      <path id="vt-r1" d="M420 635L620 595L840 600L1040 605L1230 600" />
-      <path id="vt-r2" d="M530 650L670 620L900 600L1100 620L1265 620" />
-      <path id="vt-r3" d="M640 655L780 690L965 645L1130 670L1250 690" />
-      <path id="vt-r4" d="M620 715L760 655L900 600L1040 605L1180 605" />
-      <path id="vt-r5" d="M670 675L820 700L990 620L1180 605L1280 655" />
-      <path id="vt-r6" d="M920 780L1010 735L1140 745L1230 790" />
-      <path id="vt-r7" d="M300 760L420 635L620 595" />
-      <path id="vt-r8" d="M1230 600L1328 722L1342 808" />
-      <path id="vt-r9" d="M900 600L1085 565L1168 610" />
-      <path id="vt-r10" d="M760 655L670 620L560 615L420 635L300 700" />
-    </g>
-
-    <g fill="none" stroke="url(#vt-route)" stroke-width="2.1">
-      <path d="M300 690C460 500 600 500 760 680" />
-      <path d="M520 670C700 430 900 430 1080 670" />
-      <path d="M760 670C940 490 1140 490 1320 690" />
-      <path d="M430 710C620 550 860 550 1050 710" />
-      <path d="M650 730C830 590 1050 590 1230 730" />
-    </g>
+  <g fill="#67e8f9" fill-opacity="0.85">
+    <circle cx="400" cy="360" r="8"/>
+    <circle cx="810" cy="480" r="8"/>
+    <circle cx="1150" cy="260" r="8"/>
   </g>
-
-  <g fill="#b7fbff" fill-opacity="0.95">
-    <circle cx="420" cy="635" r="4" /><circle cx="530" cy="650" r="4" /><circle cx="620" cy="595" r="4" />
-    <circle cx="670" cy="620" r="4" /><circle cx="780" cy="690" r="4" /><circle cx="840" cy="600" r="4" />
-    <circle cx="900" cy="600" r="4" /><circle cx="965" cy="645" r="4" /><circle cx="1040" cy="605" r="4" />
-    <circle cx="1130" cy="670" r="4" /><circle cx="1230" cy="600" r="4" /><circle cx="1250" cy="690" r="4" />
-    <circle cx="300" cy="700" r="4" /><circle cx="300" cy="760" r="4" /><circle cx="1342" cy="808" r="4" />
-    <circle cx="1328" cy="722" r="4" /><circle cx="1085" cy="565" r="4" /><circle cx="1168" cy="610" r="4" />
-  </g>
-
-  <g font-family="'JetBrains Mono', 'IBM Plex Mono', monospace" font-size="16" letter-spacing="1.8" fill="#b9f7ff" fill-opacity="0.28">
-    <text x="250" y="712">SOUTH AMERICA LINK</text>
-    <text x="526" y="552">NORTH ATLANTIC GATE</text>
-    <text x="822" y="540">EUROPE CORE MESH</text>
-    <text x="1008" y="526">MENA TRANSIT NODE</text>
-    <text x="1086" y="820">INDIAN OCEAN STREAM</text>
-    <animate attributeName="opacity" values="0.24;0.34;0.24" dur="7.2s" repeatCount="indefinite" />
-  </g>
-
-  <g fill="none" stroke="#8ceeff" stroke-opacity="0.24" stroke-width="1.2">
-    <path d="M264 718L340 718" />
-    <path d="M542 558L616 558" />
-    <path d="M838 546L914 546" />
-    <path d="M1024 532L1100 532" />
-    <path d="M1102 826L1188 826" />
-  </g>
-
-  <g>
-    <g transform="translate(280 700)">
-      <rect x="0" y="0" width="116" height="42" rx="7" fill="#031227" fill-opacity="0.5" stroke="#5fddff" stroke-opacity="0.2" />
-      <rect x="8" y="9" width="54" height="4" rx="2" fill="#9df8ff" fill-opacity="0.44" />
-      <rect x="8" y="18" width="80" height="3" rx="1.5" fill="#6de5ff" fill-opacity="0.24" />
-      <rect x="8" y="25" width="66" height="3" rx="1.5" fill="#6de5ff" fill-opacity="0.2" />
-      <circle cx="97" cy="20" r="7" fill="#89f0ff" fill-opacity="0.22" />
-      <circle cx="97" cy="20" r="2.4" fill="#d8fdff" />
-      <animateTransform attributeName="transform" type="translate" values="280 700;282 698;280 700" dur="6.2s" repeatCount="indefinite" />
-    </g>
-
-    <g transform="translate(1024 730)">
-      <rect x="0" y="0" width="128" height="46" rx="7" fill="#031227" fill-opacity="0.5" stroke="#5fddff" stroke-opacity="0.2" />
-      <rect x="9" y="10" width="60" height="4" rx="2" fill="#9df8ff" fill-opacity="0.44" />
-      <rect x="9" y="19" width="86" height="3" rx="1.5" fill="#6de5ff" fill-opacity="0.24" />
-      <rect x="9" y="26" width="76" height="3" rx="1.5" fill="#6de5ff" fill-opacity="0.2" />
-      <rect x="9" y="33" width="52" height="3" rx="1.5" fill="#6de5ff" fill-opacity="0.18" />
-      <circle cx="108" cy="22" r="7" fill="#7ff2e6" fill-opacity="0.2" />
-      <circle cx="108" cy="22" r="2.4" fill="#d7fff8" />
-      <animateTransform attributeName="transform" type="translate" values="1024 730;1021 732;1024 730" dur="7s" repeatCount="indefinite" />
-    </g>
-
-    <g transform="translate(784 526)">
-      <rect x="0" y="0" width="136" height="44" rx="7" fill="#031227" fill-opacity="0.5" stroke="#5fddff" stroke-opacity="0.2" />
-      <path d="M10 30L28 22L44 26L62 16L84 20L106 13L124 17" stroke="#9cf8ff" stroke-opacity="0.44" stroke-width="1.6" fill="none" />
-      <rect x="10" y="9" width="66" height="3" rx="1.5" fill="#9df8ff" fill-opacity="0.34" />
-      <animateTransform attributeName="transform" type="translate" values="784 526;786 523;784 526" dur="5.4s" repeatCount="indefinite" />
-    </g>
-  </g>
-
-  <g fill="#8defff" fill-opacity="0.26">
-    <circle r="7">
-      <animateMotion path="M420 635L620 595L840 600L1040 605L1230 600" dur="4.1s" repeatCount="indefinite" rotate="auto" />
-    </circle>
-    <circle r="6" fill="#77ffe8" fill-opacity="0.26">
-      <animateMotion path="M530 650L670 620L900 600L1100 620L1265 620" dur="4.8s" begin="0.8s" repeatCount="indefinite" rotate="auto" />
-    </circle>
-  </g>
-
-  <g fill="#d6fdff" stroke="#56ddff" stroke-width="1.2">
-    <circle r="3.2">
-      <animateMotion path="M420 635L620 595L840 600L1040 605L1230 600" dur="4.1s" repeatCount="indefinite" rotate="auto" />
-    </circle>
-    <circle r="3" fill="#b2fff1" stroke="#41dcc4">
-      <animateMotion path="M530 650L670 620L900 600L1100 620L1265 620" dur="4.8s" begin="0.8s" repeatCount="indefinite" rotate="auto" />
-    </circle>
-    <circle r="2.7" fill="#d6fdff" stroke="#56ddff">
-      <animateMotion path="M640 655L780 690L965 645L1130 670L1250 690" dur="5.2s" begin="1.3s" repeatCount="indefinite" rotate="auto" />
-    </circle>
-    <circle r="2.9" fill="#d6fdff" stroke="#56ddff">
-      <animateMotion path="M300 760L420 635L620 595" dur="4.4s" begin="1.9s" repeatCount="indefinite" rotate="auto" />
-    </circle>
-    <circle r="2.7" fill="#b2fff1" stroke="#41dcc4">
-      <animateMotion path="M1230 600L1328 722L1342 808" dur="3.9s" begin="2.2s" repeatCount="indefinite" rotate="auto" />
-    </circle>
-    <circle r="2.6" fill="#d6fdff" stroke="#56ddff">
-      <animateMotion path="M900 600L1085 565L1168 610" dur="3.5s" begin="0.6s" repeatCount="indefinite" rotate="auto" />
-    </circle>
+  <g stroke="#67e8f9" stroke-opacity="0.55" stroke-width="3" fill="none">
+    <path d="M400 360L810 480L1150 260"/>
   </g>
 </svg>
