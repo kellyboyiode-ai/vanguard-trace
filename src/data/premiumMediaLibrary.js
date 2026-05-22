@@ -1,71 +1,69 @@
-const premiumMediaModules = import.meta.glob(
-  '../assets/premium_photo_1677535563096_116abf37d186/*.{jpg,jpeg,webp,avif}',
+import heroPortImage from '../assets/timelab-sWOvgOOFk1g-unsplash.jpg';
+
+export const allPremiumMedia = [
   {
-    eager: true,
-    import: 'default',
+    id: 'vt-night-port',
+    src: heroPortImage,
+    alt: 'Nighttime container port operations with stacked freight and active crane lanes',
   },
-);
+  {
+    id: 'vt-global-map',
+    src: '/media/global-map.svg',
+    alt: 'Global route intelligence map for Vanguard Trace operations',
+  },
+  {
+    id: 'vt-satellite-network',
+    src: '/media/satellite-network.svg',
+    alt: 'Satellite telemetry network for Vanguard Trace shipment visibility',
+  },
+  {
+    id: 'vt-analytics-stream',
+    src: '/media/analytics-stream.svg',
+    alt: 'Operational analytics stream in the Vanguard Trace command center',
+  },
+  {
+    id: 'vt-port-operations',
+    src: '/media/port-operations.svg',
+    alt: 'Port operations interface for Vanguard Trace logistics monitoring',
+  },
+  {
+    id: 'vt-air-cargo',
+    src: '/media/air-cargo.svg',
+    alt: 'Air cargo network view for Vanguard Trace corridor management',
+  },
+  {
+    id: 'vt-warehouse-grid',
+    src: '/media/warehouse-grid.svg',
+    alt: 'Warehouse grid telemetry for Vanguard Trace fulfillment operations',
+  },
+  {
+    id: 'vt-truck-fleet',
+    src: '/media/truck-fleet.svg',
+    alt: 'Truck fleet corridor visualization for Vanguard Trace dispatch operations',
+  },
+  {
+    id: 'vt-cyber-grid',
+    src: '/media/cyber-grid.svg',
+    alt: 'Cyber grid security layer for Vanguard Trace monitoring systems',
+  },
+].sort((left, right) => left.id.localeCompare(right.id));
 
-function toAltText() {
-  return 'Vanguard Trace logistics media';
+const mediaIndex = new Map(allPremiumMedia.map((asset) => [asset.id, asset]));
+
+function pickMedia(...ids) {
+  return ids.map((id) => mediaIndex.get(id)).filter(Boolean);
 }
 
-export const allPremiumMedia = Object.entries(premiumMediaModules)
-  .map(([path, src]) => {
-    const fileName = path.split('/').pop() || path;
-    const id = fileName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-
-    return {
-      id,
-      src,
-      alt: toAltText(),
-    };
-  })
-  .sort((left, right) => left.id.localeCompare(right.id));
-
-const HOME_TRANSMISSION_COUNT = 12;
-
-const HOME_TRANSMISSION_PHASES = [
-  0.02, 0.1, 0.18, 0.27, 0.35, 0.43, 0.52, 0.61, 0.7, 0.79, 0.88, 0.97,
-];
-
-function buildCuratedTransmissionSet(media, count) {
-  if (media.length <= count) {
-    return media;
-  }
-
-  const selectedIndexes = new Set(
-    HOME_TRANSMISSION_PHASES.map((phase) =>
-      Math.min(media.length - 1, Math.floor((media.length - 1) * phase)),
-    ),
-  );
-
-  const curated = [];
-
-  for (const index of selectedIndexes) {
-    if (curated.length >= count) {
-      break;
-    }
-    curated.push(media[index]);
-  }
-
-  if (curated.length < count) {
-    for (const asset of media) {
-      if (curated.length >= count) {
-        break;
-      }
-      if (!curated.some((entry) => entry.id === asset.id)) {
-        curated.push(asset);
-      }
-    }
-  }
-
-  return curated;
-}
-
-export const homeTransmissionMedia = buildCuratedTransmissionSet(
-  allPremiumMedia,
-  HOME_TRANSMISSION_COUNT,
+export const homeTransmissionMedia = pickMedia(
+  'vt-night-port',
+  'vt-global-map',
+  'vt-satellite-network',
+  'vt-analytics-stream',
+  'vt-port-operations',
+  'vt-air-cargo',
+  'vt-warehouse-grid',
+  'vt-truck-fleet',
+  'vt-cyber-grid',
 );
 
 export const PAGE_KEYS = [
@@ -86,50 +84,37 @@ export const PAGE_KEYS = [
   'not-found',
 ];
 
-const PAGE_DISTRIBUTION_WEIGHTS = {
-  home: 3,
-  overview: 2,
-  about: 1,
-  contact: 1,
-  intel: 2,
-  operations: 2,
-  services: 2,
-  tracking: 2,
-  traces: 2,
-  settings: 1,
-  login: 1,
-  signup: 1,
-  'pending-approval': 1,
-  'admin-approvals': 1,
-  'not-found': 1,
-};
+export const pageDistributionOrder = [...PAGE_KEYS];
 
-export const pageDistributionOrder = PAGE_KEYS.flatMap((pageKey) =>
-  Array.from(
-    { length: PAGE_DISTRIBUTION_WEIGHTS[pageKey] || 1 },
-    () => pageKey,
+const pageMediaBuckets = {
+  home: pickMedia('vt-night-port', 'vt-global-map', 'vt-analytics-stream'),
+  overview: pickMedia('vt-global-map', 'vt-analytics-stream', 'vt-cyber-grid'),
+  about: pickMedia('vt-night-port', 'vt-warehouse-grid'),
+  contact: pickMedia('vt-global-map', 'vt-satellite-network'),
+  intel: pickMedia(
+    'vt-analytics-stream',
+    'vt-cyber-grid',
+    'vt-satellite-network',
   ),
-);
-
-const homeTransmissionIds = new Set(
-  homeTransmissionMedia.map((asset) => asset.id),
-);
-
-const remainingMedia = allPremiumMedia.filter(
-  (asset) => !homeTransmissionIds.has(asset.id),
-);
-
-const pageMediaBuckets = PAGE_KEYS.reduce((acc, pageKey) => {
-  acc[pageKey] = [];
-  return acc;
-}, {});
-
-remainingMedia.forEach((asset, index) => {
-  const pageKey =
-    pageDistributionOrder[index % pageDistributionOrder.length] ||
-    PAGE_KEYS[index % PAGE_KEYS.length];
-  pageMediaBuckets[pageKey].push(asset);
-});
+  operations: pickMedia(
+    'vt-truck-fleet',
+    'vt-warehouse-grid',
+    'vt-port-operations',
+  ),
+  services: pickMedia('vt-air-cargo', 'vt-port-operations', 'vt-cyber-grid'),
+  tracking: pickMedia('vt-global-map', 'vt-truck-fleet', 'vt-night-port'),
+  traces: pickMedia(
+    'vt-satellite-network',
+    'vt-analytics-stream',
+    'vt-port-operations',
+  ),
+  settings: pickMedia('vt-cyber-grid', 'vt-analytics-stream'),
+  login: pickMedia('vt-cyber-grid'),
+  signup: pickMedia('vt-satellite-network'),
+  'pending-approval': pickMedia('vt-warehouse-grid'),
+  'admin-approvals': pickMedia('vt-cyber-grid', 'vt-night-port'),
+  'not-found': pickMedia('vt-global-map'),
+};
 
 export function getPageMedia(pageKey) {
   return pageMediaBuckets[pageKey] || [];
@@ -139,7 +124,7 @@ export function getMediaCoverageSummary() {
   const perPageCounts = PAGE_KEYS.map((pageKey) => ({
     pageKey,
     count: getPageMedia(pageKey).length,
-    weight: PAGE_DISTRIBUTION_WEIGHTS[pageKey] || 1,
+    weight: getPageMedia(pageKey).length || 1,
   }));
 
   const assignedCount = perPageCounts.reduce(
@@ -151,8 +136,7 @@ export function getMediaCoverageSummary() {
     total: allPremiumMedia.length,
     transmissionCount: homeTransmissionMedia.length,
     assignedCount,
-    unassignedCount:
-      allPremiumMedia.length - homeTransmissionMedia.length - assignedCount,
+    unassignedCount: 0,
     pageDistributionOrder,
     perPageCounts,
   };
