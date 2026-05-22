@@ -76,7 +76,7 @@ export function AuthProvider({ children }) {
         setSession(session);
         setUser(session?.user ?? null);
         await syncApprovalForUser(session?.user ?? null);
-      } catch {
+      } catch (error) {
         if (!active) {
           return;
         }

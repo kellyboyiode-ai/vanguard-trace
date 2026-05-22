@@ -116,29 +116,7 @@ export async function createPendingApprovalRequest({
   };
 }
 
-export async function refreshMyContactConfirmation(user) {
-  if (!supabaseState.ready || !supabase || !user?.id) {
-    return { source: 'local', data: null, error: null };
-  }
-
-  const contactConfirmed = Boolean(
-    user.email_confirmed_at || user.phone_confirmed_at,
-  );
-  const { data, error } = await supabase
-    .from('account_onboarding')
-    .update({ contact_confirmed: contactConfirmed })
-    .eq('user_id', user.id)
-    .select()
-    .single();
-
-  return {
-    source: 'supabase',
-    data: data || null,
-    error,
-  };
-}
-
-export async function getMyApprovalState() {
+export async function getMyApprovalState(user) {
   if (!supabaseState.ready || !supabase) {
     return getDefaultApprovalState();
   }
@@ -170,12 +148,23 @@ export async function getMyApprovalState() {
     };
   }
 
-  const derived = deriveApprovalState(data, adminResult.isAdmin);
+  const onboarding = data || null;
+  const derived = deriveApprovalState(
+    {
+      ...onboarding,
+      contact_confirmed: Boolean(
+        onboarding?.contact_confirmed ||
+          user?.email_confirmed_at ||
+          user?.phone_confirmed_at,
+      ),
+    },
+    adminResult.isAdmin,
+  );
 
   return {
     source: 'supabase',
     error: null,
-    onboarding: data || null,
+    onboarding,
     isAdmin: adminResult.isAdmin,
     isApproved: derived.isApproved,
     needsApproval: derived.needsApproval,
@@ -187,11 +176,7 @@ export async function syncMyApprovalState(user) {
     return getDefaultApprovalState();
   }
 
-  if (user?.id) {
-    await refreshMyContactConfirmation(user);
-  }
-
-  return getMyApprovalState();
+  return getMyApprovalState(user);
 }
 
 export async function listAccountApprovalRequests() {
