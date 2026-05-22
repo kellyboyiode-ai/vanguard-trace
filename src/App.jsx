@@ -5,6 +5,7 @@ import './App.css';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import { useAdaptiveMotion } from './hooks/useAdaptiveMotion.js';
+import { useMediaAssetProtection } from './hooks/useMediaAssetProtection.js';
 
 const AdminApprovalsPage = lazy(() => import('./pages/AdminApprovalsPage.jsx'));
 const About = lazy(() => import('./pages/About.jsx'));
@@ -68,6 +69,8 @@ function RouteMotion({ children, reducedMotion }) {
 function App() {
   const location = useLocation();
   const { reducedMotion } = useAdaptiveMotion({ applyRootClass: true });
+
+  useMediaAssetProtection();
 
   return (
     <AuthProvider>
