@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { getPageMedia } from '../data/premiumMediaLibrary.js';
-import { useAdaptiveMotion } from '../hooks/useAdaptiveMotion.js';
 
 const galleryVariants = {
   hidden: { opacity: 0, y: 16 },
@@ -31,7 +30,7 @@ export default function PageMediaGallery({
   title = 'Mission Visual Intelligence',
   compact = false,
 }) {
-  const { reducedMotion } = useAdaptiveMotion();
+  const disableMotion = false;
   const media = getPageMedia(pageKey);
 
   if (!media.length) {
@@ -46,9 +45,9 @@ export default function PageMediaGallery({
           : 'vt-media-gallery'
       }
       aria-label={`${title} for ${pageKey}`}
-      initial={reducedMotion ? false : 'hidden'}
-      whileInView={reducedMotion ? undefined : 'visible'}
-      viewport={reducedMotion ? undefined : { once: true, amount: 0.3 }}
+      initial={disableMotion ? false : 'hidden'}
+      whileInView={disableMotion ? undefined : 'visible'}
+      viewport={disableMotion ? undefined : { once: true, amount: 0.3 }}
       variants={galleryVariants}
     >
       <motion.div className="panel-header" variants={itemVariants}>
@@ -63,7 +62,7 @@ export default function PageMediaGallery({
             className="vt-media-tile"
             variants={itemVariants}
             whileHover={
-              reducedMotion
+              disableMotion
                 ? undefined
                 : {
                     y: -7,
@@ -78,7 +77,7 @@ export default function PageMediaGallery({
               loading="lazy"
               decoding="async"
               animate={
-                reducedMotion
+                disableMotion
                   ? undefined
                   : {
                       scale: [1.03, 1.09, 1.04, 1.03],
@@ -93,7 +92,7 @@ export default function PageMediaGallery({
                     }
               }
               transition={
-                reducedMotion
+                disableMotion
                   ? undefined
                   : {
                       duration: 13.5,
@@ -106,7 +105,7 @@ export default function PageMediaGallery({
               className="vt-media-sweep"
               aria-hidden="true"
               animate={
-                reducedMotion
+                disableMotion
                   ? undefined
                   : {
                       x: ['-120%', '160%'],
@@ -114,7 +113,7 @@ export default function PageMediaGallery({
                     }
               }
               transition={
-                reducedMotion
+                disableMotion
                   ? undefined
                   : {
                       duration: 4.8,
@@ -127,7 +126,7 @@ export default function PageMediaGallery({
               className="vt-media-pulse"
               aria-hidden="true"
               animate={
-                reducedMotion
+                disableMotion
                   ? undefined
                   : {
                       scale: [0.9, 1.08, 0.9],
@@ -135,7 +134,7 @@ export default function PageMediaGallery({
                     }
               }
               transition={
-                reducedMotion
+                disableMotion
                   ? undefined
                   : {
                       duration: 3.2,
@@ -152,9 +151,9 @@ export default function PageMediaGallery({
                 <motion.path
                   d="M58 112 L186 152 L332 74"
                   className="vt-media-signal-trace"
-                  initial={reducedMotion ? false : { pathLength: 0.15, opacity: 0.45 }}
+                  initial={disableMotion ? false : { pathLength: 0.15, opacity: 0.45 }}
                   animate={
-                    reducedMotion
+                    disableMotion
                       ? undefined
                       : {
                           pathLength: [0.2, 1, 0.34, 1],
@@ -162,7 +161,7 @@ export default function PageMediaGallery({
                         }
                   }
                   transition={
-                    reducedMotion
+                    disableMotion
                       ? undefined
                       : {
                           duration: 6,
@@ -174,9 +173,9 @@ export default function PageMediaGallery({
                 <motion.path
                   d="M86 228 L186 152 L286 236"
                   className="vt-media-signal-trace vt-media-signal-trace-secondary"
-                  initial={reducedMotion ? false : { pathLength: 0.12, opacity: 0.34 }}
+                  initial={disableMotion ? false : { pathLength: 0.12, opacity: 0.34 }}
                   animate={
-                    reducedMotion
+                    disableMotion
                       ? undefined
                       : {
                           pathLength: [0.14, 0.92, 0.26, 0.92],
@@ -184,7 +183,7 @@ export default function PageMediaGallery({
                         }
                   }
                   transition={
-                    reducedMotion
+                    disableMotion
                       ? undefined
                       : {
                           duration: 7.4,
@@ -203,14 +202,14 @@ export default function PageMediaGallery({
                         r="4"
                         className="vt-media-signal-node"
                         animate={
-                          reducedMotion
+                          disableMotion
                             ? undefined
                             : {
                                 opacity: [0.45, 1, 0.45],
                               }
                         }
                         transition={
-                          reducedMotion
+                          disableMotion
                             ? undefined
                             : {
                                 duration: 2.4,
@@ -226,7 +225,7 @@ export default function PageMediaGallery({
                         r="8"
                         className="vt-media-signal-node-glow"
                         animate={
-                          reducedMotion
+                          disableMotion
                             ? undefined
                             : {
                                 scale: [0.7, 1.6, 0.7],
@@ -234,7 +233,7 @@ export default function PageMediaGallery({
                               }
                         }
                         transition={
-                          reducedMotion
+                          disableMotion
                             ? undefined
                             : {
                                 duration: 2.8,
@@ -251,7 +250,7 @@ export default function PageMediaGallery({
                   className="vt-media-signal-packet-trail"
                   r="7"
                   animate={
-                    reducedMotion
+                    disableMotion
                       ? undefined
                       : {
                           cx: [58, 186, 332, 58],
@@ -260,7 +259,7 @@ export default function PageMediaGallery({
                         }
                   }
                   transition={
-                    reducedMotion
+                    disableMotion
                       ? undefined
                       : {
                           duration: 3.8,
@@ -273,7 +272,7 @@ export default function PageMediaGallery({
                   className="vt-media-signal-packet"
                   r="3.3"
                   animate={
-                    reducedMotion
+                    disableMotion
                       ? undefined
                       : {
                           cx: [58, 186, 332, 58],
@@ -282,7 +281,7 @@ export default function PageMediaGallery({
                         }
                   }
                   transition={
-                    reducedMotion
+                    disableMotion
                       ? undefined
                       : {
                           duration: 3.8,
@@ -295,7 +294,7 @@ export default function PageMediaGallery({
                   className="vt-media-signal-packet-trail vt-media-signal-packet-trail-secondary"
                   r="6"
                   animate={
-                    reducedMotion
+                    disableMotion
                       ? undefined
                       : {
                           cx: [86, 186, 286, 86],
@@ -304,7 +303,7 @@ export default function PageMediaGallery({
                         }
                   }
                   transition={
-                    reducedMotion
+                    disableMotion
                       ? undefined
                       : {
                           duration: 4.6,
@@ -318,7 +317,7 @@ export default function PageMediaGallery({
                   className="vt-media-signal-packet vt-media-signal-packet-secondary"
                   r="3"
                   animate={
-                    reducedMotion
+                    disableMotion
                       ? undefined
                       : {
                           cx: [86, 186, 286, 86],
@@ -327,7 +326,7 @@ export default function PageMediaGallery({
                         }
                   }
                   transition={
-                    reducedMotion
+                    disableMotion
                       ? undefined
                       : {
                           duration: 4.6,
