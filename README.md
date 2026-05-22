@@ -85,6 +85,8 @@ VITE_SAILINGS_API_BASE=https://api.your-company.example
 
 If `VITE_ENABLE_SUPABASE=false`, app stays in demo mode.
 
+If your hosted Supabase project is paused on the free tier, auth and other live requests will fail until you unpause it in the Supabase dashboard. For local recovery, run `npm run dev:full` to boot the local Supabase stack and regenerate `.env.local` against that local instance.
+
 ### 4) Apply database schema
 
 In Supabase SQL Editor, run:

@@ -3,8 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import PageMediaGallery from '../components/PageMediaGallery.jsx';
 import { syncMyApprovalState } from '../services/approvalService.js';
 import {
+  getFriendlyAuthErrorMessage,
   getSession,
   requestPasswordReset,
+  resendSignupConfirmationEmail,
+  signInWithMagicLink,
   signInWithEmail,
 } from '../services/authService';
 
@@ -16,30 +19,29 @@ export default function LoginPage() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [resetLoading, setResetLoading] = useState(false);
-
-  function getFriendlyAuthErrorMessage(message) {
-    if (!message) {
-      return 'Unable to sign in. Please try again.';
-    }
-
-    if (message === 'Invalid login credentials') {
-      return 'Email or password is incorrect, or the account is not fully activated yet. If this is a new account, sign up first and complete email confirmation.';
-    }
-
-    return message;
-  }
+  const [resendLoading, setResendLoading] = useState(false);
+  const [magicLoading, setMagicLoading] = useState(false);
+  const [allowResendConfirmation, setAllowResendConfirmation] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
     setMessage('');
+    setAllowResendConfirmation(false);
     setLoading(true);
     const normalizedEmail = email.trim().toLowerCase();
     const { error } = await signInWithEmail(normalizedEmail, password);
 
     if (error) {
       setLoading(false);
-      setError(getFriendlyAuthErrorMessage(error.message));
+      setError(getFriendlyAuthErrorMessage(error));
+
+      const normalizedMessage = String(error.message || '').toLowerCase();
+      setAllowResendConfirmation(
+        Boolean(normalizedEmail) &&
+          (normalizedMessage.includes('email not confirmed') ||
+            normalizedMessage.includes('invalid login credentials')),
+      );
       return;
     }
 
@@ -60,6 +62,29 @@ export default function LoginPage() {
     navigate('/');
   }
 
+  async function handleResendConfirmation() {
+    const normalizedEmail = email.trim().toLowerCase();
+
+    setError('');
+    setMessage('');
+
+    if (!normalizedEmail) {
+      setError('Enter your email first, then resend confirmation.');
+      return;
+    }
+
+    setResendLoading(true);
+    const { error } = await resendSignupConfirmationEmail(normalizedEmail);
+    setResendLoading(false);
+
+    if (error) {
+      setError(getFriendlyAuthErrorMessage(error));
+      return;
+    }
+
+    setMessage('Confirmation link sent. Check your inbox and spam folder.');
+  }
+
   async function handleForgotPassword() {
     const normalizedEmail = email.trim().toLowerCase();
     setError('');
@@ -76,12 +101,36 @@ export default function LoginPage() {
     setResetLoading(false);
 
     if (error) {
-      setError(error.message || 'Password reset request failed.');
+      setError(getFriendlyAuthErrorMessage(error));
       return;
     }
 
     setMessage(
       'Reset link dispatched. Check your inbox and follow the secure recovery link.',
+    );
+  }
+
+  async function handleMagicLinkSignIn() {
+    const normalizedEmail = email.trim().toLowerCase();
+    setError('');
+    setMessage('');
+
+    if (!normalizedEmail) {
+      setError('Enter your email first, then request a secure sign-in link.');
+      return;
+    }
+
+    setMagicLoading(true);
+    const { error } = await signInWithMagicLink(normalizedEmail);
+    setMagicLoading(false);
+
+    if (error) {
+      setError(getFriendlyAuthErrorMessage(error));
+      return;
+    }
+
+    setMessage(
+      'Secure sign-in link sent. Open your email and continue from the link.',
     );
   }
 
@@ -92,7 +141,12 @@ export default function LoginPage() {
           <p className="mb-3 text-xs uppercase tracking-[0.28em] text-cyan-300/70">
             Vanguard Trace Access
           </p>
-          <h1 className="mb-2 text-2xl font-bold text-white">Cipher Entry</h1>
+          <h1
+            className="text-2xl font-bold text-white"
+            style={{ marginBottom: '0.45rem' }}
+          >
+            Cipher Entry
+          </h1>
           <p className="mb-4 text-sm text-zinc-400">
             Establish a secured session to access your Vanguard Trace.
           </p>
@@ -154,14 +208,40 @@ export default function LoginPage() {
               <p className="text-xs text-zinc-500">
                 Credential payload is never stored in browser state.
               </p>
-              <button
-                type="button"
-                onClick={handleForgotPassword}
-                disabled={resetLoading || loading}
-                className="text-xs font-medium uppercase tracking-[0.12em] text-cyan-400 transition-colors hover:text-cyan-300 disabled:opacity-50"
-              >
-                {resetLoading ? 'Dispatching…' : 'Forgot Password'}
-              </button>
+              <div className="flex items-center gap-4">
+                <button
+                  type="button"
+                  onClick={handleMagicLinkSignIn}
+                  disabled={
+                    magicLoading || resendLoading || resetLoading || loading
+                  }
+                  className="text-xs font-medium uppercase tracking-[0.12em] text-blue-400 transition-colors hover:text-blue-300 disabled:opacity-50"
+                >
+                  {magicLoading ? 'Sending Link…' : 'Email Sign-In Link'}
+                </button>
+                {allowResendConfirmation && (
+                  <button
+                    type="button"
+                    onClick={handleResendConfirmation}
+                    disabled={
+                      resendLoading || magicLoading || resetLoading || loading
+                    }
+                    className="text-xs font-medium uppercase tracking-[0.12em] text-emerald-400 transition-colors hover:text-emerald-300 disabled:opacity-50"
+                  >
+                    {resendLoading ? 'Resending…' : 'Resend Confirmation'}
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={handleForgotPassword}
+                  disabled={
+                    resetLoading || magicLoading || resendLoading || loading
+                  }
+                  className="text-xs font-medium uppercase tracking-[0.12em] text-cyan-400 transition-colors hover:text-cyan-300 disabled:opacity-50"
+                >
+                  {resetLoading ? 'Dispatching…' : 'Forgot Password'}
+                </button>
+              </div>
             </div>
             <button
               type="submit"

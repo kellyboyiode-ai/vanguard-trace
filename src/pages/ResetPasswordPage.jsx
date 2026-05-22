@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PageMediaGallery from '../components/PageMediaGallery.jsx';
-import { getSession, updatePassword } from '../services/authService';
+import {
+  getFriendlyAuthErrorMessage,
+  getSession,
+  updatePassword,
+} from '../services/authService';
 import { supabaseState } from '../lib/supabase.js';
 
 export default function ResetPasswordPage() {
@@ -26,7 +30,18 @@ export default function ResetPasswordPage() {
         return;
       }
 
-      const { data } = await getSession();
+      const { data, error } = await getSession();
+
+      if (!active) {
+        return;
+      }
+
+      if (error) {
+        setError(getFriendlyAuthErrorMessage(error));
+        setValidRecoverySession(false);
+        return;
+      }
+
       const hasRecoverySession = Boolean(data?.session);
 
       if (!active) {
@@ -75,7 +90,7 @@ export default function ResetPasswordPage() {
     setLoading(false);
 
     if (error) {
-      setError(error.message || 'Could not update password.');
+      setError(getFriendlyAuthErrorMessage(error));
       return;
     }
 

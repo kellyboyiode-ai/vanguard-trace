@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PageMediaGallery from '../components/PageMediaGallery.jsx';
 import { createPendingApprovalRequest } from '../services/approvalService.js';
-import { signUpWithEmail } from '../services/authService';
+import { getFriendlyAuthErrorMessage, signUpWithEmail } from '../services/authService';
 
 export default function SignupPage() {
   const [fullName, setFullName] = useState('');
@@ -34,8 +34,9 @@ export default function SignupPage() {
     }
 
     setLoading(true);
+    const normalizedEmail = email.trim().toLowerCase();
 
-    const { data, error } = await signUpWithEmail(email, password, {
+    const { data, error } = await signUpWithEmail(normalizedEmail, password, {
       full_name: fullName,
       company_name: companyName,
       phone,
@@ -54,7 +55,7 @@ export default function SignupPage() {
 
     setLoading(false);
     if (error) {
-      setError(error.message);
+      setError(getFriendlyAuthErrorMessage(error));
     } else {
       setMessage(
         'Account created. Complete email or phone confirmation, then wait for admin approval to access the platform.',
@@ -85,7 +86,10 @@ export default function SignupPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="mb-1 block text-sm text-zinc-300" htmlFor="fullName">
+              <label
+                className="mb-1 block text-sm text-zinc-300"
+                htmlFor="fullName"
+              >
                 Full Name
               </label>
               <input
@@ -100,7 +104,10 @@ export default function SignupPage() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm text-zinc-300" htmlFor="companyName">
+              <label
+                className="mb-1 block text-sm text-zinc-300"
+                htmlFor="companyName"
+              >
                 Company Name
               </label>
               <input
@@ -113,7 +120,10 @@ export default function SignupPage() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm text-zinc-300" htmlFor="email">
+              <label
+                className="mb-1 block text-sm text-zinc-300"
+                htmlFor="email"
+              >
                 Email
               </label>
               <input
@@ -128,7 +138,10 @@ export default function SignupPage() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm text-zinc-300" htmlFor="phone">
+              <label
+                className="mb-1 block text-sm text-zinc-300"
+                htmlFor="phone"
+              >
                 Phone
               </label>
               <input
@@ -143,7 +156,10 @@ export default function SignupPage() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm text-zinc-300" htmlFor="kycReference">
+              <label
+                className="mb-1 block text-sm text-zinc-300"
+                htmlFor="kycReference"
+              >
                 KYC Reference
               </label>
               <input
@@ -157,7 +173,10 @@ export default function SignupPage() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm text-zinc-300" htmlFor="password">
+              <label
+                className="mb-1 block text-sm text-zinc-300"
+                htmlFor="password"
+              >
                 Password
               </label>
               <input
@@ -173,7 +192,10 @@ export default function SignupPage() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm text-zinc-300" htmlFor="confirm">
+              <label
+                className="mb-1 block text-sm text-zinc-300"
+                htmlFor="confirm"
+              >
                 Confirm Password
               </label>
               <input
@@ -222,10 +244,13 @@ export default function SignupPage() {
               Registration Control Layer
             </p>
             <h2 className="text-xl font-semibold text-cyan-50">
-              Verified onboarding for freight operators, customers, and partners.
+              Verified onboarding for freight operators, customers, and
+              partners.
             </h2>
             <p className="mt-2 max-w-2xl text-sm text-slate-300/80">
-              New accounts are screened through KYC reference checks, approval workflows, and monitored activation before platform access is granted.
+              New accounts are screened through KYC reference checks, approval
+              workflows, and monitored activation before platform access is
+              granted.
             </p>
           </div>
 

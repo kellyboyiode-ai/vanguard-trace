@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { supabase, supabaseState } from '../lib/supabase.js';
 import { syncMyApprovalState } from '../services/approvalService.js';
+import { getSession } from '../services/authService.js';
 
 const AuthContext = createContext(null);
 
@@ -61,7 +62,12 @@ export function AuthProvider({ children }) {
       try {
         const {
           data: { session },
-        } = await supabase.auth.getSession();
+          error,
+        } = await getSession();
+
+        if (error) {
+          throw error;
+        }
 
         if (!active) {
           return;
@@ -80,9 +86,9 @@ export function AuthProvider({ children }) {
         setApprovalState({
           onboarding: null,
           isAdmin: false,
-          isApproved: false,
+          isApproved: true,
           needsApproval: false,
-          error: null,
+          error: error instanceof Error ? error.message : null,
           source: 'supabase',
         });
       } finally {
