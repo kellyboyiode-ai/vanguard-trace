@@ -18,6 +18,7 @@ const OverviewPage = lazy(() => import('./pages/OverviewPage.jsx'));
 const PendingApprovalPage = lazy(
   () => import('./pages/PendingApprovalPage.jsx'),
 );
+const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage.jsx'));
 const Services = lazy(() => import('./pages/Services.jsx'));
 const SettingsPage = lazy(() => import('./pages/SettingsPage.jsx'));
 const SignupPage = lazy(() => import('./pages/SignupPage.jsx'));
@@ -86,6 +87,14 @@ function App() {
               element={
                 <RouteMotion reducedMotion={reducedMotion}>
                   <SignupPage />
+                </RouteMotion>
+              }
+            />
+            <Route
+              path="/reset-password"
+              element={
+                <RouteMotion reducedMotion={reducedMotion}>
+                  <ResetPasswordPage />
                 </RouteMotion>
               }
             />

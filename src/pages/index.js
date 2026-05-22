@@ -10,6 +10,7 @@ export { default as Intel } from './Intel.jsx';
 export { default as Contact } from './Contact.jsx';
 export { default as About } from './About.jsx';
 export { default as LoginPage } from './LoginPage.jsx';
+export { default as ResetPasswordPage } from './ResetPasswordPage.jsx';
 export { default as SignupPage } from './SignupPage.jsx';
 export { default as PendingApprovalPage } from './PendingApprovalPage.jsx';
 export { default as AdminApprovalsPage } from './AdminApprovalsPage.jsx';
