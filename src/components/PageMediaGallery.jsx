@@ -144,6 +144,200 @@ export default function PageMediaGallery({
                     }
               }
             />
+              <motion.svg
+                className="vt-media-signal-layer"
+                viewBox="0 0 400 300"
+                aria-hidden="true"
+              >
+                <motion.path
+                  d="M58 112 L186 152 L332 74"
+                  className="vt-media-signal-trace"
+                  initial={reducedMotion ? false : { pathLength: 0.15, opacity: 0.45 }}
+                  animate={
+                    reducedMotion
+                      ? undefined
+                      : {
+                          pathLength: [0.2, 1, 0.34, 1],
+                          opacity: [0.42, 0.95, 0.56, 0.92],
+                        }
+                  }
+                  transition={
+                    reducedMotion
+                      ? undefined
+                      : {
+                          duration: 6,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                        }
+                  }
+                />
+                <motion.path
+                  d="M86 228 L186 152 L286 236"
+                  className="vt-media-signal-trace vt-media-signal-trace-secondary"
+                  initial={reducedMotion ? false : { pathLength: 0.12, opacity: 0.34 }}
+                  animate={
+                    reducedMotion
+                      ? undefined
+                      : {
+                          pathLength: [0.14, 0.92, 0.26, 0.92],
+                          opacity: [0.25, 0.74, 0.38, 0.7],
+                        }
+                  }
+                  transition={
+                    reducedMotion
+                      ? undefined
+                      : {
+                          duration: 7.4,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                          delay: 0.6,
+                        }
+                  }
+                />
+                {[{ cx: 58, cy: 112 }, { cx: 186, cy: 152 }, { cx: 332, cy: 74 }].map(
+                  (node, index) => (
+                    <g key={`${asset.id}-node-${index}`}>
+                      <motion.circle
+                        cx={node.cx}
+                        cy={node.cy}
+                        r="4"
+                        className="vt-media-signal-node"
+                        animate={
+                          reducedMotion
+                            ? undefined
+                            : {
+                                opacity: [0.45, 1, 0.45],
+                              }
+                        }
+                        transition={
+                          reducedMotion
+                            ? undefined
+                            : {
+                                duration: 2.4,
+                                repeat: Infinity,
+                                ease: 'easeInOut',
+                                delay: index * 0.28,
+                              }
+                        }
+                      />
+                      <motion.circle
+                        cx={node.cx}
+                        cy={node.cy}
+                        r="8"
+                        className="vt-media-signal-node-glow"
+                        animate={
+                          reducedMotion
+                            ? undefined
+                            : {
+                                scale: [0.7, 1.6, 0.7],
+                                opacity: [0.28, 0, 0.28],
+                              }
+                        }
+                        transition={
+                          reducedMotion
+                            ? undefined
+                            : {
+                                duration: 2.8,
+                                repeat: Infinity,
+                                ease: 'easeOut',
+                                delay: index * 0.28,
+                              }
+                        }
+                      />
+                    </g>
+                  ),
+                )}
+                <motion.circle
+                  className="vt-media-signal-packet-trail"
+                  r="7"
+                  animate={
+                    reducedMotion
+                      ? undefined
+                      : {
+                          cx: [58, 186, 332, 58],
+                          cy: [112, 152, 74, 112],
+                          opacity: [0.2, 0.46, 0.2, 0.2],
+                        }
+                  }
+                  transition={
+                    reducedMotion
+                      ? undefined
+                      : {
+                          duration: 3.8,
+                          repeat: Infinity,
+                          ease: 'linear',
+                        }
+                  }
+                />
+                <motion.circle
+                  className="vt-media-signal-packet"
+                  r="3.3"
+                  animate={
+                    reducedMotion
+                      ? undefined
+                      : {
+                          cx: [58, 186, 332, 58],
+                          cy: [112, 152, 74, 112],
+                          opacity: [0.75, 1, 0.75, 0.75],
+                        }
+                  }
+                  transition={
+                    reducedMotion
+                      ? undefined
+                      : {
+                          duration: 3.8,
+                          repeat: Infinity,
+                          ease: 'linear',
+                        }
+                  }
+                />
+                <motion.circle
+                  className="vt-media-signal-packet-trail vt-media-signal-packet-trail-secondary"
+                  r="6"
+                  animate={
+                    reducedMotion
+                      ? undefined
+                      : {
+                          cx: [86, 186, 286, 86],
+                          cy: [228, 152, 236, 228],
+                          opacity: [0.16, 0.36, 0.16, 0.16],
+                        }
+                  }
+                  transition={
+                    reducedMotion
+                      ? undefined
+                      : {
+                          duration: 4.6,
+                          repeat: Infinity,
+                          ease: 'linear',
+                          delay: 0.75,
+                        }
+                  }
+                />
+                <motion.circle
+                  className="vt-media-signal-packet vt-media-signal-packet-secondary"
+                  r="3"
+                  animate={
+                    reducedMotion
+                      ? undefined
+                      : {
+                          cx: [86, 186, 286, 86],
+                          cy: [228, 152, 236, 228],
+                          opacity: [0.68, 0.98, 0.68, 0.68],
+                        }
+                  }
+                  transition={
+                    reducedMotion
+                      ? undefined
+                      : {
+                          duration: 4.6,
+                          repeat: Infinity,
+                          ease: 'linear',
+                          delay: 0.75,
+                        }
+                  }
+                />
+              </motion.svg>
           </motion.figure>
         ))}
       </div>
