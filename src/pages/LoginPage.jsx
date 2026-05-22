@@ -90,7 +90,7 @@ export default function LoginPage() {
       <div className="mx-auto grid w-full max-w-6xl gap-6 md:grid-cols-[minmax(0,420px)_minmax(0,1fr)] md:items-center">
         <div className="rounded-[28px] border border-cyan-950/80 bg-zinc-900/95 p-8 shadow-[0_24px_80px_rgba(2,8,23,0.45)] backdrop-blur">
           <p className="mb-3 text-xs uppercase tracking-[0.28em] text-cyan-300/70">
-            Encrypted Vanguard Trace Access
+            Vanguard Trace Access
           </p>
           <h1 className="mb-2 text-2xl font-bold text-white">Cipher Entry</h1>
           <p className="mb-4 text-sm text-zinc-400">
