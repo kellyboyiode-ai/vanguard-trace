@@ -6,15 +6,6 @@ const premiumMediaModules = import.meta.glob(
   },
 );
 
-function toReadableLabel(fileName) {
-  return fileName
-    .replace(/\.[a-z0-9]+$/i, '')
-    .replace(/[-_]+/g, ' ')
-    .replace(/\(\d+\)/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
 function toAltText() {
   return 'Vanguard Trace logistics media';
 }
@@ -26,18 +17,11 @@ export const allPremiumMedia = Object.entries(premiumMediaModules)
 
     return {
       id,
-      fileName,
-      label: toReadableLabel(fileName),
       src,
       alt: toAltText(),
     };
   })
-  .sort((left, right) =>
-    left.fileName.localeCompare(right.fileName, undefined, {
-      numeric: true,
-      sensitivity: 'base',
-    }),
-  );
+  .sort((left, right) => left.id.localeCompare(right.id));
 
 const HOME_TRANSMISSION_COUNT = 12;
 
