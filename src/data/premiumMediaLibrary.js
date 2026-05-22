@@ -15,9 +15,8 @@ function toReadableLabel(fileName) {
     .trim();
 }
 
-function toAltText(fileName) {
-  const readable = toReadableLabel(fileName);
-  return `Vanguard Trace logistics media: ${readable}`;
+function toAltText() {
+  return 'Vanguard Trace logistics media';
 }
 
 export const allPremiumMedia = Object.entries(premiumMediaModules)
@@ -30,7 +29,7 @@ export const allPremiumMedia = Object.entries(premiumMediaModules)
       fileName,
       label: toReadableLabel(fileName),
       src,
-      alt: toAltText(fileName),
+      alt: toAltText(),
     };
   })
   .sort((left, right) =>

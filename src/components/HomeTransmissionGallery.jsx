@@ -24,7 +24,10 @@ export default function HomeTransmissionGallery() {
   const activeAsset = media[activeIndex];
 
   return (
-    <section className="vt-transmission" aria-label="Home transmission image stream">
+    <section
+      className="vt-transmission"
+      aria-label="Home transmission image stream"
+    >
       <div className="vt-transmission-stage">
         <img
           key={activeAsset.id}
@@ -39,10 +42,13 @@ export default function HomeTransmissionGallery() {
 
       <div className="vt-transmission-meta">
         <p className="panel-kicker">Transmission Sequence</p>
-        <h3>{activeAsset.label}</h3>
         <p>{`Frame ${activeIndex + 1} / ${media.length}`}</p>
 
-        <div className="vt-transmission-dots" role="tablist" aria-label="Transmission frame selector">
+        <div
+          className="vt-transmission-dots"
+          role="tablist"
+          aria-label="Transmission frame selector"
+        >
           {media.map((asset, index) => (
             <button
               key={asset.id}

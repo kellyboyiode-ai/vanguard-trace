@@ -13,7 +13,11 @@ export default function PageMediaGallery({
 
   return (
     <section
-      className={compact ? 'vt-media-gallery vt-media-gallery-compact' : 'vt-media-gallery'}
+      className={
+        compact
+          ? 'vt-media-gallery vt-media-gallery-compact'
+          : 'vt-media-gallery'
+      }
       aria-label={`${title} for ${pageKey}`}
     >
       <div className="panel-header">
@@ -24,8 +28,12 @@ export default function PageMediaGallery({
       <div className="vt-media-grid">
         {media.map((asset) => (
           <figure key={asset.id} className="vt-media-tile">
-            <img src={asset.src} alt={asset.alt} loading="lazy" decoding="async" />
-            <figcaption>{asset.label}</figcaption>
+            <img
+              src={asset.src}
+              alt={asset.alt}
+              loading="lazy"
+              decoding="async"
+            />
           </figure>
         ))}
       </div>
